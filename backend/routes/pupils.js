@@ -1,0 +1,90 @@
+// routes/pupils.js
+import express from "express";
+import { Pupil } from "../db/models/pupil.js";
+import jwt from "jsonwebtoken";
+
+export const router = express.Router();
+
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (!token) return res.status(401).send("Login required");
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).send("Invalid or expired token");
+    req.user = user;
+    next();
+  });
+}
+
+//CREATE NEW PUPIL - protected
+router.post("/", authenticateToken, async (req, res) => {
+  try {
+    const pupil = new Pupil(req.body);
+    await pupil.save();
+    res.status(201).json(pupil);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+//GET ALL PUPILS - protected
+router.get("/", authenticateToken, async (req, res) => {
+  try {
+    const pupils = await Pupil.find();
+    res.json(pupils);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//GET ONE PUPIL
+router.get("/:id", async (req, res) => {
+  try {
+    const pupil = await Pupil.findById(req.params.id);
+    if (!pupil) {
+      return res.status(404).json({ error: "Pupil not found" });
+    }
+    res.json(pupil);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+/**
+ * UPDATE a pupil by ID
+ * PUT /api/v1/pupils/:id
+ */
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedPupil = await Pupil.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    if (!updatedPupil) {
+      return res.status(404).json({ error: "Pupil not found" });
+    }
+    res.json(updatedPupil);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+/**
+ * DELETE a pupil by ID
+ * DELETE /api/v1/pupils/:id
+ */
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedPupil = await Pupil.findByIdAndDelete(req.params.id);
+    if (!deletedPupil) {
+      return res.status(404).json({ error: "Pupil not found" });
+    }
+    res.json({ message: "Pupil deleted" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
