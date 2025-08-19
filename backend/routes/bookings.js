@@ -12,9 +12,7 @@ function getTodayRange() {
   return { today, tomorrow };
 }
 
-// ======================
 // CREATE Booking (only 1 per day)
-// ======================
 router.post("/", async (req, res) => {
   try {
     const { today, tomorrow } = getTodayRange();

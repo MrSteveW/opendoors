@@ -2,14 +2,17 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import helmet from "helmet";
 import { router as bookingsRouter } from "./routes/bookings.js";
 import { router as pupilsRouter } from "./routes/pupils.js";
 import { router as usersRouter } from "./routes/users.js";
 import dotenv from "dotenv";
 dotenv.config();
+
 const app = express();
 
 //Middleware
+app.use(helmet());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());

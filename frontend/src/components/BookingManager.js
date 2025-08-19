@@ -1,167 +1,180 @@
 import React, { useState, useEffect } from "react";
 
-export default function Booking() {
+export default function BookingManager() {
   const [bookings, setBookings] = useState([]);
   const [pupils, setPupils] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [activeSlot, setActiveSlot] = useState(null); // which slot is being edited
+  const API_URL = "http://localhost:3001/api/v1/bookings";
+  const PUPILS_URL = "http://localhost:3001/api/v1/pupils";
 
-  // Fetch today's booking(s)
-  const fetchBookings = async (autoCreateIfEmpty = false) => {
+  // helper to get headers with token
+  const authHeaders = () => {
+    const token = localStorage.getItem("token");
+    return {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+  };
+
+  // ==============================
+  // BOOKINGS
+  // ==============================
+
+  // Fetch today's bookings
+  const fetchBookings = async () => {
     try {
-      setLoading(true);
-      const res = await fetch("http://localhost:3001/api/v1/bookings");
+      const res = await fetch(API_URL, {
+        method: "GET",
+        headers: authHeaders(),
+      });
+
+      if (res.status === 401) {
+        console.error("Login required");
+        return;
+      }
+      if (res.status === 403) {
+        console.error("Invalid or expired token");
+        return;
+      }
+
       const data = await res.json();
 
-      if (data.length === 0 && autoCreateIfEmpty) {
+      // Auto-create if empty
+      if (data.length === 0) {
         await createBooking();
         return;
       }
-      setBookings(data);
-    } catch (error) {
-      console.error("Error fetching bookings:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  // Fetch pupils
-  const fetchPupils = async () => {
-    try {
-      const res = await fetch("http://localhost:3001/api/v1/pupils");
-      const data = await res.json();
-      setPupils(data);
-    } catch (error) {
-      console.error("Error fetching pupils:", error);
+      setBookings(data);
+    } catch (err) {
+      console.error("Error fetching bookings:", err);
     }
   };
 
   // Create today's booking
   const createBooking = async () => {
     try {
-      const res = await fetch("http://localhost:3001/api/v1/bookings", {
+      const res = await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ first: "", second: "", third: "" }),
+        headers: authHeaders(),
+        body: JSON.stringify({
+          first: "",
+          second: "",
+          third: "",
+          fourth: "",
+          fifth: "",
+          sixth: "",
+        }),
       });
+
       if (!res.ok) {
-        console.warn("Booking creation failed:", await res.json());
+        console.error("Booking creation failed:", await res.json());
         return;
       }
-      await fetchBookings(false);
-    } catch (error) {
-      console.error("Error creating booking:", error);
+
+      fetchBookings();
+    } catch (err) {
+      console.error("Error creating booking:", err);
     }
   };
 
   // Update booking slot
   const updateSlot = async (id, field, value) => {
     try {
-      await fetch(`http://localhost:3001/api/v1/bookings/${id}`, {
+      const res = await fetch(`${API_URL}/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders(),
         body: JSON.stringify({ [field]: value }),
       });
-      setActiveSlot(null); // hide pupil selection after choosing
-      await fetchBookings(false);
-    } catch (error) {
-      console.error("Error updating booking:", error);
+
+      if (res.ok) {
+        setActiveSlot(null);
+        fetchBookings();
+      } else {
+        console.error("Failed to update booking");
+      }
+    } catch (err) {
+      console.error("Error updating booking:", err);
     }
   };
 
+  // ==============================
+  // PUPILS
+  // ==============================
+
+  const fetchPupils = async () => {
+    try {
+      const res = await fetch(PUPILS_URL, {
+        method: "GET",
+        headers: authHeaders(),
+      });
+
+      if (res.status === 401) {
+        console.error("Login required");
+        return;
+      }
+      if (res.status === 403) {
+        console.error("Invalid or expired token");
+        return;
+      }
+
+      const data = await res.json();
+      setPupils(data);
+    } catch (err) {
+      console.error("Error fetching pupils:", err);
+    }
+  };
+
+  // ==============================
+  // INIT
+  // ==============================
+
   useEffect(() => {
-    fetchBookings(true);
+    fetchBookings();
     fetchPupils();
   }, []);
+
+  // ==============================
+  // RENDER
+  // ==============================
 
   return (
     <div>
       <h1>Today's Booking</h1>
-      {loading && <p>Loading...</p>}
+      {bookings.map((booking) => (
+        <table key={booking._id} border="1" style={{ marginTop: "10px" }}>
+          <thead>
+            <tr>
+              <th>12:00</th>
+              <th>12:10</th>
+              <th>12:20</th>
+              <th>12:30</th>
+              <th>12:40</th>
+              <th>12:50</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {["first", "second", "third", "fourth", "fifth", "sixth"].map(
+                (slot) => (
+                  <td key={slot}>
+                    {booking[slot] || ""}{" "}
+                    <button
+                      onClick={() =>
+                        setActiveSlot({ id: booking._id, field: slot })
+                      }
+                    >
+                      Book
+                    </button>
+                  </td>
+                )
+              )}
+            </tr>
+          </tbody>
+        </table>
+      ))}
 
-      {!loading && bookings.length === 0 && <p>No booking for today.</p>}
-
-      {!loading &&
-        bookings.map((booking) => (
-          <table key={booking._id} border="1" style={{ marginTop: "10px" }}>
-            <thead>
-              <tr>
-                <th>12:00</th>
-                <th>12:10</th>
-                <th>12:20</th>
-                <th>12:30</th>
-                <th>12:40</th>
-                <th>12:50</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  {booking.first || ""}{" "}
-                  <button
-                    onClick={() =>
-                      setActiveSlot({ id: booking._id, field: "first" })
-                    }
-                  >
-                    Book
-                  </button>
-                </td>
-                <td>
-                  {booking.second || ""}{" "}
-                  <button
-                    onClick={() =>
-                      setActiveSlot({ id: booking._id, field: "second" })
-                    }
-                  >
-                    Book
-                  </button>
-                </td>
-                <td>
-                  {booking.third || ""}{" "}
-                  <button
-                    onClick={() =>
-                      setActiveSlot({ id: booking._id, field: "third" })
-                    }
-                  >
-                    Book
-                  </button>
-                </td>
-                <td>
-                  {booking.fourth || ""}{" "}
-                  <button
-                    onClick={() =>
-                      setActiveSlot({ id: booking._id, field: "fourth" })
-                    }
-                  >
-                    Book
-                  </button>
-                </td>
-                <td>
-                  {booking.fifth || ""}{" "}
-                  <button
-                    onClick={() =>
-                      setActiveSlot({ id: booking._id, field: "fifth" })
-                    }
-                  >
-                    Book
-                  </button>
-                </td>
-                <td>
-                  {booking.sixth || ""}{" "}
-                  <button
-                    onClick={() =>
-                      setActiveSlot({ id: booking._id, field: "sixth" })
-                    }
-                  >
-                    Book
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        ))}
-
-      {/* Show pupil selection buttons if editing */}
+      {/* Show pupil selection if editing a slot */}
       {activeSlot && (
         <div style={{ marginTop: "20px" }}>
           <h3>Select Pupil for {activeSlot.field} slot:</h3>
