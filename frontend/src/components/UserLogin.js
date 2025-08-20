@@ -16,7 +16,7 @@ export default function LoginForm({ onLogin }) {
     setMessage(null);
 
     try {
-      const res = await fetch("http://localhost:3001/api/v1/users/login", {
+      const res = await fetch("http://localhost:3001/api/v1/login/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -37,7 +37,7 @@ export default function LoginForm({ onLogin }) {
 
       setMessage({ type: "success", text: "Login successful!" });
 
-      // ✅ Callback to parent (e.g. switch to pupil manager)
+      // ✅ Callback to parent (e.g. switch to pupil manager) ??
       if (onLogin) {
         onLogin(data);
       }

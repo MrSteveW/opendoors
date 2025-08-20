@@ -6,6 +6,7 @@ import helmet from "helmet";
 import { router as bookingsRouter } from "./routes/bookings.js";
 import { router as pupilsRouter } from "./routes/pupils.js";
 import { router as usersRouter } from "./routes/users.js";
+import { router as loginRouter } from "./routes/login.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use("/api/v1/bookings", bookingsRouter);
 app.use("/api/v1/pupils", pupilsRouter);
 app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/login", loginRouter);
 
 /* really useful debuggin
 app.use((req, res, next) => {

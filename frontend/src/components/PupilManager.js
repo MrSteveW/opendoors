@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 
 export default function PupilManager() {
   const [pupils, setPupils] = useState([]);
-  const [newPupil, setNewPupil] = useState({ name: "", class: "", year: "" });
-  const API_URL = "http://localhost:3001/api/v1/pupils";
+  const [newPupil, setNewPupil] = useState({
+    name: "",
+    classname: "",
+    year: "",
+  });
+  const API_URL = "http://localhost:3001/api/v1/pupils/admin";
 
   // helper to get headers with token
   const authHeaders = () => {
@@ -20,6 +24,7 @@ export default function PupilManager() {
       const res = await fetch(API_URL, {
         method: "GET",
         headers: authHeaders(),
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       });
 
       if (res.status === 401) {
@@ -48,7 +53,7 @@ export default function PupilManager() {
         body: JSON.stringify(newPupil),
       });
       if (res.ok) {
-        setNewPupil({ name: "", class: "", year: "" });
+        setNewPupil({ name: "", classname: "", year: "" });
         fetchPupils();
       } else {
         console.error("Failed to add pupil");
@@ -113,9 +118,11 @@ export default function PupilManager() {
         />
         <input
           type="text"
-          placeholder="Class"
-          value={newPupil.class}
-          onChange={(e) => setNewPupil({ ...newPupil, class: e.target.value })}
+          placeholder="Classname"
+          value={newPupil.classname}
+          onChange={(e) =>
+            setNewPupil({ ...newPupil, classname: e.target.value })
+          }
           required
         />
         <input
@@ -134,7 +141,7 @@ export default function PupilManager() {
         {pupils.map((pupil) => (
           <li key={pupil._id}>
             <div>
-              <strong>{pupil.name}</strong> - {pupil.class} - {pupil.year}
+              <strong>{pupil.name}</strong> - {pupil.classname} - {pupil.year}
             </div>
             <div>
               <button
@@ -152,12 +159,12 @@ export default function PupilManager() {
                 onClick={() =>
                   handleUpdateField(
                     pupil._id,
-                    "class",
-                    prompt("New class:", pupil.class)
+                    "classname",
+                    prompt("New classname:", pupil.classname)
                   )
                 }
               >
-                Edit Class
+                Edit Classname
               </button>
               <button
                 onClick={() =>

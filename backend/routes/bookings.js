@@ -1,3 +1,4 @@
+//routes/bookings.js
 import express from "express";
 import { Booking } from "../db/models/booking.js";
 

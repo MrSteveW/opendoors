@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 
 export default function BookingManager() {
   const [bookings, setBookings] = useState([]);
   const [pupils, setPupils] = useState([]);
   const [activeSlot, setActiveSlot] = useState(null); // which slot is being edited
-  const API_URL = "http://localhost:3001/api/v1/bookings";
+  const BOOKINGS_URL = "http://localhost:3001/api/v1/bookings";
   const PUPILS_URL = "http://localhost:3001/api/v1/pupils";
 
   // helper to get headers with token
@@ -23,7 +24,7 @@ export default function BookingManager() {
   // Fetch today's bookings
   const fetchBookings = async () => {
     try {
-      const res = await fetch(API_URL, {
+      const res = await fetch(BOOKINGS_URL, {
         method: "GET",
         headers: authHeaders(),
       });
@@ -54,7 +55,7 @@ export default function BookingManager() {
   // Create today's booking
   const createBooking = async () => {
     try {
-      const res = await fetch(API_URL, {
+      const res = await fetch(BOOKINGS_URL, {
         method: "POST",
         headers: authHeaders(),
         body: JSON.stringify({
@@ -81,7 +82,7 @@ export default function BookingManager() {
   // Update booking slot
   const updateSlot = async (id, field, value) => {
     try {
-      const res = await fetch(`${API_URL}/${id}`, {
+      const res = await fetch(`${BOOKINGS_URL}/${id}`, {
         method: "PUT",
         headers: authHeaders(),
         body: JSON.stringify({ [field]: value }),
@@ -109,17 +110,26 @@ export default function BookingManager() {
         headers: authHeaders(),
       });
 
-      if (res.status === 401) {
-        console.error("Login required");
-        return;
-      }
-      if (res.status === 403) {
-        console.error("Invalid or expired token");
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("Server error:", text);
         return;
       }
 
       const data = await res.json();
-      setPupils(data);
+
+      // ✅ Decode token and extract classname
+      const token = localStorage.getItem("token");
+      let classname = null;
+      if (token) {
+        const decoded = jwtDecode(token);
+        classname = decoded.classname; // <-- comes from backend payload
+      }
+
+      // ✅ Filter pupils by classname
+      const filtered = data.filter((pupil) => pupil.classname === classname);
+
+      setPupils(filtered);
     } catch (err) {
       console.error("Error fetching pupils:", err);
     }
@@ -186,7 +196,8 @@ export default function BookingManager() {
               }
               style={{ margin: "5px" }}
             >
-              {pupil.name} ({pupil.class}, {pupil.year})
+              {pupil.name} ({pupil.classname}){" "}
+              {/*remove when you don't want to show classname*/}
             </button>
           ))}
           <div>

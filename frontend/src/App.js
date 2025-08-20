@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 import BookingManager from "./components/BookingManager";
 import PupilManager from "./components/PupilManager";
 import UserLogin from "./components/UserLogin";
@@ -9,31 +10,31 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // On mount: check localStorage + validate with server
   useEffect(() => {
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username");
     const role = localStorage.getItem("role");
+    const classname = localStorage.getItem("classname");
 
     if (token && username) {
-      fetch("http://localhost:3001/api/v1/users/validate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.valid) {
-            setIsLoggedIn(true);
-            setUser({ token, username, role });
-          } else {
-            handleLogout();
-          }
-        })
-        .catch(() => handleLogout())
-        .finally(() => setLoading(false));
+      try {
+        const decoded = jwtDecode(token);
+
+        // JWT exp is in seconds, Date.now() is in ms → multiply by 1000
+        if (decoded.exp * 1000 > Date.now()) {
+          // ✅ Token still valid
+          setIsLoggedIn(true);
+          setUser({ token, username, role, classname });
+        } else {
+          // ❌ Token expired
+          handleLogout();
+        }
+      } catch (err) {
+        console.error("Invalid token:", err);
+        handleLogout();
+      } finally {
+        setLoading(false);
+      }
     } else {
       setLoading(false);
     }
@@ -57,6 +58,7 @@ export default function App() {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("role");
+    localStorage.removeItem("classname");
     setIsLoggedIn(false);
     setUser(null);
   };
@@ -78,7 +80,7 @@ export default function App() {
             <AdminDashboard />
           ) : (
             <div>
-              <h3>Standard User Dashboard</h3>
+              {/*Standard User Dashboard */}
               <BookingManager />
             </div>
           )}

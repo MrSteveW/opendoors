@@ -2,7 +2,7 @@
 import mongoose, { Schema } from "mongoose";
 const pupilSchema = new Schema({
   name: String,
-  class: String,
+  classname: String,
   year: Number,
 });
 
