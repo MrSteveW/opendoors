@@ -9,18 +9,14 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username");
     const role = localStorage.getItem("role");
     const classname = localStorage.getItem("classname");
-
     if (token && username) {
       try {
-        const decoded = jwtDecode(token);
-
-        // JWT exp is in seconds, Date.now() is in ms → multiply by 1000
+        const decoded = jwtDecode(token); // JWT exp is in seconds, Date.now() is in ms → multiply by 1000
         if (decoded.exp * 1000 > Date.now()) {
           // ✅ Token still valid
           setIsLoggedIn(true);
@@ -39,18 +35,20 @@ export default function App() {
       setLoading(false);
     }
   }, []);
-
   const handleLogin = (data) => {
-    // data = { accessToken, username, role }
+    const decoded = jwtDecode(data.accessToken);
+
     localStorage.setItem("token", data.accessToken);
-    localStorage.setItem("username", data.username);
-    localStorage.setItem("role", data.role);
+    localStorage.setItem("username", decoded.username);
+    localStorage.setItem("role", decoded.role);
+    localStorage.setItem("classname", decoded.classname);
 
     setIsLoggedIn(true);
     setUser({
       token: data.accessToken,
-      username: data.username,
-      role: data.role,
+      username: decoded.username,
+      role: decoded.role,
+      classname: decoded.classname,
     });
   };
 
@@ -62,30 +60,29 @@ export default function App() {
     setIsLoggedIn(false);
     setUser(null);
   };
-
   if (loading) {
     return <p>Loading...</p>;
   }
-
   return (
     <div>
+      {" "}
       {!isLoggedIn ? (
         <UserLogin onLogin={handleLogin} />
       ) : (
         <>
-          <h2>Welcome, {user?.username}</h2>
-          <button onClick={handleLogout}>Logout</button>
-
+          {" "}
+          <h2>Welcome, {user?.username}</h2>{" "}
+          <button onClick={handleLogout}>Logout</button>{" "}
           {user?.role === "admin" ? (
             <AdminDashboard />
           ) : (
             <div>
-              {/*Standard User Dashboard */}
-              <BookingManager />
+              {" "}
+              {/*Standard User Dashboard */} <BookingManager />{" "}
             </div>
-          )}
+          )}{" "}
         </>
-      )}
+      )}{" "}
     </div>
   );
 }
