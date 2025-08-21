@@ -1,0 +1,52 @@
+/*specific to app.js styles */
+
+table.bookingtable {
+  width: 90%;
+  margin: auto;
+}
+
+table.bookingtable,
+th,
+td {
+  font-size: 2rem;
+  border-collapse: collapse;
+  padding: 10px;
+  text-align: center;
+}
+
+button.bookingbutton {
+  display: inline-block;
+  outline: 0;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 4px;
+  font-size: 13px;
+  height: 5rem;
+  width: 10rem;
+  background-color: #9147ff;
+  color: white;
+  padding: 0 10px;
+  :hover {
+    background-color: yellow;
+  }
+}
+
+button.pupilbutton {
+  margin: 10px;
+  border: 1px;
+  cursor: pointer;
+  color: rgb(60, 66, 87);
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px,
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 4px 8px;
+  display: inline-block;
+  min-height: 28px;
+  transition: background-color 0.24s, box-shadow 0.24s;
+}

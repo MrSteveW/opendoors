@@ -4,6 +4,7 @@ import BookingManager from "./components/BookingManager";
 import PupilManager from "./components/PupilManager";
 import UserLogin from "./components/UserLogin";
 import AdminDashboard from "./components/AdminDashboard";
+import "./App.css";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

@@ -152,7 +152,7 @@ export default function BookingManager() {
     <div>
       <h1>Today's Booking</h1>
       {bookings.map((booking) => (
-        <table key={booking._id} border="1" style={{ marginTop: "10px" }}>
+        <table key={booking._id} class="bookingtable">
           <thead>
             <tr>
               <th>12:00</th>
@@ -168,8 +168,10 @@ export default function BookingManager() {
               {["first", "second", "third", "fourth", "fifth", "sixth"].map(
                 (slot) => (
                   <td key={slot}>
-                    {booking[slot] || ""}{" "}
+                    {booking[slot] || ""}
+                    <br />
                     <button
+                      class="bookingbutton"
                       onClick={() =>
                         setActiveSlot({ id: booking._id, field: slot })
                       }
@@ -190,11 +192,11 @@ export default function BookingManager() {
           <h3>Select Pupil for {activeSlot.field} slot:</h3>
           {pupils.map((pupil) => (
             <button
+              class="pupilbutton"
               key={pupil._id}
               onClick={() =>
                 updateSlot(activeSlot.id, activeSlot.field, pupil.name)
               }
-              style={{ margin: "5px" }}
             >
               {pupil.name} ({pupil.classname}){" "}
               {/*remove when you don't want to show classname*/}
