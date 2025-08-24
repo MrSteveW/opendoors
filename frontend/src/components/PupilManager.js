@@ -145,6 +145,7 @@ export default function PupilManager() {
             </div>
             <div>
               <button
+                class="btn btn-light btn-sm edited"
                 onClick={() =>
                   handleUpdateField(
                     pupil._id,
@@ -156,6 +157,7 @@ export default function PupilManager() {
                 Edit Name
               </button>
               <button
+                class="btn btn-light btn-sm edited"
                 onClick={() =>
                   handleUpdateField(
                     pupil._id,
@@ -167,6 +169,7 @@ export default function PupilManager() {
                 Edit Classname
               </button>
               <button
+                class="btn btn-light btn-sm edited"
                 onClick={() =>
                   handleUpdateField(
                     pupil._id,
@@ -177,7 +180,12 @@ export default function PupilManager() {
               >
                 Edit Year
               </button>
-              <button onClick={() => handleDelete(pupil._id)}>Delete</button>
+              <button
+                class="btn btn-light btn-sm edited"
+                onClick={() => handleDelete(pupil._id)}
+              >
+                Delete
+              </button>
             </div>
           </li>
         ))}

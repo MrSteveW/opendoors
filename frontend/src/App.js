@@ -71,9 +71,13 @@ export default function App() {
         <UserLogin onLogin={handleLogin} />
       ) : (
         <>
-          {" "}
-          <h2>Welcome, {user?.username}</h2>{" "}
-          <button onClick={handleLogout}>Logout</button>{" "}
+          <div class="topnav">
+            <h2>{user?.username}</h2>
+            <button onClick={handleLogout} class="logoutbutton">
+              Logout
+            </button>{" "}
+          </div>
+          <br />
           {user?.role === "admin" ? (
             <AdminDashboard />
           ) : (

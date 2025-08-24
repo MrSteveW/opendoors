@@ -142,7 +142,6 @@ export default function UserManager() {
       </form>
 
       {/* Users List */}
-      <h2>Users List</h2>
       <ul>
         {users.map((user) => (
           <li key={user._id}>
@@ -152,6 +151,7 @@ export default function UserManager() {
             </div>
             <div>
               <button
+                class="btn btn-light btn-sm edited"
                 onClick={() =>
                   handleUpdateField(
                     user._id,
@@ -163,6 +163,7 @@ export default function UserManager() {
                 Edit Username
               </button>
               <button
+                class="btn btn-light btn-sm edited"
                 onClick={() =>
                   handleUpdateField(
                     user._id,
@@ -174,6 +175,7 @@ export default function UserManager() {
                 Edit Password
               </button>
               <button
+                class="btn btn-light btn-sm edited"
                 onClick={() =>
                   handleUpdateField(
                     user._id,
@@ -185,6 +187,7 @@ export default function UserManager() {
                 Edit Role
               </button>
               <button
+                class="btn btn-light btn-sm edited"
                 onClick={() =>
                   handleUpdateField(
                     user._id,
@@ -195,7 +198,12 @@ export default function UserManager() {
               >
                 Edit Classname
               </button>
-              <button onClick={() => handleDelete(user._id)}>Delete</button>
+              <button
+                class="btn btn-light btn-sm edited"
+                onClick={() => handleDelete(user._id)}
+              >
+                Delete
+              </button>
             </div>
           </li>
         ))}

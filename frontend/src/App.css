@@ -1,7 +1,23 @@
 /*specific to app.js styles */
 
+h1.banner {
+  absolute: right;
+  text-align: center;
+  font-size: 2rem;
+  color: #3b0ee5;
+  margin-bottom: 20px;
+}
+
+.topnav {
+  float: right;
+  padding: 20px;
+  margin-right: 50px;
+  margin-top: 10px;
+}
+
 table.bookingtable {
   width: 90%;
+  float: center;
   margin: auto;
 }
 
@@ -14,39 +30,63 @@ td {
   text-align: center;
 }
 
-button.bookingbutton {
+button.logoutbutton {
+  background-color: #e50e0e;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
   display: inline-block;
   outline: 0;
   border: none;
   cursor: pointer;
-  font-weight: 600;
   border-radius: 4px;
-  font-size: 13px;
-  height: 5rem;
-  width: 10rem;
-  background-color: #9147ff;
-  color: white;
+  height: 2rem;
+  width: 5rem;
   padding: 0 10px;
   :hover {
     background-color: yellow;
   }
 }
 
+button.bookingbutton {
+  background-color: #3b0ee5;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  display: inline-block;
+  outline: 0;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  height: 4rem;
+  width: 8rem;
+  padding: 0 10px;
+}
+.bookingbutton:hover {
+  background-color: rgb(20, 122, 90);
+}
 button.pupilbutton {
+  font-size: 1rem;
+  font-weight: 500;
   margin: 10px;
-  border: 1px;
+  border: 2px solid rgb(60, 66, 87);
   cursor: pointer;
   color: rgb(60, 66, 87);
-  background-color: rgb(255, 255, 255);
-  box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
-    rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px,
-    rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
-    rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+  background-color: #fdd500;
   border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
+
   padding: 4px 8px;
   display: inline-block;
   min-height: 28px;
   transition: background-color 0.24s, box-shadow 0.24s;
+}
+
+button.edited {
+  border: 2px solid;
+  margin: 2px;
+}
+
+button.edited:hover {
+  background-color: rgb(194, 194, 194);
+  border: 2px solid;
 }

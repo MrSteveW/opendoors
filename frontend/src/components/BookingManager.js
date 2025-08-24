@@ -150,7 +150,7 @@ export default function BookingManager() {
 
   return (
     <div>
-      <h1>Today's Booking</h1>
+      <h1 class="banner">Drake Radio</h1>
       {bookings.map((booking) => (
         <table key={booking._id} class="bookingtable">
           <thead>

@@ -8,7 +8,7 @@ export const router = express.Router();
 //function for authenticating JWT when any of following routes is requested
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  const token = authHeader && authHeader.split(" ")[1]; //remove BEARER
 
   if (!token) return res.status(401).json({ message: "Token required" });
 
