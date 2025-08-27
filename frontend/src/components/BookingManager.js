@@ -188,7 +188,7 @@ export default function BookingManager() {
 
       {/* Show pupil selection if editing a slot */}
       {activeSlot && (
-        <div style={{ marginTop: "20px" }}>
+        <div>
           <h3>Select Pupil for {activeSlot.field} slot:</h3>
           {pupils.map((pupil) => (
             <button
@@ -203,12 +203,7 @@ export default function BookingManager() {
             </button>
           ))}
           <div>
-            <button
-              onClick={() => setActiveSlot(null)}
-              style={{ marginTop: "10px" }}
-            >
-              Cancel
-            </button>
+            <button onClick={() => setActiveSlot(null)}>Cancel</button>
           </div>
         </div>
       )}
