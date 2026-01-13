@@ -1,10 +1,14 @@
 import Link from "next/link";
 
-export default function AdminDashboard() {
+export default function AdminNav() {
   return (
-    <div>
-      <Link href="/">Calendar</Link>
-      <Link href="/admin">Admin</Link>
+    <div className="w-full flex justify-evenly text-2xl">
+      <Link href="/" className="hover:text-openblue hover:underline">
+        Calendar
+      </Link>
+      <Link href="/admin" className="hover:text-openblue hover:underline">
+        Admin
+      </Link>
     </div>
   );
 }

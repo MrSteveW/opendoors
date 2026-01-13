@@ -6,7 +6,8 @@
   --color-openblue: #010066;
   --color-opengreen: #0db651;
   --color-openlightgreen: #b3f7cb;
-  --font-mulish: "Mulish", sans-serif;
+  --font-family-mulish: "Mulish", sans-serif;
+  --font-family-atomatic: var(--font-atomatic);
 }
 
 /* html,

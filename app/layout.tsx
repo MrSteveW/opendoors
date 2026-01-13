@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider, SignedIn, UserButton } from "@clerk/nextjs";
 import { Mulish } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
-import AdminDashboard from "@/components/admin/AdminNav";
+import AdminNav from "@/components/admin/AdminNav";
+import Image from "next/image";
+// import logosm from "../../public/logosm.png";
 
 const mulish = Mulish({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+const atomatic = localFont({
+  src: "./fonts/linotypeatomatic.ttf",
+  variable: "--font-atomatic",
 });
 
 export const metadata: Metadata = {
@@ -29,18 +30,26 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${mulish.variable}  antialiased`}>
-          <header className="flex bg-yellow-200 items-center  h-16">
-            <SignedIn>
-              <div className="flex flex-row">
-                <AdminDashboard />
-                <div>Radio Drake</div>
-                <div className="scale-150 fixed top-5 right-7">
-                  <UserButton />
+        <body
+          className={`${mulish.variable}  ${atomatic.variable}  antialiased`}
+        >
+          <SignedIn>
+            <header className="flex bg-yellow-200 items-center  h-16">
+              <div className="w-full text-center font-family-atomatic text-5xl">
+                Radio Drake
+                <div className="relative">
+                  <Image src="/logosm.png" alt="" height={50} width={50} />
                 </div>
               </div>
-            </SignedIn>
-          </header>
+              <div className="flex flex-row w-70 fixed top-5 left-0 items-center">
+                <AdminNav />
+              </div>
+
+              <div className="scale-150 fixed top-5 right-7">
+                <UserButton />
+              </div>
+            </header>
+          </SignedIn>
           {children}
         </body>
       </html>
