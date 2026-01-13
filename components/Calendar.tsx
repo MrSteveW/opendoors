@@ -1,10 +1,26 @@
 "use client";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
 
-export default function NewCalendar() {
+export default function Calendar() {
   return (
     <>
-      <div className="h-[calc(100vh-4rem)] text-center py-50">
-        <div className="text-5xl">New Calendar!</div>
+      <div className=" ">
+        <FullCalendar
+          plugins={[dayGridPlugin]}
+          initialView="twoWeekGrid"
+          weekends={false}
+          dayHeaderFormat={{ weekday: "long" }}
+          views={{
+            twoWeekGrid: {
+              type: "dayGrid",
+              duration: { weeks: 2 },
+              buttonText: "2 weeks",
+            },
+          }}
+        />
       </div>
     </>
   );
