@@ -11,7 +11,7 @@ export default function ShowForm({ classNames, producers, times }: FormType) {
 
         <div className="input-container">
           <label className="input-label">Class:</label>
-          <select name="class-select" id="class-select">
+          <select name="class_id" id="class_id">
             <option value="">Select class</option>
             {classNames.map((className) => (
               <option key={className.id} value={className.id}>
@@ -23,7 +23,7 @@ export default function ShowForm({ classNames, producers, times }: FormType) {
 
         <div className="input-container">
           <label className="input-label">Producer:</label>
-          <select name="producer-select" id="producer-select" className="">
+          <select name="producer_id" id="producer_id" className="">
             <option value="">Select producer</option>
             {producers.map((producer) => (
               <option key={producer.id} value={producer.id}>
@@ -35,7 +35,7 @@ export default function ShowForm({ classNames, producers, times }: FormType) {
 
         <div className="input-container">
           <label className="input-label">Time:</label>
-          <select name="time-select" id="time-select" className="">
+          <select name="time_id" id="time_id" className="">
             <option value="">Select time</option>
             {times.map((time) => (
               <option key={time.id} value={time.id}>
@@ -47,7 +47,7 @@ export default function ShowForm({ classNames, producers, times }: FormType) {
 
         <div className="input-container">
           <label className="input-label">Topic:</label>
-          <textarea name="title" className="input" />
+          <textarea name="topic" className="input" />
         </div>
       </form>
     </div>

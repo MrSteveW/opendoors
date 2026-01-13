@@ -16,15 +16,15 @@ export default function Calendar({ handleDateSelect }) {
     start: booking.date,
     extendedProps: {
       name: booking.name,
-      producer_id: booking.producer_id,
-      time_id: booking.time_id,
+      producer: booking.producer,
+      time: booking.time,
       topic: booking.topic,
     },
   }));
   return (
     <>
       <div>
-        <div>{JSON.stringify(bookings)}</div>
+        {/* <div>{JSON.stringify(bookings)}</div> */}
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="twoWeekGrid"

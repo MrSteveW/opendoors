@@ -1,13 +1,17 @@
-export default function EventCard({ eventInfo }) {
+import { EventType } from "@/types";
+import EventTimeLabel from "./EventTimeLabel";
+
+export default function EventCard({ eventInfo }: EventType) {
   const { event } = eventInfo;
-  const { name, producer_id, time_id, topic } = event.extendedProps;
+  const { name, producer, time } = event.extendedProps;
 
   return (
-    <div className="border-1">
-      <p>{name}</p>
-      <p>Producer: {producer_id}</p>
-      <p>Time: {time_id}</p>
-      <p>{topic}</p>
+    <div className="border">
+      <div>{name}</div>
+      <div>
+        <EventTimeLabel time={time} />
+      </div>
+      <div>{producer}</div>
     </div>
   );
 }
