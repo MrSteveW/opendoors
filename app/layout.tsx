@@ -9,6 +9,7 @@ import {
 } from "@clerk/nextjs";
 import { Mulish } from "next/font/google";
 import "./globals.css";
+import AdminDashboard from "@/components/admin/AdminNav";
 
 const mulish = Mulish({
   variable: "--font-geist-sans",
@@ -29,10 +30,14 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${mulish.variable}  antialiased`}>
-          <header className="flex justify-end bg-yellow-200 items-center  h-16">
+          <header className="flex bg-yellow-200 items-center  h-16">
             <SignedIn>
-              <div className="scale-150 fixed top-5 right-7">
-                <UserButton />
+              <div className="flex flex-row">
+                <AdminDashboard />
+                <div>Radio Drake</div>
+                <div className="scale-150 fixed top-5 right-7">
+                  <UserButton />
+                </div>
               </div>
             </SignedIn>
           </header>

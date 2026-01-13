@@ -1,7 +1,6 @@
-import AddButton from "@/components/new/AddButton";
-import CancelButton from "@/components/new/CancelButton";
+import { FormType } from "@/types";
 
-export default function ShowForm() {
+export default function ShowForm({ classNames, producers, times }: FormType) {
   return (
     <div className="w-full">
       <form>
@@ -12,10 +11,13 @@ export default function ShowForm() {
 
         <div className="input-container">
           <label className="input-label">Class:</label>
-          <select name="class-select" id="class-select" className="">
+          <select name="class-select" id="class-select">
             <option value="">Select class</option>
-            <option value="Class1">Class 1</option>
-            <option value="Class2">Class 2</option>
+            {classNames.map((className) => (
+              <option key={className.id} value={className.id}>
+                {className.name}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -23,18 +25,23 @@ export default function ShowForm() {
           <label className="input-label">Producer:</label>
           <select name="producer-select" id="producer-select" className="">
             <option value="">Select producer</option>
-            <option value="Producer1">Producer 1</option>
-            <option value="Producer2">Producer 2</option>
+            {producers.map((producer) => (
+              <option key={producer.id} value={producer.id}>
+                {producer.name}
+              </option>
+            ))}
           </select>
         </div>
 
         <div className="input-container">
           <label className="input-label">Time:</label>
-          <select name="producer-select" id="producer-select" className="">
+          <select name="time-select" id="time-select" className="">
             <option value="">Select time</option>
-            <option value="Daily Mile">Daily Mile</option>
-            <option value="Live at Lunch">Live at Lunch</option>
-            <option value="After Lunch">After Lunch</option>
+            {times.map((time) => (
+              <option key={time.id} value={time.id}>
+                {time.name}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -43,10 +50,6 @@ export default function ShowForm() {
           <textarea name="title" className="input" />
         </div>
       </form>
-      <div className="">
-        <AddButton />
-        <CancelButton />
-      </div>
     </div>
   );
 }
