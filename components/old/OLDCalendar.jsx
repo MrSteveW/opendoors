@@ -10,7 +10,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import CalendarSidebar from "./CalendarSidebar";
-import EventLabel from "./EventLabel";
+import EventCard from "./EventCard";
 import useAddEvent from "./useAddEvent";
 import useEventClick from "./useEventClick";
 import useSaveEdit from "./useSaveEdit";
@@ -141,7 +141,7 @@ export default function Calendar() {
             weekends={weekendsVisible}
             events={events}
             select={handleDateSelect}
-            eventContent={(eventInfo) => <EventLabel eventInfo={eventInfo} />}
+            eventContent={(eventInfo) => <EventCard eventInfo={eventInfo} />}
             eventClick={handleEventClick}
             height="100%"
             fixedWeekCount={false}

@@ -1,3 +1,3 @@
-export default function AddButton() {
-  return <button>Cancel</button>;
+export default function CancelButton({ setShowSidebar }) {
+  return <button onClick={() => setShowSidebar(false)}>Cancel</button>;
 }
