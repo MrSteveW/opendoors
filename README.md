@@ -45,3 +45,4 @@
 - pg
 - Clerk
 - Lucide-React
+- Motion

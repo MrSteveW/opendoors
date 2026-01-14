@@ -10,32 +10,13 @@
   --font-family-atomatic: var(--font-atomatic);
 }
 
-/* html,
-body {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none;
-} */
-
 body {
   font-family: var(--font-mulish);
-  background-color: #ffefd5;
+  background-image: url("/bglogo.webp");
+  background-position: right top;
+  background-size: contain;
+  background-repeat: no-repeat;
   overflow: hidden;
-}
-
-body {
-  background-color: #ffefd5;
-  overflow: hidden;
-}
-
-/* Adding vertical padding to space out Event labels */
-.fc-event {
-  margin-top: 4px;
-  margin-bottom: 4px;
 }
 
 .header-title {
@@ -44,36 +25,6 @@ body {
   font-weight: bold;
   color: #020265;
   flex: 1;
-}
-
-/* Showing coloured time label in calendar */
-.calendar-event-label {
-  font-size: 0.9em;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-}
-
-/* Showing name in calendar */
-.calendar-event-name {
-  font-size: 1.2em;
-  color: #000000;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  padding: 0.3rem;
-}
-
-/* Style for calendar */
-.fc {
-  height: 90vh !important;
-  min-height: 80vh !important;
-  background-color: #ffefd5;
-  /*text colour*/
-  color: #020265;
-}
-
-.sidebar-date {
-  font-size: 1.3rem;
-  margin-bottom: 0.8rem;
 }
 
 .input-container {
@@ -119,16 +70,38 @@ textarea {
   height: 100px;
 }
 
+/* Style for calendar */
+/* .fc {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #000000;
+} */
+
+/* target all calendar day cells */
+.fc .fc-daygrid-day {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* target non-current month days (if they have a different shade) */
+.fc .fc-day-other {
+  background-color: transparent !important;
+}
+
+/* target time slots in Week/Day views */
+.fc .fc-timegrid-slot,
+.fc .fc-timegrid-col {
+  background-color: transparent !important;
+}
+
 /* Calendar border colour */
 .fc-scrollgrid,
 .fc-theme-standard td,
 .fc-theme-standard th {
-  border-color: #2c2a75 !important;
+  border-color: #010066 !important;
 }
 
 /*Current day highlighted*/
 .fc-day-today {
-  background: #f5dd97 !important;
+  background: #fff45d !important;
   border: 2px solid #8a0404 !important;
 }
 
@@ -139,6 +112,12 @@ textarea {
   margin-right: auto !important;
 }
 
+/* Equal height day cells with overflow */
+.fc .fc-daygrid-day-frame {
+  min-height: 200px;
+  overflow: auto;
+}
+
 /*Other FullCalendar CSS */
 .calendar-layout {
   display: flex;
@@ -146,10 +125,6 @@ textarea {
   width: 100%;
   height: calc(100vh - 50px);
   flex: 1;
-}
-
-.calendar-main {
-  width: 70vw;
 }
 
 button {

@@ -7,11 +7,13 @@ import { useFetch } from "./useFetch";
 
 type CalendarProps = {
   handleDateSelect: () => void;
+  setSelectedEvent: () => void;
   refreshState: number;
 };
 
 export default function Calendar({
   handleDateSelect,
+  setSelectedEvent,
   refreshState,
 }: CalendarProps) {
   const { data: bookings } = useFetch("/api/bookings", refreshState);
@@ -45,10 +47,16 @@ export default function Calendar({
               buttonText: "2 weeks",
             },
           }}
+          aspectRatio={1.9}
           selectable={true}
           select={handleDateSelect}
           events={events}
-          eventContent={(eventInfo) => <EventCard eventInfo={eventInfo} />}
+          eventContent={(eventInfo) => (
+            <EventCard
+              eventInfo={eventInfo}
+              setSelectedEvent={setSelectedEvent}
+            />
+          )}
         />
       </div>
     </>

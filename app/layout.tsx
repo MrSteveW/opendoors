@@ -34,11 +34,11 @@ export default function RootLayout({
           className={`${mulish.variable}  ${atomatic.variable}  antialiased`}
         >
           <SignedIn>
-            <header className="flex bg-yellow-200 items-center  h-16">
-              <div className="w-full h-full text-center font-family-atomatic text-5xl ">
+            <header className="flex items-center  h-16">
+              <div className="w-full h-full text-center font-family-atomatic text-5xl items-center">
                 Radio Drake
-                <div className="relative">
-                  <Image src="/logosm.png" alt="" height={50} width={50} />
+                <div className="fixed top-0 right-150">
+                  <Image src="/logosm.png" alt="" height={60} width={60} />
                 </div>
               </div>
               <div className="flex flex-row w-70 fixed top-5 left-0 items-center">

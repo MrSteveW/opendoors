@@ -4,17 +4,16 @@ import { handleFormSubmit } from "@/app/serveractions/handleFormSubmit";
 
 //
 export default function EventForm({
-  bookingOptions,
-  selectedDate,
+  selectedEvent,
   handleRefresh,
   setShowSidebar,
 }: {
-  bookingOptions: FormOptionsType;
+  bookingData: FormOptionsType;
   selectedDate: Date;
   handleRefresh: () => void;
   setShowSidebar: (show: boolean) => void;
 }) {
-  const { classNames, producers, times } = bookingOptions;
+  const { classNames, producers, times } = bookingData;
 
   // client function receieving server response
   async function handleClientSubmit(formData: FormData) {

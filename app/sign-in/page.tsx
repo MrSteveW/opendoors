@@ -3,6 +3,10 @@
 import { useSignIn } from "@clerk/nextjs";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import EnterAnimation from "../animation/EnterAnimation";
+import bglogo from "@/public/bglogo.webp";
+import shiplogo from "@/public/shiplogo.webp";
+import Image from "next/image";
 
 export default function SignInPage() {
   const { isLoaded, signIn, setActive } = useSignIn();
@@ -34,7 +38,17 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="h-[calc(100vh-4rem)] bg-opencream flex items-center justify-center">
+    <div className="h-screen bg-white flex flex-col items-center justify-center">
+      <div className="relative h-75 w-fit">
+        <div className="relative">
+          <Image src={bglogo} alt="Background" height={300} priority />
+        </div>
+
+        <EnterAnimation className="absolute inset-0 z-10">
+          <Image src={shiplogo} alt="Ship" height={300} priority />
+        </EnterAnimation>
+      </div>
+
       <div className="min-w-lg p-6 border rounded-lg">
         <h1 className="text-2xl font-bold mb-6">Sign In</h1>
 

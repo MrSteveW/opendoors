@@ -1,10 +1,13 @@
 "use client";
 import EventForm from "@/components/EventForm";
+import EventEdit from "@/components/EventEdit";
 import CancelButton from "@/components/CancelButton";
 import { useFetch } from "./useFetch";
+import { EventType } from "@/types";
 
 type SidebarProps = {
   selectedDate: Date;
+  selectedEvent: EventType;
   setShowSidebar: (show: boolean) => void;
   handleRefresh: () => void;
 };
@@ -12,10 +15,11 @@ type SidebarProps = {
 //
 export default function Sidebar({
   selectedDate,
+  selectedEvent,
   setShowSidebar,
   handleRefresh,
 }: SidebarProps) {
-  const { data: bookingData, loading } = useFetch("/api/data");
+  const { data: bookingOptions, loading } = useFetch("/api/data");
   if (loading) return;
 
   return (
@@ -28,13 +32,17 @@ export default function Sidebar({
           day: "numeric",
         })}
       </div>
-      <EventForm
-        bookingData={bookingData}
-        selectedDate={selectedDate}
-        handleRefresh={handleRefresh}
-        setShowSidebar={setShowSidebar}
-      />
-      {/* <div>{JSON.stringify(bookingData)}</div> */}
+      {selectedEvent ? (
+        <EventEdit selectedEvent={selectedEvent} />
+      ) : (
+        <EventForm
+          bookingOptions={bookingOptions}
+          selectedDate={selectedDate}
+          handleRefresh={handleRefresh}
+          setShowSidebar={setShowSidebar}
+        />
+      )}
+
       <div className="">
         <CancelButton setShowSidebar={setShowSidebar} />
       </div>
