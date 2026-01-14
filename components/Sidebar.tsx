@@ -1,10 +1,20 @@
 "use client";
-import ShowForm from "@/components/ShowForm";
-import AddButton from "@/components/AddButton";
+import EventForm from "@/components/EventForm";
 import CancelButton from "@/components/CancelButton";
 import { useFetch } from "./useFetch";
 
-export default function Sidebar({ selectedDate, setShowSidebar }) {
+type SidebarProps = {
+  selectedDate: Date;
+  setShowSidebar: (show: boolean) => void;
+  handleRefresh: () => void;
+};
+
+//
+export default function Sidebar({
+  selectedDate,
+  setShowSidebar,
+  handleRefresh,
+}: SidebarProps) {
   const { data: bookingData, loading } = useFetch("/api/data");
   if (loading) return;
 
@@ -18,10 +28,14 @@ export default function Sidebar({ selectedDate, setShowSidebar }) {
           day: "numeric",
         })}
       </div>
-      <ShowForm {...bookingData} />
+      <EventForm
+        bookingData={bookingData}
+        selectedDate={selectedDate}
+        handleRefresh={handleRefresh}
+        setShowSidebar={setShowSidebar}
+      />
       {/* <div>{JSON.stringify(bookingData)}</div> */}
       <div className="">
-        <AddButton />
         <CancelButton setShowSidebar={setShowSidebar} />
       </div>
     </div>

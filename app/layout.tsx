@@ -35,7 +35,7 @@ export default function RootLayout({
         >
           <SignedIn>
             <header className="flex bg-yellow-200 items-center  h-16">
-              <div className="w-full text-center font-family-atomatic text-5xl">
+              <div className="w-full h-full text-center font-family-atomatic text-5xl ">
                 Radio Drake
                 <div className="relative">
                   <Image src="/logosm.png" alt="" height={50} width={50} />

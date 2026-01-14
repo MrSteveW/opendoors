@@ -2,12 +2,19 @@
 import EventCard from "./EventCard";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-// import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useFetch } from "./useFetch";
 
-export default function Calendar({ handleDateSelect }) {
-  const { data: bookings, loading } = useFetch("/api/bookings");
+type CalendarProps = {
+  handleDateSelect: () => void;
+  refreshState: number;
+};
+
+export default function Calendar({
+  handleDateSelect,
+  refreshState,
+}: CalendarProps) {
+  const { data: bookings } = useFetch("/api/bookings", refreshState);
 
   // Convert bookings into FullCalendar's event format
   const events = bookings?.map((booking) => ({
@@ -21,6 +28,7 @@ export default function Calendar({ handleDateSelect }) {
       topic: booking.topic,
     },
   }));
+
   return (
     <>
       <div>
