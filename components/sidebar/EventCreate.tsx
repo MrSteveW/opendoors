@@ -2,18 +2,19 @@
 import { FormOptionsType } from "@/types";
 import { handleFormSubmit } from "@/app/serveractions/handleFormSubmit";
 
-//
-export default function EventForm({
-  bookingOptions,
-  selectedDate,
-  handleRefresh,
-  setShowSidebar,
-}: {
+type EventCreateProps = {
   bookingOptions: FormOptionsType;
   selectedDate: Date;
   handleRefresh: () => void;
   setShowSidebar: (show: boolean) => void;
-}) {
+};
+//
+export default function EventCreate({
+  bookingOptions,
+  selectedDate,
+  handleRefresh,
+  setShowSidebar,
+}: EventCreateProps) {
   const { classNames, producers, times } = bookingOptions;
 
   // client function receieving server response
@@ -29,6 +30,14 @@ export default function EventForm({
   }
   return (
     <div className="w-full">
+      <div className="text-2xl ">
+        {selectedDate?.toLocaleString("en-GB", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
+      </div>
       <form action={handleClientSubmit}>
         <input
           type="hidden"

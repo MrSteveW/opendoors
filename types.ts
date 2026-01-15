@@ -17,3 +17,19 @@ export type EventType = {
     };
   }[];
 };
+
+export type SelectedEventType = {
+  allDay: boolean;
+  title: string;
+  start: Date;
+  id: number;
+  extendedProps: {
+    name: string;
+    class_id: number;
+    producer_id: number;
+    producer: string;
+    time_id: number;
+    time: string;
+    topic: string;
+  };
+};

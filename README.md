@@ -22,6 +22,7 @@
 | ----- | ----------- |
 | id    | Primary Key |
 | name  | String      |
+| order | Integer     |
 
 ### bookings table
 
@@ -40,9 +41,9 @@
 - [x] Calendar by FullCalendar
 - [x] Authentication and Authorization by Clerk
 
-## Additional dependencies
+## Additional libraries used
 
 - pg
 - Clerk
-- Lucide-React
+- Lucide icons
 - Motion

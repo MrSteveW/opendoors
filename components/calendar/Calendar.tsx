@@ -3,17 +3,17 @@ import EventCard from "./EventCard";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { useFetch } from "./useFetch";
+import { useFetch } from "../useFetch";
 
 type CalendarProps = {
-  handleDateSelect: () => void;
-  setSelectedEvent: () => void;
+  handleDateSelect: (selectInfo: any) => void;
+  handleEventSelect: (event: any) => void;
   refreshState: number;
 };
 
 export default function Calendar({
   handleDateSelect,
-  setSelectedEvent,
+  handleEventSelect,
   refreshState,
 }: CalendarProps) {
   const { data: bookings } = useFetch("/api/bookings", refreshState);
@@ -23,9 +23,13 @@ export default function Calendar({
     id: booking.id,
     title: booking.name,
     start: booking.date,
+    order: booking.order,
     extendedProps: {
       name: booking.name,
+      class_id: booking.class_id,
+      producer_id: booking.producer_id,
       producer: booking.producer,
+      time_id: booking.time_id,
       time: booking.time,
       topic: booking.topic,
     },
@@ -49,12 +53,13 @@ export default function Calendar({
           }}
           aspectRatio={1.9}
           selectable={true}
+          eventOrder="order"
           select={handleDateSelect}
           events={events}
           eventContent={(eventInfo) => (
             <EventCard
               eventInfo={eventInfo}
-              setSelectedEvent={setSelectedEvent}
+              handleEventSelect={handleEventSelect}
             />
           )}
         />

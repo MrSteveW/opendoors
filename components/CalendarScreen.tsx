@@ -1,7 +1,7 @@
 "use client";
-import Calendar from "@/components/Calendar";
-import Sidebar from "@/components/Sidebar";
-import React, { useState } from "react";
+import Calendar from "@/components/calendar/Calendar";
+import Sidebar from "@/components/sidebar/Sidebar";
+import { useState } from "react";
 
 export default function CalendarScreen() {
   // Set State
@@ -13,6 +13,11 @@ export default function CalendarScreen() {
   // Functions
   function handleDateSelect(selectInfo) {
     setSelectedDate(new Date(selectInfo.startStr));
+    setShowSidebar(true);
+  }
+
+  function handleEventSelect(event) {
+    setSelectedEvent(event);
     setShowSidebar(true);
   }
 
@@ -30,7 +35,7 @@ export default function CalendarScreen() {
         </div> */}
         <Calendar
           handleDateSelect={handleDateSelect}
-          setSelectedEvent={setSelectedEvent}
+          handleEventSelect={handleEventSelect}
           refreshState={refreshState}
         />
       </div>

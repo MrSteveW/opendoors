@@ -1,8 +1,8 @@
 "use client";
-import EventForm from "@/components/EventForm";
-import EventEdit from "@/components/EventEdit";
-import CancelButton from "@/components/CancelButton";
-import { useFetch } from "./useFetch";
+import EventCreate from "@/components/sidebar/EventCreate";
+import EventEdit from "@/components/sidebar/EventEdit";
+import CancelButton from "@/components/sidebar/CancelButton";
+import { useFetch } from "../useFetch";
 import { EventType } from "@/types";
 
 type SidebarProps = {
@@ -19,23 +19,21 @@ export default function Sidebar({
   setShowSidebar,
   handleRefresh,
 }: SidebarProps) {
-  const { data: bookingOptions, loading } = useFetch("/api/data");
+  const { data: bookingOptions, loading } = useFetch("/api/optionsdata");
   if (loading) return;
 
   return (
-    <div className="h-full bg-openlightgreen flex flex-col items-center p-2">
-      <div className="text-2xl ">
-        {selectedDate.toLocaleString("en-GB", {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
-      </div>
+    <div className="h-full bg-openlightgreen flex flex-col items-center p-2 rounded-3xl">
       {selectedEvent ? (
-        <EventEdit selectedEvent={selectedEvent} />
+        <EventEdit
+          key={selectedEvent.id}
+          selectedEvent={selectedEvent}
+          bookingOptions={bookingOptions}
+          handleRefresh={handleRefresh}
+          setShowSidebar={setShowSidebar}
+        />
       ) : (
-        <EventForm
+        <EventCreate
           bookingOptions={bookingOptions}
           selectedDate={selectedDate}
           handleRefresh={handleRefresh}

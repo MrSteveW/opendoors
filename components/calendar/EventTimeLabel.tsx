@@ -12,22 +12,25 @@ export default function EventTimeLabel({ time }: PropsType) {
     switch (time) {
       case "Daily Mile":
         return (
-          <div className="text-red-600 flex">
-            <Timer /> Daily Mile
+          <div className="text-opengreen flex font-bold items-center">
+            <Timer />
+            <div className="ml-1">Daily Mile</div>
           </div>
         );
 
       case "Live at Lunch":
         return (
-          <div className="text-green-600 flex">
-            <Sandwich /> Live at Lunch
+          <div className="text-openyellow flex font-bold items-center">
+            <Sandwich />
+            <div className="ml-1">Live at Lunch</div>
           </div>
         );
 
       case "After Lunch":
         return (
-          <div className="text-blue-600 flex">
-            <Headphones /> After Lunch
+          <div className="text-openblue flex font-bold items-center">
+            <Headphones />
+            <div className="ml-1">After Lunch</div>
           </div>
         );
 

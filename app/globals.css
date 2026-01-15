@@ -12,10 +12,10 @@
 
 body {
   font-family: var(--font-mulish);
-  background-image: url("/bglogo.webp");
+  /* background-image: url("/bglogo.webp");
   background-position: right top;
   background-size: contain;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   overflow: hidden;
 }
 
@@ -101,7 +101,7 @@ textarea {
 
 /*Current day highlighted*/
 .fc-day-today {
-  background: #fff45d !important;
+  background: #c4ed83 !important;
   border: 2px solid #8a0404 !important;
 }
 
