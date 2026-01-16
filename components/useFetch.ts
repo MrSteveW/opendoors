@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from 'react';
 
-export function useFetch(url: string, refreshState: number) {
+export function useFetch(url: string) {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -23,7 +23,7 @@ export function useFetch(url: string, refreshState: number) {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData, refreshState]);
+  }, [fetchData]);
 
   return { data, error, loading, refetch: fetchData };
 }

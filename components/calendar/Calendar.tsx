@@ -1,22 +1,20 @@
-"use client";
-import EventCard from "./EventCard";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import { useFetch } from "../useFetch";
+'use client';
+import EventCard from './EventCard';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { useFetch } from '../useFetch';
 
 type CalendarProps = {
   handleDateSelect: (selectInfo: any) => void;
   handleEventSelect: (event: any) => void;
-  refreshState: number;
 };
 
 export default function Calendar({
   handleDateSelect,
   handleEventSelect,
-  refreshState,
 }: CalendarProps) {
-  const { data: bookings } = useFetch("/api/bookings", refreshState);
+  const { data: bookings } = useFetch('/api/bookings');
 
   // Convert bookings into FullCalendar's event format
   const events = bookings?.map((booking) => ({
@@ -43,12 +41,12 @@ export default function Calendar({
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="twoWeekGrid"
           weekends={false}
-          dayHeaderFormat={{ weekday: "long" }}
+          dayHeaderFormat={{ weekday: 'long' }}
           views={{
             twoWeekGrid: {
-              type: "dayGrid",
+              type: 'dayGrid',
               duration: { weeks: 2 },
-              buttonText: "2 weeks",
+              buttonText: '2 weeks',
             },
           }}
           aspectRatio={1.9}

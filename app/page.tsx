@@ -1,5 +1,5 @@
-import CalendarScreen from "@/components/CalendarScreen";
+import App from '@/components/App';
 
 export default function Home() {
-  return <CalendarScreen />;
+  return <App />;
 }

@@ -43,7 +43,8 @@
 
 ## Additional libraries used
 
-- pg
+- pg database interface
+- Zustand state management
 - Clerk
 - Lucide icons
 - Motion
