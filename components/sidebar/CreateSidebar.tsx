@@ -1,5 +1,5 @@
 'use client';
-import { handleFormSubmit } from '@/app/serveractions/handleFormSubmit';
+import { handleFormSubmit } from '@/app/lib/handleFormSubmit';
 import { useSidebar } from '@/stores/useSidebar';
 import { SquareCheck } from 'lucide-react';
 import { PanelRightClose } from 'lucide-react';

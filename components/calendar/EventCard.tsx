@@ -1,6 +1,6 @@
-import { EventType } from "@/types";
-import EventTimeLabel from "./EventTimeLabel";
-import { SlidersHorizontal } from "lucide-react";
+import { EventType } from '@/types';
+import EventTimeLabel from './EventTimeLabel';
+import { SlidersHorizontal } from 'lucide-react';
 
 type EventCardProps = {
   eventInfo: EventType;
@@ -22,7 +22,7 @@ export default function EventCard({
   return (
     <div
       onClick={handleClick}
-      className="w-full mx-1 p-1 border-2 rounded-md text-2xl cursor-pointer hover:bg-yellow-300"
+      className="w-full mx-1 p-1 border-2 rounded-md text-2xl cursor-pointer hover:bg-orange-500"
     >
       <div className="flex justify-evenly">
         <div className="font-bold">{name}</div>

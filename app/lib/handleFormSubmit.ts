@@ -1,7 +1,7 @@
-"use server";
+'use server';
 
-import { db } from "@/utils/connect";
-import { revalidatePath } from "next/cache";
+import { db } from '@/utils/connect';
+import { revalidatePath } from 'next/cache';
 
 export async function handleFormSubmit(formData: FormData) {
   try {
@@ -18,7 +18,7 @@ export async function handleFormSubmit(formData: FormData) {
         data.topic,
       ]
     );
-    revalidatePath("/");
+    revalidatePath('/');
     return { success: true };
   } catch (error) {
     return { success: false, error: error.message };

@@ -1,5 +1,5 @@
 'use client';
-import { handleFormSubmit } from '@/app/serveractions/handleFormSubmit';
+import { handleEditSubmit as updateEventServerAction } from '@/app/lib/handleEditSubmit';
 import { useSidebar } from '@/stores/useSidebar';
 import { Trash } from 'lucide-react';
 import { SquareCheck } from 'lucide-react';
@@ -16,15 +16,14 @@ export default function EventEdit({ onEventChange }: EditSidebarProps) {
   const setSelectedEvent = useSidebar((state) => state.setSelectedEvent);
   const setMode = useSidebar((state) => state.setMode);
 
-  // client function receieving server response
-  async function handleClientSubmit(formData: FormData) {
-    const result = await handleFormSubmit(formData);
+  async function handleEditSubmit(formData: FormData) {
+    const result = await updateEventServerAction(formData);
 
     if (result.success) {
       setMode(null);
       onEventChange();
     } else {
-      console.error('Form submmission failed', result.error);
+      console.error('Update failed', result.error);
     }
   }
 
@@ -61,8 +60,13 @@ export default function EventEdit({ onEventChange }: EditSidebarProps) {
             day: 'numeric',
           })}
         </div>
-        <form action={handleClientSubmit}>
-          {/* <div>{selectedEvent.start}</div> */}
+        <form action={handleEditSubmit}>
+          <input
+            name="id"
+            id="id"
+            type="hidden"
+            defaultValue={selectedEvent?.id}
+          />
 
           <div className="input-container">
             <label className="input-label">Name:</label>
@@ -134,7 +138,6 @@ export default function EventEdit({ onEventChange }: EditSidebarProps) {
           </div>
           <div className="p-3 flex justify-evenly items-center">
             <button type="submit">
-              {' '}
               <SquareCheck color="green" size={50} strokeWidth={2} />
             </button>
             <button

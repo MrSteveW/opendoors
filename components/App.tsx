@@ -51,8 +51,8 @@ export default function App() {
     <div className="h-[calc(100vh-4rem)] flex flex-row">
       <div className="w-7/10">
         {/* <div>Mode: {JSON.stringify(mode)}</div>
-        <div>SelectedDate: {JSON.stringify(selectedDate)}</div>
-        <div>SelectedEvent:{JSON.stringify(selectedEvent)}</div> */}
+        <div>SelectedDate: {JSON.stringify(selectedDate)}</div> */}
+        <div>SelectedEvent:{JSON.stringify(selectedEvent)}</div>
 
         <Calendar
           handleDateSelect={handleDateSelect}
