@@ -4,7 +4,7 @@ import CreateSidebar from '@/components/sidebar/CreateSidebar';
 import EditSidebar from '@/components/sidebar/EditSidebar';
 import { useSidebar } from '@/stores/useSidebar';
 import { useEffect } from 'react';
-// Zustand OUTSIDE OF MAIN FUNCTION
+import { useFetch } from './useFetch';
 
 export default function App() {
   const mode = useSidebar((state) => state.mode);
@@ -15,6 +15,8 @@ export default function App() {
   const setSelectedEvent = useSidebar((state) => state.setSelectedEvent);
   const bookingOptions = useSidebar((state) => state.bookingOptions);
   const setBookingOptions = useSidebar((state) => state.setBookingOptions);
+
+  const { data: eventsData, refetch } = useFetch('/api/events');
 
   // Fetch bookingOptions on mount
   useEffect(() => {
@@ -48,19 +50,21 @@ export default function App() {
   return (
     <div className="h-[calc(100vh-4rem)] flex flex-row">
       <div className="w-7/10">
-        <div>Mode: {JSON.stringify(mode)}</div>
+        {/* <div>Mode: {JSON.stringify(mode)}</div>
         <div>SelectedDate: {JSON.stringify(selectedDate)}</div>
-        <div>SelectedEvent:{JSON.stringify(selectedEvent)}</div>
-        <div>BookingOptions: {JSON.stringify(bookingOptions)}</div>
+        <div>SelectedEvent:{JSON.stringify(selectedEvent)}</div> */}
 
         <Calendar
           handleDateSelect={handleDateSelect}
           handleEventSelect={handleEventSelect}
+          eventsData={eventsData}
         />
       </div>
       <div className="w-3/10">
-        {mode === 'Create' && <CreateSidebar />}
-        {mode === 'Edit' && <EditSidebar key={selectedEvent.id} />}
+        {mode === 'Create' && <CreateSidebar onEventChange={refetch} />}
+        {mode === 'Edit' && (
+          <EditSidebar key={selectedEvent.id} onEventChange={refetch} />
+        )}
       </div>
     </div>
   );

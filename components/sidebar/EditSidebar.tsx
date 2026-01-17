@@ -2,9 +2,14 @@
 import { handleFormSubmit } from '@/app/serveractions/handleFormSubmit';
 import { useSidebar } from '@/stores/useSidebar';
 import { Trash } from 'lucide-react';
-import SquareCheck from 'lucide-react';
+import { SquareCheck } from 'lucide-react';
+import { PanelRightClose } from 'lucide-react';
 
-export default function EventEdit() {
+interface EditSidebarProps {
+  onEventChange: () => void;
+}
+
+export default function EventEdit({ onEventChange }: EditSidebarProps) {
   const bookingOptions = useSidebar((state) => state.bookingOptions);
   const { classNames, producers, times } = bookingOptions;
   const selectedEvent = useSidebar((state) => state.selectedEvent);
@@ -17,10 +22,34 @@ export default function EventEdit() {
 
     if (result.success) {
       setMode(null);
+      onEventChange();
     } else {
       console.error('Form submmission failed', result.error);
     }
   }
+
+  async function handleDelete() {
+    try {
+      const response = await fetch(`/api/events`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: selectedEvent.id }),
+      });
+
+      if (response.ok) {
+        setMode(null);
+        setSelectedEvent(null);
+        onEventChange();
+      } else {
+        console.error('Failed to delete event');
+      }
+    } catch (error) {
+      console.error('Error deleting event:', error);
+    }
+  }
+
   return (
     <div className="h-full bg-openlightgreen flex flex-col items-center p-2 rounded-3xl">
       <div className="w-full">
@@ -42,7 +71,7 @@ export default function EventEdit() {
               id="name"
               type="text"
               className="input"
-              defaultValue={selectedEvent.title}
+              defaultValue={selectedEvent?.title}
             />
           </div>
 
@@ -51,7 +80,7 @@ export default function EventEdit() {
             <select
               name="class_id"
               id="class_id"
-              defaultValue={selectedEvent.extendedProps.class_id}
+              defaultValue={selectedEvent?.extendedProps.class_id}
             >
               <option value="">Select class</option>
               {classNames?.map((className) => (
@@ -103,18 +132,26 @@ export default function EventEdit() {
               defaultValue={selectedEvent.extendedProps.topic}
             />
           </div>
-          <div className="bg-amber-200">
-            <button type="submit">Add</button>
+          <div className="p-3 flex justify-evenly items-center">
+            <button type="submit">
+              {' '}
+              <SquareCheck color="green" size={50} strokeWidth={2} />
+            </button>
             <button
               onClick={() => {
                 setMode(null);
                 setSelectedEvent(null);
               }}
             >
-              Cancel
+              <PanelRightClose color="gray" size={50} strokeWidth={2} />
             </button>
-            <SquareCheck />
-            <Trash color="red" size={30} strokeWidth={2.5} />
+
+            <Trash
+              onClick={handleDelete}
+              color="red"
+              size={50}
+              strokeWidth={2}
+            />
           </div>
         </form>
       </div>

@@ -1,4 +1,6 @@
-import { db } from "@/utils/connect";
+import { db } from '@/utils/connect';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const bookings = await db.query(`
@@ -8,4 +10,14 @@ export async function GET() {
     JOIN producers ON bookings.producer_id = producers.id
     JOIN times ON bookings.time_id = times.id`);
   return Response.json(bookings.rows);
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { id } = await request.json();
+    await db.query('DELETE FROM bookings WHERE id = $1', [id]);
+    return Response.json({ success: true });
+  } catch (error) {
+    return Response.json({ error: 'Error deleting event' }, { status: 500 });
+  }
 }

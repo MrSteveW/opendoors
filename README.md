@@ -35,6 +35,13 @@
 | time_id     | FK references times     |
 | topic       | Text                    |
 
+### Zustand state
+
+- [x] mode ('Create', 'Edit')
+- [x] selectedDate
+- [x] selectedEvent
+- [x] bookingOptions
+
 ## Features
 
 - [x] Next.JS with PostgreSQL database
