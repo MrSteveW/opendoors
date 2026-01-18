@@ -1,25 +1,31 @@
-import type { Metadata } from "next";
-import { ClerkProvider, SignedIn, UserButton } from "@clerk/nextjs";
-import { Mulish } from "next/font/google";
-import localFont from "next/font/local";
-import "./globals.css";
-import AdminNav from "@/components/admin/AdminNav";
-import Image from "next/image";
+import type { Metadata } from 'next';
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  UserButton,
+  SignInButton,
+} from '@clerk/nextjs';
+import { Mulish } from 'next/font/google';
+import localFont from 'next/font/local';
+import './globals.css';
+import AdminNav from '@/components/admin/AdminNav';
+import Image from 'next/image';
 // import logosm from "../../public/logosm.png";
 
 const mulish = Mulish({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
 });
 
 const atomatic = localFont({
-  src: "./fonts/linotypeatomatic.ttf",
-  variable: "--font-atomatic",
+  src: './fonts/linotypeatomatic.ttf',
+  variable: '--font-atomatic',
 });
 
 export const metadata: Metadata = {
-  title: "OpenDoors",
-  description: "OpenDoors booking v4",
+  title: 'OpenDoors',
+  description: 'OpenDoors booking v4',
 };
 
 export default function RootLayout({

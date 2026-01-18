@@ -5,6 +5,7 @@ import EditSidebar from '@/components/sidebar/EditSidebar';
 import { useSidebar } from '@/stores/useSidebar';
 import { useEffect } from 'react';
 import { useFetch } from './useFetch';
+import { useUser } from '@clerk/nextjs';
 
 export default function App() {
   const mode = useSidebar((state) => state.mode);
@@ -15,6 +16,7 @@ export default function App() {
   const setSelectedEvent = useSidebar((state) => state.setSelectedEvent);
   const bookingOptions = useSidebar((state) => state.bookingOptions);
   const setBookingOptions = useSidebar((state) => state.setBookingOptions);
+  const { isSignedIn, user, isLoaded } = useUser();
 
   const { data: eventsData, refetch } = useFetch('/api/events');
 
@@ -52,7 +54,7 @@ export default function App() {
       <div className="w-7/10">
         {/* <div>Mode: {JSON.stringify(mode)}</div>
         <div>SelectedDate: {JSON.stringify(selectedDate)}</div> */}
-        <div>SelectedEvent:{JSON.stringify(selectedEvent)}</div>
+        {/* <div>SelectedEvent:{JSON.stringify(selectedEvent)}</div> */}
 
         <Calendar
           handleDateSelect={handleDateSelect}
