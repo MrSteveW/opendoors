@@ -2,6 +2,7 @@
 import Calendar from '@/components/calendar/Calendar';
 import CreateSidebar from '@/components/sidebar/CreateSidebar';
 import EditSidebar from '@/components/sidebar/EditSidebar';
+import ViewSidebar from './sidebar/ViewSidebar';
 import { useSidebar } from '@/stores/useSidebar';
 import { useEffect } from 'react';
 import { useFetch } from './useFetch';
@@ -16,7 +17,8 @@ export default function App() {
   const setSelectedEvent = useSidebar((state) => state.setSelectedEvent);
   const bookingOptions = useSidebar((state) => state.bookingOptions);
   const setBookingOptions = useSidebar((state) => state.setBookingOptions);
-  const { isSignedIn, user, isLoaded } = useUser();
+  const { user } = useUser();
+  const role = user?.publicMetadata?.role;
 
   const { data: eventsData, refetch } = useFetch('/api/events');
 
@@ -38,24 +40,26 @@ export default function App() {
 
   //
   function handleDateSelect(selectInfo) {
-    setMode('Create');
-    setSelectedDate(new Date(selectInfo.startStr));
-    setSelectedEvent(null);
+    if (role === 'admin' || role === 'editor') {
+      setMode('Create');
+      setSelectedDate(new Date(selectInfo.startStr));
+      setSelectedEvent(null);
+    }
   }
 
   function handleEventSelect(event) {
-    setMode('Edit');
     setSelectedEvent(event);
     setSelectedDate(null);
+    if (role === 'admin' || role === 'editor') {
+      setMode('Edit');
+    } else if (role === 'viewer') {
+      setMode('View');
+    }
   }
 
   return (
     <div className="h-[calc(100vh-4rem)] flex flex-row">
       <div className="w-7/10">
-        {/* <div>Mode: {JSON.stringify(mode)}</div>
-        <div>SelectedDate: {JSON.stringify(selectedDate)}</div> */}
-        {/* <div>SelectedEvent:{JSON.stringify(selectedEvent)}</div> */}
-
         <Calendar
           handleDateSelect={handleDateSelect}
           handleEventSelect={handleEventSelect}
@@ -67,6 +71,7 @@ export default function App() {
         {mode === 'Edit' && (
           <EditSidebar key={selectedEvent.id} onEventChange={refetch} />
         )}
+        {mode === 'View' && <ViewSidebar key={selectedEvent.id} />}
       </div>
     </div>
   );

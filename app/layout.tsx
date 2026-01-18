@@ -1,16 +1,12 @@
 import type { Metadata } from 'next';
-import {
-  ClerkProvider,
-  SignedIn,
-  SignedOut,
-  UserButton,
-  SignInButton,
-} from '@clerk/nextjs';
+import { ClerkProvider, SignedIn, UserButton } from '@clerk/nextjs';
 import { Mulish } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
 import AdminNav from '@/components/admin/AdminNav';
 import Image from 'next/image';
+import { currentUser } from '@clerk/nextjs/server';
+
 // import logosm from "../../public/logosm.png";
 
 const mulish = Mulish({
@@ -28,11 +24,14 @@ export const metadata: Metadata = {
   description: 'OpenDoors booking v4',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await currentUser();
+  const role = user?.publicMetadata?.role;
+
   return (
     <ClerkProvider>
       <html lang="en">
@@ -40,15 +39,18 @@ export default function RootLayout({
           className={`${mulish.variable}  ${atomatic.variable}  antialiased`}
         >
           <SignedIn>
-            <header className="flex items-center  h-16">
-              <div className="w-full h-full text-center font-family-atomatic text-5xl items-center">
-                Radio Drake
-                <div className="fixed top-0 right-150">
+            <header className="w-full flex h-16 text-center items-center">
+              <div className="flex flex-row w-70 fixed top-5 left-0 items-center">
+                {role === 'admin' && <AdminNav />}
+              </div>
+              <div className="flex w-full h-full items-center justify-center">
+                <div className="font-family-atomatic text-5xl mx-2">
+                  Radio Drake
+                </div>
+                <div className="mx-2">
                   <Image src="/logosm.png" alt="" height={60} width={60} />
                 </div>
-              </div>
-              <div className="flex flex-row w-70 fixed top-5 left-0 items-center">
-                <AdminNav />
+                <div className="mx-2 text-2xl italic">({role})</div>
               </div>
 
               <div className="scale-150 fixed top-5 right-7">
