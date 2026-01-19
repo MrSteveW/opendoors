@@ -30,7 +30,7 @@ export default function App({ eventOptions }: AppProps) {
       setSelectedDate(new Date(selectInfo.startStr));
       setSelectedEvent(null);
       const selectedDateStr = selectInfo.startStr.split('T')[0];
-      const unavailable = eventsData
+      const unavailable = eventsData?
         .filter((event) => event.date.split('T')[0] === selectedDateStr)
         .map((event) => ({ time_id: event.time_id }));
       setUnavailableTimes(unavailable);
@@ -50,7 +50,6 @@ export default function App({ eventOptions }: AppProps) {
   return (
     <div className="h-[calc(100vh-4rem)] flex flex-row">
       <div className="w-7/10">
-        <div>Options: {JSON.stringify(eventOptions)}</div>
         <Calendar
           handleDateSelect={handleDateSelect}
           handleEventSelect={handleEventSelect}

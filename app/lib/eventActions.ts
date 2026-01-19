@@ -2,7 +2,29 @@
 import { db } from '@/utils/connect';
 import { revalidatePath } from 'next/cache';
 
-export async function handleEditSubmit(formData: FormData) {
+export async function handleEventCreate(formData: FormData) {
+  try {
+    const data = Object.fromEntries(formData);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const sendToDb = await db.query(
+      `INSERT INTO events (date, name, class_id, producer_id, time_id, topic) VALUES ($1, $2, $3, $4, $5, $6)`,
+      [
+        data.date,
+        data.name,
+        data.class_id,
+        data.producer_id,
+        data.time_id,
+        data.topic,
+      ],
+    );
+    revalidatePath('/');
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+
+export async function handleEventEdit(formData: FormData) {
   try {
     const id = formData.get('id');
     const name = formData.get('name');
@@ -28,29 +50,7 @@ export async function handleEditSubmit(formData: FormData) {
   }
 }
 
-export async function handleFormSubmit(formData: FormData) {
-  try {
-    const data = Object.fromEntries(formData);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const sendToDb = await db.query(
-      `INSERT INTO events (date, name, class_id, producer_id, time_id, topic) VALUES ($1, $2, $3, $4, $5, $6)`,
-      [
-        data.date,
-        data.name,
-        data.class_id,
-        data.producer_id,
-        data.time_id,
-        data.topic,
-      ],
-    );
-    revalidatePath('/');
-    return { success: true };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
-}
-
-export async function handleDelete(id: number) {
+export async function handleEventDelete(id: number) {
   try {
     await db.query('DELETE FROM events WHERE id = $1', [id]);
     return { success: true };

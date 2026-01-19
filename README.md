@@ -37,7 +37,7 @@
 
 ### Zustand state
 
-- [x] mode ('Create', 'Edit')
+- [x] mode ('Create', 'Edit', 'View')
 - [x] selectedDate
 - [x] selectedEvent
 - [x] unavailableTimes

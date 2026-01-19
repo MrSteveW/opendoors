@@ -1,5 +1,5 @@
 import App from '@/components/App';
-import { getOptionsData } from '@/app/lib/data';
+import { getOptionsData } from '@/app/lib/getOptionsData';
 
 export default async function Page() {
   const optionsData = await getOptionsData();

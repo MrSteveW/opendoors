@@ -1,5 +1,5 @@
 'use client';
-import { handleFormSubmit } from '@/app/lib/actions';
+import { handleEventCreate } from '@/app/lib/eventActions';
 import { useSidebar } from '@/stores/useSidebar';
 import { SquareCheck } from 'lucide-react';
 import { PanelRightClose } from 'lucide-react';
@@ -24,8 +24,8 @@ export default function CreateSidebar({
   const { classNames, producers, times } = eventOptions;
 
   // client function receieving server response
-  async function handleClientSubmit(formData: FormData) {
-    const result = await handleFormSubmit(formData);
+  async function handleSubmit(formData: FormData) {
+    const result = await handleEventCreate(formData);
 
     if (result.success) {
       setMode(null);
@@ -47,7 +47,7 @@ export default function CreateSidebar({
             day: 'numeric',
           })}
         </div>
-        <form action={handleClientSubmit}>
+        <form action={handleSubmit}>
           <input
             type="hidden"
             name="date"

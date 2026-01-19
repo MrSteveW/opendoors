@@ -1,6 +1,6 @@
 'use client';
-import { handleEditSubmit as updateEventServerAction } from '@/app/lib/actions';
-import { handleDelete as deleteServerAction } from '@/app/lib/actions';
+import { handleEventEdit } from '@/app/lib/eventActions';
+import { handleEventDelete } from '@/app/lib/eventActions';
 import { useSidebar } from '@/stores/useSidebar';
 import { Trash } from 'lucide-react';
 import { SquareCheck } from 'lucide-react';
@@ -11,7 +11,7 @@ interface EditSidebarProps {
   eventOptions: any;
 }
 
-export default function EventEdit({
+export default function EditSidebar({
   onEventChange,
   eventOptions,
 }: EditSidebarProps) {
@@ -21,7 +21,7 @@ export default function EventEdit({
   const setMode = useSidebar((state) => state.setMode);
 
   async function handleEditSubmit(formData: FormData) {
-    const result = await updateEventServerAction(formData);
+    const result = await handleEventEdit(formData);
 
     if (result.success) {
       setMode(null);
@@ -32,7 +32,7 @@ export default function EventEdit({
   }
 
   async function handleDelete(id: number) {
-    const result = await deleteServerAction(id);
+    const result = await handleEventDelete(id);
     if (result.success) {
       setMode(null);
       setSelectedEvent(null);
