@@ -6,9 +6,12 @@ import ViewSidebar from './sidebar/ViewSidebar';
 import { useSidebar } from '@/stores/useSidebar';
 import { useFetch } from './useFetch';
 import { useUser } from '@clerk/nextjs';
+import { EventsData, EventOptionsType } from '@/types';
+import { DateSelectArg } from '@fullcalendar/core/index.js';
+import { EventInput } from '@fullcalendar/core';
 
 type AppProps = {
-  eventOptions: any;
+  eventOptions: EventOptionsType;
 };
 
 export default function App({ eventOptions }: AppProps) {
@@ -22,22 +25,22 @@ export default function App({ eventOptions }: AppProps) {
   const { user } = useUser();
   const role = user?.publicMetadata?.role;
 
-  const { data: eventsData, refetch } = useFetch('/api/events');
+  const { data: eventsData, refetch } = useFetch<EventsData[]>('/api/events');
 
-  function handleDateSelect(selectInfo) {
+  function handleDateSelect(selectInfo: DateSelectArg) {
     if (role === 'admin' || role === 'editor') {
       setMode('Create');
       setSelectedDate(new Date(selectInfo.startStr));
       setSelectedEvent(null);
       const selectedDateStr = selectInfo.startStr.split('T')[0];
-      const unavailable = eventsData?
+      const unavailable = (eventsData ?? [])
         .filter((event) => event.date.split('T')[0] === selectedDateStr)
         .map((event) => ({ time_id: event.time_id }));
       setUnavailableTimes(unavailable);
     }
   }
 
-  function handleEventSelect(event) {
+  function handleEventSelect(event: EventInput) {
     setSelectedEvent(event);
     setSelectedDate(null);
     if (role === 'admin' || role === 'editor') {
@@ -49,6 +52,7 @@ export default function App({ eventOptions }: AppProps) {
 
   return (
     <div className="h-[calc(100vh-4rem)] flex flex-row">
+      <div>{JSON.stringify(eventsData)}</div>
       <div className="w-7/10">
         <Calendar
           handleDateSelect={handleDateSelect}

@@ -1,35 +1,36 @@
-export type eventOptionsType = {
-  classNames: { id: number; name: string }[];
-  producers: { id: number; name: string }[];
-  times: { id: number; name: string }[];
+export type ClassesAdminProps = {
+  classData: { id: number; name: string; deleted_at: Date }[];
 };
 
-export type EventType = {
-  eventInfo: {
-    id: number;
-    title: string;
-    start: Date;
-    extendedProps: {
-      name: string;
-      producer: string;
-      time: string;
-      topic: string;
-    };
-  }[];
+export type ProducersAdminProps = {
+  producersData: { id: number; name: string; deleted_at: Date }[];
 };
 
-export type SelectedEventType = {
-  allDay: boolean;
-  title: string;
-  start: Date;
+export type EventsData = {
   id: number;
-  extendedProps: {
-    name: string;
-    class_id: number;
-    producer_id: number;
-    producer: string;
-    time_id: number;
-    time: string;
-    topic: string;
-  };
+  date: string;
+  name: string;
+  class_id: number;
+  producer_id: number;
+  producer: string;
+  time_id: number;
+  order: number;
+  time: string;
+  topic: string;
+};
+
+export type ItemData = {
+  id: number;
+  name: string;
+};
+
+type OptionType = {
+  id: number;
+  name: string;
+};
+
+export type EventOptionsType = {
+  classNames: OptionType[];
+  producers: OptionType[];
+  times: OptionType[];
 };

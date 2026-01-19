@@ -3,7 +3,7 @@ import { db } from '@/utils/connect';
 
 export async function getClassesData() {
   const classData = await db.query(
-    `SELECT * FROM classes WHERE deleted_at IS NULL`,
+    `SELECT id, name FROM classes WHERE deleted_at IS NULL`,
   );
   return classData.rows;
 }

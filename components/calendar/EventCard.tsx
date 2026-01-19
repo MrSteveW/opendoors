@@ -1,10 +1,10 @@
-import { EventType } from '@/types';
 import EventTimeLabel from './EventTimeLabel';
 import { SlidersHorizontal } from 'lucide-react';
+import { EventApi, EventContentArg } from '@fullcalendar/core';
 
 type EventCardProps = {
-  eventInfo: EventType;
-  handleEventSelect: (event: any) => void;
+  eventInfo: EventContentArg;
+  handleEventSelect: (event: EventApi) => void;
 };
 
 export default function EventCard({

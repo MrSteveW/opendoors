@@ -5,8 +5,9 @@ import ItemCard from './ItemCard';
 import InputForm from './InputForm';
 import { handleClassCreate } from '@/app/lib/classActions';
 import { handleClassDelete } from '@/app/lib/classActions';
+import { ClassesAdminProps } from '@/types';
 
-export default function ClassesAdmin({ classData }) {
+export default function ClassesAdmin({ classData }: ClassesAdminProps) {
   const router = useRouter();
 
   async function handleDelete(id: number) {

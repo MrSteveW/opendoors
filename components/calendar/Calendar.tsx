@@ -3,11 +3,15 @@ import EventCard from './EventCard';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { EventsData } from '@/types';
+import { EventContentArg } from '@fullcalendar/core';
+import { DateSelectArg, EventApi } from '@fullcalendar/core';
+import { EventInput } from '@fullcalendar/core';
 
 type CalendarProps = {
-  handleDateSelect: (selectInfo: any) => void;
-  handleEventSelect: (event: any) => void;
-  eventsData: [];
+  handleDateSelect: (selectInfo: DateSelectArg) => void;
+  handleEventSelect: (event: EventApi) => void;
+  eventsData?: EventsData[] | null;
 };
 
 export default function Calendar({
@@ -16,8 +20,8 @@ export default function Calendar({
   eventsData,
 }: CalendarProps) {
   // Convert events into FullCalendar's event format
-  const events = eventsData?.map((event) => ({
-    id: event.id,
+  const events: EventInput[] = (eventsData ?? []).map((event) => ({
+    id: String(event.id),
     title: event.name,
     start: event.date,
     order: event.order,
@@ -52,11 +56,8 @@ export default function Calendar({
           eventOrder="order"
           select={handleDateSelect}
           events={events}
-          eventContent={(eventInfo) => (
-            <EventCard
-              eventInfo={eventInfo}
-              handleEventSelect={handleEventSelect}
-            />
+          eventContent={(arg: EventContentArg) => (
+            <EventCard eventInfo={arg} handleEventSelect={handleEventSelect} />
           )}
         />
       </div>

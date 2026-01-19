@@ -5,8 +5,9 @@ import ItemCard from './ItemCard';
 import InputForm from './InputForm';
 import { handleProducersCreate } from '@/app/lib/producerActions';
 import { handleProducersDelete } from '@/app/lib/producerActions';
+import { ProducersAdminProps } from '@/types';
 
-export default function ProducersAdmin({ producersData }) {
+export default function ProducersAdmin({ producersData }: ProducersAdminProps) {
   const router = useRouter();
 
   async function handleSubmit(formData: FormData) {
