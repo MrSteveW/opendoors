@@ -12,15 +12,14 @@ export default function CreateSidebar({ onEventChange }: CreateSidebarProps) {
   const selectedDate = useSidebar((state) => state.selectedDate);
   const setMode = useSidebar((state) => state.setMode);
   const setSelectedDate = useSidebar((state) => state.setSelectedDate);
-  const bookingOptions = useSidebar((state) => state.bookingOptions);
-  const loading = useSidebar((state) => state.bookingOptionsLoading);
+  const eventOptions = useSidebar((state) => state.eventOptions);
+  const loading = useSidebar((state) => state.eventOptionsLoading);
+  const unavailableTimes = useSidebar((state) => state.unavailableTimes);
+  const setUnavailableTimes = useSidebar((state) => state.setUnavailableTimes);
 
-  if (loading || !bookingOptions) return <div>Loading...</div>;
+  if (loading || !eventOptions) return <div>Loading...</div>;
 
-  // const { data: bookingOptions, loading } = bookingOptions;
-  // //   if (loading) return;
-  // if (!bookingOptions) return <div>Loading...</div>;
-  const { classNames, producers, times } = bookingOptions;
+  const { classNames, producers, times } = eventOptions;
 
   // client function receieving server response
   async function handleClientSubmit(formData: FormData) {
@@ -28,6 +27,7 @@ export default function CreateSidebar({ onEventChange }: CreateSidebarProps) {
 
     if (result.success) {
       setMode(null);
+      setUnavailableTimes(null);
       onEventChange();
     } else {
       console.error('Form submmission failed', result.error);
@@ -93,27 +93,37 @@ export default function CreateSidebar({ onEventChange }: CreateSidebarProps) {
             <label className="input-label">Time:</label>
             <select name="time_id" id="time_id" required>
               <option value="">Select time</option>
-              {times?.map((time) => (
-                <option key={time.id} value={time.id}>
-                  {time.name}
-                </option>
-              ))}
+              {times?.map((time) => {
+                const isUnavailable = unavailableTimes.some(
+                  (un) => un.time_id === time.id,
+                );
+
+                return (
+                  <option
+                    key={time.id}
+                    value={time.id}
+                    disabled={isUnavailable}
+                  >
+                    {time.name}
+                  </option>
+                );
+              })}
             </select>
           </div>
 
           <div className="input-container">
             <label className="input-label">Topic:</label>
-            <textarea name="topic" id="topic" className="input" required />
+            <textarea name="topic" id="topic" className="input" />
           </div>
           <div className="p-3 flex justify-evenly items-center">
             <button type="submit">
-              {' '}
               <SquareCheck color="green" size={50} strokeWidth={2} />
             </button>
             <button
               onClick={() => {
                 setMode(null);
                 setSelectedDate(null);
+                setUnavailableTimes(null);
               }}
             >
               <PanelRightClose color="gray" size={50} strokeWidth={2} />

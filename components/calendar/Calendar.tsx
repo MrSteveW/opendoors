@@ -15,7 +15,7 @@ export default function Calendar({
   handleEventSelect,
   eventsData,
 }: CalendarProps) {
-  // Convert bookings into FullCalendar's event format
+  // Convert events into FullCalendar's event format
   const events = eventsData?.map((event) => ({
     id: event.id,
     title: event.name,

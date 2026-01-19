@@ -10,8 +10,8 @@ interface EditSidebarProps {
 }
 
 export default function EventEdit({ onEventChange }: EditSidebarProps) {
-  const bookingOptions = useSidebar((state) => state.bookingOptions);
-  const { classNames, producers, times } = bookingOptions;
+  const eventOptions = useSidebar((state) => state.eventOptions);
+  const { classNames, producers, times } = eventOptions;
   const selectedEvent = useSidebar((state) => state.selectedEvent);
   const setSelectedEvent = useSidebar((state) => state.setSelectedEvent);
   const setMode = useSidebar((state) => state.setMode);

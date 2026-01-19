@@ -8,7 +8,7 @@ export async function handleFormSubmit(formData: FormData) {
     const data = Object.fromEntries(formData);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const sendToDb = await db.query(
-      `INSERT INTO bookings (date, name, class_id, producer_id, time_id, topic) VALUES ($1, $2, $3, $4, $5, $6)`,
+      `INSERT INTO events (date, name, class_id, producer_id, time_id, topic) VALUES ($1, $2, $3, $4, $5, $6)`,
       [
         data.date,
         data.name,
@@ -16,7 +16,7 @@ export async function handleFormSubmit(formData: FormData) {
         data.producer_id,
         data.time_id,
         data.topic,
-      ]
+      ],
     );
     revalidatePath('/');
     return { success: true };

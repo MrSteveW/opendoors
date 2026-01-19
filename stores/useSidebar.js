@@ -7,8 +7,9 @@ export const useSidebar = create(
       mode: null,
       selectedDate: null,
       selectedEvent: null,
-      bookingOptions: null,
-      bookingOptionsLoading: true,
+      eventOptions: null,
+      eventOptionsLoading: true,
+      unavailableTimes: null,
     },
     (set) => {
       return {
@@ -37,14 +38,17 @@ export const useSidebar = create(
                 : nextSelectedEvent,
           }));
         },
-        // bookingOptions fetched once on mount
-        setBookingOptions: (options) => {
-          set({ bookingOptions: options, bookingOptionsLoading: false });
+        // eventOptions fetched once on mount
+        seteventOptions: (options) => {
+          set({ eventOptions: options, eventOptionsLoading: false });
         },
-        setBookingOptionsLoading: (loading) => {
-          set({ bookingOptionsLoading: loading });
+        seteventOptionsLoading: (loading) => {
+          set({ eventOptionsLoading: loading });
+        },
+        setUnavailableTimes: (nextUnavailableTimes) => {
+          set({ unavailableTimes: nextUnavailableTimes });
         },
       };
-    }
-  )
+    },
+  ),
 );

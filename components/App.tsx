@@ -15,28 +15,31 @@ export default function App() {
   const setSelectedDate = useSidebar((state) => state.setSelectedDate);
   const selectedEvent = useSidebar((state) => state.selectedEvent);
   const setSelectedEvent = useSidebar((state) => state.setSelectedEvent);
-  const bookingOptions = useSidebar((state) => state.bookingOptions);
-  const setBookingOptions = useSidebar((state) => state.setBookingOptions);
+  const eventOptions = useSidebar((state) => state.eventOptions);
+  const seteventOptions = useSidebar((state) => state.seteventOptions);
+  const unavailableTimes = useSidebar((state) => state.unavailableTimes);
+  const setUnavailableTimes = useSidebar((state) => state.setUnavailableTimes);
+
   const { user } = useUser();
   const role = user?.publicMetadata?.role;
 
   const { data: eventsData, refetch } = useFetch('/api/events');
 
-  // Fetch bookingOptions on mount
+  // Fetch eventOptions on mount
   useEffect(() => {
-    async function fetchBookingOptions() {
+    async function fetcheventOptions() {
       try {
         const response = await fetch('/api/optionsdata');
         const data = await response.json();
-        setBookingOptions(data);
+        seteventOptions(data);
       } catch (error) {
         console.error('Failed to fetch booking options:', error);
-        setBookingOptions(null);
+        seteventOptions(null);
       }
     }
 
-    fetchBookingOptions();
-  }, [setBookingOptions]);
+    fetcheventOptions();
+  }, [seteventOptions]);
 
   //
   function handleDateSelect(selectInfo) {
@@ -44,6 +47,11 @@ export default function App() {
       setMode('Create');
       setSelectedDate(new Date(selectInfo.startStr));
       setSelectedEvent(null);
+      const selectedDateStr = selectInfo.startStr.split('T')[0];
+      const unavailable = eventsData
+        .filter((event) => event.date.split('T')[0] === selectedDateStr)
+        .map((event) => ({ time_id: event.time_id }));
+      setUnavailableTimes(unavailable);
     }
   }
 

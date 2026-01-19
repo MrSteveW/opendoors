@@ -1,4 +1,4 @@
-export type BookingOptionsType = {
+export type eventOptionsType = {
   classNames: { id: number; name: string }[];
   producers: { id: number; name: string }[];
   times: { id: number; name: string }[];

@@ -12,14 +12,14 @@ export async function handleEditSubmit(formData: FormData) {
     const topic = formData.get('topic');
 
     await db.query(
-      `UPDATE bookings
+      `UPDATE events
        SET name = $1,
            class_id = $2,
            producer_id = $3,
            time_id = $4,
            topic = $5
        WHERE id = $6`,
-      [name, class_id, producer_id, time_id, topic, id]
+      [name, class_id, producer_id, time_id, topic, id],
     );
     revalidatePath('/');
     return { success: true };

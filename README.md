@@ -24,7 +24,7 @@
 | name  | String      |
 | order | Integer     |
 
-### bookings table
+### events table
 
 | Field       | Type                    |
 | ----------- | ----------------------- |
@@ -40,7 +40,8 @@
 - [x] mode ('Create', 'Edit')
 - [x] selectedDate
 - [x] selectedEvent
-- [x] bookingOptions
+- [x] eventOptions
+- [x] unavailableTimes
 
 ## Features
 
