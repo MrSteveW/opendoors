@@ -55,3 +55,8 @@
 - Clerk
 - Lucide icons
 - Motion
+
+## Attributions
+
+[Headphones by juicy_fish on Freepik](https://www.freepik.com/free-vector/ear-headphones-music-symbol_37409070.htm#fromView=search&page=1&position=16&uuid=74735ec4-08ef-400e-aa22-f83fe92436f8&query=headphone+icon)  
+[Linotype Atomatic Font](https://legionfonts.com/fonts/linotype-atomatic)

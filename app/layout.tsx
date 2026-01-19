@@ -53,7 +53,7 @@ export default async function RootLayout({
                 <div className="mx-2 text-2xl italic">({role})</div>
               </div>
 
-              <div className="scale-150 fixed top-5 right-7">
+              <div className="scale-150 fixed top-5 right-15">
                 <UserButton />
               </div>
             </header>

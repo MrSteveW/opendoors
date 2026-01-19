@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check } from 'lucide-react';
 
 interface Props {
   handleSubmit: (formData: FormData) => void | Promise<void>;
@@ -6,7 +6,7 @@ interface Props {
 
 export default function InputForm({ handleSubmit }: Props) {
   return (
-    <div className="w-full">
+    <div className="w-full px-2 pb-5 bg-openlightgreen rounded-2xl">
       <div className="text-2xl py-4">Add new</div>
       <form action={handleSubmit}>
         <div className="flex ">
