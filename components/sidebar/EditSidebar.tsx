@@ -1,5 +1,6 @@
 'use client';
-import { handleEditSubmit as updateEventServerAction } from '@/app/lib/handleEditSubmit';
+import { handleEditSubmit as updateEventServerAction } from '@/app/lib/actions';
+import { handleDelete as deleteServerAction } from '@/app/lib/actions';
 import { useSidebar } from '@/stores/useSidebar';
 import { Trash } from 'lucide-react';
 import { SquareCheck } from 'lucide-react';
@@ -7,10 +8,13 @@ import { PanelRightClose } from 'lucide-react';
 
 interface EditSidebarProps {
   onEventChange: () => void;
+  eventOptions: any;
 }
 
-export default function EventEdit({ onEventChange }: EditSidebarProps) {
-  const eventOptions = useSidebar((state) => state.eventOptions);
+export default function EventEdit({
+  onEventChange,
+  eventOptions,
+}: EditSidebarProps) {
   const { classNames, producers, times } = eventOptions;
   const selectedEvent = useSidebar((state) => state.selectedEvent);
   const setSelectedEvent = useSidebar((state) => state.setSelectedEvent);
@@ -27,25 +31,14 @@ export default function EventEdit({ onEventChange }: EditSidebarProps) {
     }
   }
 
-  async function handleDelete() {
-    try {
-      const response = await fetch(`/api/events`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: selectedEvent.id }),
-      });
-
-      if (response.ok) {
-        setMode(null);
-        setSelectedEvent(null);
-        onEventChange();
-      } else {
-        console.error('Failed to delete event');
-      }
-    } catch (error) {
-      console.error('Error deleting event:', error);
+  async function handleDelete(id: number) {
+    const result = await deleteServerAction(id);
+    if (result.success) {
+      setMode(null);
+      setSelectedEvent(null);
+      onEventChange();
+    } else {
+      console.error('Update failed', result.error);
     }
   }
 
@@ -141,6 +134,7 @@ export default function EventEdit({ onEventChange }: EditSidebarProps) {
               <SquareCheck color="green" size={50} strokeWidth={2} />
             </button>
             <button
+              type="button"
               onClick={() => {
                 setMode(null);
                 setSelectedEvent(null);
@@ -150,10 +144,11 @@ export default function EventEdit({ onEventChange }: EditSidebarProps) {
             </button>
 
             <Trash
-              onClick={handleDelete}
+              onClick={() => handleDelete(Number(selectedEvent?.id))}
               color="red"
               size={50}
               strokeWidth={2}
+              className="cursor-pointer"
             />
           </div>
         </form>

@@ -12,13 +12,3 @@ export async function GET() {
     ORDER BY events.date ASC`);
   return Response.json(events.rows);
 }
-
-export async function DELETE(request: Request) {
-  try {
-    const { id } = await request.json();
-    await db.query('DELETE FROM events WHERE id = $1', [id]);
-    return Response.json({ success: true });
-  } catch (error) {
-    return Response.json({ error: 'Error deleting event' }, { status: 500 });
-  }
-}

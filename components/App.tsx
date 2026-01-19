@@ -4,20 +4,19 @@ import CreateSidebar from '@/components/sidebar/CreateSidebar';
 import EditSidebar from '@/components/sidebar/EditSidebar';
 import ViewSidebar from './sidebar/ViewSidebar';
 import { useSidebar } from '@/stores/useSidebar';
-import { useEffect } from 'react';
 import { useFetch } from './useFetch';
 import { useUser } from '@clerk/nextjs';
 
-export default function App() {
+type AppProps = {
+  eventOptions: any;
+};
+
+export default function App({ eventOptions }: AppProps) {
   const mode = useSidebar((state) => state.mode);
   const setMode = useSidebar((state) => state.setMode);
-  const selectedDate = useSidebar((state) => state.selectedDate);
   const setSelectedDate = useSidebar((state) => state.setSelectedDate);
   const selectedEvent = useSidebar((state) => state.selectedEvent);
   const setSelectedEvent = useSidebar((state) => state.setSelectedEvent);
-  const eventOptions = useSidebar((state) => state.eventOptions);
-  const seteventOptions = useSidebar((state) => state.seteventOptions);
-  const unavailableTimes = useSidebar((state) => state.unavailableTimes);
   const setUnavailableTimes = useSidebar((state) => state.setUnavailableTimes);
 
   const { user } = useUser();
@@ -25,23 +24,6 @@ export default function App() {
 
   const { data: eventsData, refetch } = useFetch('/api/events');
 
-  // Fetch eventOptions on mount
-  useEffect(() => {
-    async function fetcheventOptions() {
-      try {
-        const response = await fetch('/api/optionsdata');
-        const data = await response.json();
-        seteventOptions(data);
-      } catch (error) {
-        console.error('Failed to fetch booking options:', error);
-        seteventOptions(null);
-      }
-    }
-
-    fetcheventOptions();
-  }, [seteventOptions]);
-
-  //
   function handleDateSelect(selectInfo) {
     if (role === 'admin' || role === 'editor') {
       setMode('Create');
@@ -68,6 +50,7 @@ export default function App() {
   return (
     <div className="h-[calc(100vh-4rem)] flex flex-row">
       <div className="w-7/10">
+        <div>Options: {JSON.stringify(eventOptions)}</div>
         <Calendar
           handleDateSelect={handleDateSelect}
           handleEventSelect={handleEventSelect}
@@ -75,11 +58,19 @@ export default function App() {
         />
       </div>
       <div className="w-3/10">
-        {mode === 'Create' && <CreateSidebar onEventChange={refetch} />}
-        {mode === 'Edit' && (
-          <EditSidebar key={selectedEvent.id} onEventChange={refetch} />
+        {mode === 'Create' && (
+          <CreateSidebar onEventChange={refetch} eventOptions={eventOptions} />
         )}
-        {mode === 'View' && <ViewSidebar key={selectedEvent.id} />}
+        {mode === 'Edit' && (
+          <EditSidebar
+            key={selectedEvent.id}
+            onEventChange={refetch}
+            eventOptions={eventOptions}
+          />
+        )}
+        {mode === 'View' && (
+          <ViewSidebar key={selectedEvent.id} eventOptions={eventOptions} />
+        )}
       </div>
     </div>
   );

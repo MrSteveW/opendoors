@@ -1,23 +1,25 @@
 'use client';
-import { handleFormSubmit } from '@/app/lib/handleFormSubmit';
+import { handleFormSubmit } from '@/app/lib/actions';
 import { useSidebar } from '@/stores/useSidebar';
 import { SquareCheck } from 'lucide-react';
 import { PanelRightClose } from 'lucide-react';
 
 interface CreateSidebarProps {
   onEventChange: () => void;
+  eventOptions: any;
 }
 
-export default function CreateSidebar({ onEventChange }: CreateSidebarProps) {
+export default function CreateSidebar({
+  onEventChange,
+  eventOptions,
+}: CreateSidebarProps) {
   const selectedDate = useSidebar((state) => state.selectedDate);
   const setMode = useSidebar((state) => state.setMode);
   const setSelectedDate = useSidebar((state) => state.setSelectedDate);
-  const eventOptions = useSidebar((state) => state.eventOptions);
-  const loading = useSidebar((state) => state.eventOptionsLoading);
   const unavailableTimes = useSidebar((state) => state.unavailableTimes);
   const setUnavailableTimes = useSidebar((state) => state.setUnavailableTimes);
 
-  if (loading || !eventOptions) return <div>Loading...</div>;
+  if (!eventOptions) return <div>Loading...</div>;
 
   const { classNames, producers, times } = eventOptions;
 

@@ -40,7 +40,6 @@
 - [x] mode ('Create', 'Edit')
 - [x] selectedDate
 - [x] selectedEvent
-- [x] eventOptions
 - [x] unavailableTimes
 
 ## Features

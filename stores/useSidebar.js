@@ -7,8 +7,6 @@ export const useSidebar = create(
       mode: null,
       selectedDate: null,
       selectedEvent: null,
-      eventOptions: null,
-      eventOptionsLoading: true,
       unavailableTimes: null,
     },
     (set) => {
@@ -20,7 +18,6 @@ export const useSidebar = create(
               typeof nextMode === 'function' ? nextMode(state.mode) : nextMode,
           }));
         },
-        // selectedDate for Create
         setSelectedDate: (nextSelectedDate) => {
           set((state) => ({
             selectedDate:
@@ -29,7 +26,6 @@ export const useSidebar = create(
                 : nextSelectedDate,
           }));
         },
-        // selectedEvent for Edit & View
         setSelectedEvent: (nextSelectedEvent) => {
           set((state) => ({
             selectedEvent:
@@ -37,13 +33,6 @@ export const useSidebar = create(
                 ? nextSelectedEvent(state.selectedEvent)
                 : nextSelectedEvent,
           }));
-        },
-        // eventOptions fetched once on mount
-        seteventOptions: (options) => {
-          set({ eventOptions: options, eventOptionsLoading: false });
-        },
-        seteventOptionsLoading: (loading) => {
-          set({ eventOptionsLoading: loading });
         },
         setUnavailableTimes: (nextUnavailableTimes) => {
           set({ unavailableTimes: nextUnavailableTimes });
