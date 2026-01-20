@@ -5,7 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { EventsData } from '@/types';
 import { EventContentArg } from '@fullcalendar/core';
-import { DateSelectArg, EventApi } from '@fullcalendar/core';
+import { EventApi, DateSelectArg } from '@fullcalendar/core';
 import { EventInput } from '@fullcalendar/core';
 
 type CalendarProps = {

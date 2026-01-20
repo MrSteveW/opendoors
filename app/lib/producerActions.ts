@@ -18,7 +18,12 @@ export async function handleProducersCreate(formData: FormData) {
     );
     return { success: true };
   } catch (error) {
-    return { success: false, error: error.message };
+    const message =
+      error instanceof Error ? error.message : 'An unexpected error occurred';
+    return {
+      success: false,
+      error: message,
+    };
   }
 }
 
@@ -29,6 +34,11 @@ export async function handleProducersDelete(id: number) {
     ]);
     return { success: true };
   } catch (error) {
-    return { success: false, error: error.message };
+    const message =
+      error instanceof Error ? error.message : 'An unexpected error occurred';
+    return {
+      success: false,
+      error: message,
+    };
   }
 }

@@ -30,7 +30,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const user = await currentUser();
-  const role = user?.publicMetadata?.role;
+  const role = user?.publicMetadata?.role as string;
 
   return (
     <ClerkProvider>

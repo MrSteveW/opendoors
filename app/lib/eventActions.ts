@@ -2,6 +2,8 @@
 import { db } from '@/utils/connect';
 import { revalidatePath } from 'next/cache';
 
+type ActionResponse = { success: true } | { success: false; error: string };
+
 export async function handleEventCreate(formData: FormData) {
   try {
     const data = Object.fromEntries(formData);
@@ -20,7 +22,12 @@ export async function handleEventCreate(formData: FormData) {
     revalidatePath('/');
     return { success: true };
   } catch (error) {
-    return { success: false, error: error.message };
+    const message =
+      error instanceof Error ? error.message : 'An unexpected error occurred';
+    return {
+      success: false,
+      error: message,
+    };
   }
 }
 
@@ -46,7 +53,12 @@ export async function handleEventEdit(formData: FormData) {
     revalidatePath('/');
     return { success: true };
   } catch (error) {
-    return { success: false, error: error.message };
+    const message =
+      error instanceof Error ? error.message : 'An unexpected error occurred';
+    return {
+      success: false,
+      error: message,
+    };
   }
 }
 
@@ -55,6 +67,11 @@ export async function handleEventDelete(id: number) {
     await db.query('DELETE FROM events WHERE id = $1', [id]);
     return { success: true };
   } catch (error) {
-    return { success: false, error: error.message };
+    const message =
+      error instanceof Error ? error.message : 'An unexpected error occurred';
+    return {
+      success: false,
+      error: message,
+    };
   }
 }

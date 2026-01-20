@@ -8,7 +8,7 @@ import { useFetch } from './useFetch';
 import { useUser } from '@clerk/nextjs';
 import { EventsData, EventOptionsType } from '@/types';
 import { DateSelectArg } from '@fullcalendar/core/index.js';
-import { EventInput } from '@fullcalendar/core';
+import { EventApi } from '@fullcalendar/core';
 
 type AppProps = {
   eventOptions: EventOptionsType;
@@ -40,7 +40,7 @@ export default function App({ eventOptions }: AppProps) {
     }
   }
 
-  function handleEventSelect(event: EventInput) {
+  function handleEventSelect(event: EventApi) {
     setSelectedEvent(event);
     setSelectedDate(null);
     if (role === 'admin' || role === 'editor') {
@@ -52,7 +52,6 @@ export default function App({ eventOptions }: AppProps) {
 
   return (
     <div className="h-[calc(100vh-4rem)] flex flex-row">
-      <div>{JSON.stringify(eventsData)}</div>
       <div className="w-7/10">
         <Calendar
           handleDateSelect={handleDateSelect}
@@ -66,13 +65,13 @@ export default function App({ eventOptions }: AppProps) {
         )}
         {mode === 'Edit' && (
           <EditSidebar
-            key={selectedEvent.id}
+            key={selectedEvent?.id}
             onEventChange={refetch}
             eventOptions={eventOptions}
           />
         )}
         {mode === 'View' && (
-          <ViewSidebar key={selectedEvent.id} eventOptions={eventOptions} />
+          <ViewSidebar key={selectedEvent?.id} eventOptions={eventOptions} />
         )}
       </div>
     </div>

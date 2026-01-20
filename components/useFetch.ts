@@ -2,10 +2,12 @@ import { useState, useEffect, useCallback } from 'react';
 
 export function useFetch<T>(url: string) {
   const [data, setData] = useState<T | null>(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
+    setLoading(true);
+    setError(null);
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -15,7 +17,9 @@ export function useFetch<T>(url: string) {
       const result = await response.json();
       setData(result);
     } catch (err) {
-      setError(err.message);
+      setError(
+        err instanceof Error ? err.message : 'An unknown error occurred',
+      );
     } finally {
       setLoading(false);
     }

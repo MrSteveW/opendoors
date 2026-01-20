@@ -2,13 +2,14 @@
 import { handleEventEdit } from '@/app/lib/eventActions';
 import { handleEventDelete } from '@/app/lib/eventActions';
 import { useSidebar } from '@/stores/useSidebar';
+import { EventOptionsType } from '@/types';
 import { Trash } from 'lucide-react';
 import { SquareCheck } from 'lucide-react';
 import { PanelRightClose } from 'lucide-react';
 
 interface EditSidebarProps {
   onEventChange: () => void;
-  eventOptions: any;
+  eventOptions: EventOptionsType;
 }
 
 export default function EditSidebar({
@@ -46,7 +47,7 @@ export default function EditSidebar({
     <div className="h-full bg-openlightgreen flex flex-col items-center p-2 rounded-3xl">
       <div className="w-full">
         <div className="text-2xl ">
-          {selectedEvent.start?.toLocaleString('en-GB', {
+          {selectedEvent?.start?.toLocaleString('en-GB', {
             weekday: 'long',
             year: 'numeric',
             month: 'long',
@@ -93,7 +94,7 @@ export default function EditSidebar({
             <select
               name="producer_id"
               id="producer_id"
-              defaultValue={selectedEvent.extendedProps.producer_id}
+              defaultValue={selectedEvent?.extendedProps.producer_id}
             >
               <option value="">Select producer</option>
               {producers?.map((producer) => (
@@ -109,7 +110,7 @@ export default function EditSidebar({
             <select
               name="time_id"
               id="time_id"
-              defaultValue={selectedEvent.extendedProps.time_id}
+              defaultValue={selectedEvent?.extendedProps.time_id}
             >
               <option value="">Select time</option>
               {times?.map((time) => (
@@ -126,7 +127,7 @@ export default function EditSidebar({
               name="topic"
               id="topic"
               className="input"
-              defaultValue={selectedEvent.extendedProps.topic}
+              defaultValue={selectedEvent?.extendedProps.topic}
             />
           </div>
           <div className="p-3 flex justify-evenly items-center">

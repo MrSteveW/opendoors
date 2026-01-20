@@ -1,12 +1,13 @@
 'use client';
 import { handleEventCreate } from '@/app/lib/eventActions';
 import { useSidebar } from '@/stores/useSidebar';
+import { EventOptionsType } from '@/types';
 import { SquareCheck } from 'lucide-react';
 import { PanelRightClose } from 'lucide-react';
 
 interface CreateSidebarProps {
   onEventChange: () => void;
-  eventOptions: any;
+  eventOptions: EventOptionsType;
 }
 
 export default function CreateSidebar({
@@ -96,7 +97,7 @@ export default function CreateSidebar({
             <select name="time_id" id="time_id" required>
               <option value="">Select time</option>
               {times?.map((time) => {
-                const isUnavailable = unavailableTimes.some(
+                const isUnavailable = unavailableTimes?.some(
                   (un) => un.time_id === time.id,
                 );
 
