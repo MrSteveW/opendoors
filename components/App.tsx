@@ -45,7 +45,7 @@ export default function App({ eventOptions }: AppProps) {
     setSelectedDate(null);
     if (role === 'admin' || role === 'editor') {
       setMode('Edit');
-    } else if (role === 'viewer') {
+    } else {
       setMode('View');
     }
   }

@@ -5,6 +5,7 @@ import EnterAnimation from '@/app/animation/EnterAnimation';
 import bglogo from '@/public/bglogo.webp';
 import shiplogo from '@/public/shiplogo.webp';
 import Image from 'next/image';
+import GuestButton from '../GuestButton';
 
 export default function Page() {
   const { isLoaded } = useSignIn();
@@ -24,7 +25,11 @@ export default function Page() {
         </div>
       )}
 
-      <div className="h-6/10">
+      <div className="h-6/10 flex flex-col justify-center-safe items-center">
+        <div className="mb-2">
+          <GuestButton />
+        </div>
+
         <SignIn routing="path" path="/sign-in" />
       </div>
     </div>

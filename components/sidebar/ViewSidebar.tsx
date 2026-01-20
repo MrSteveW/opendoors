@@ -9,7 +9,7 @@ export default function ViewSidebar() {
 
   return (
     <div className="h-full bg-openlightgreen flex flex-col items-center p-2 rounded-3xl">
-      <div className="w-full">
+      <div className="w-full text-center">
         <div className="text-2xl text-center">
           {selectedEvent?.start?.toLocaleString('en-GB', {
             weekday: 'long',

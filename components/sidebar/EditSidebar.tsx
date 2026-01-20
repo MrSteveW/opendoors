@@ -46,7 +46,7 @@ export default function EditSidebar({
   return (
     <div className="h-full bg-openlightgreen flex flex-col items-center p-2 rounded-3xl">
       <div className="w-full">
-        <div className="text-2xl ">
+        <div className="text-2xl text-center">
           {selectedEvent?.start?.toLocaleString('en-GB', {
             weekday: 'long',
             year: 'numeric',

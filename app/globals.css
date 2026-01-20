@@ -31,7 +31,7 @@ body {
   display: flex;
   align-items: center;
   /* background-color: green; */
-  padding-top: 1.2rem;
+  padding-top: 1rem;
   margin-top: 0.5rem;
   margin-right: 1rem;
   font-size: 1.2em;
@@ -43,15 +43,16 @@ body {
   font-size: 1em;
 }
 
-.input,
+input,
 textarea,
 select {
-  width: 75%;
+  width: 70%;
   color: black;
   background-color: whitesmoke;
   margin-left: 1rem;
   border: 1px solid black;
   border-radius: 3px;
+  padding: 0.5rem;
 }
 
 input:focus {
