@@ -38,8 +38,16 @@ export default function Calendar({
 
   return (
     <>
-      <div>
+      <div className="h-full">
         <FullCalendar
+          expandRows={true}
+          events={events}
+          eventContent={(arg: EventContentArg) => (
+            <EventCard eventInfo={arg} handleEventSelect={handleEventSelect} />
+          )}
+          handleWindowResize={true}
+          height="100%"
+          titleFormat={{ month: 'long', day: 'numeric', year: 'numeric' }}
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="twoWeekGrid"
           weekends={false}
@@ -51,14 +59,9 @@ export default function Calendar({
               buttonText: '2 weeks',
             },
           }}
-          aspectRatio={1.9}
           selectable={true}
           eventOrder="order"
           select={handleDateSelect}
-          events={events}
-          eventContent={(arg: EventContentArg) => (
-            <EventCard eventInfo={arg} handleEventSelect={handleEventSelect} />
-          )}
         />
       </div>
     </>

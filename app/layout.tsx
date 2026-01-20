@@ -39,7 +39,7 @@ export default async function RootLayout({
           className={`${mulish.variable}  ${atomatic.variable}  antialiased`}
         >
           <SignedIn>
-            <header className="w-full flex h-16 text-center items-center">
+            <header className="w-full flex h-12 text-center items-center">
               <div className="flex flex-row w-70 fixed top-5 left-0 items-center">
                 {role === 'admin' && <AdminNav />}
               </div>
@@ -48,12 +48,12 @@ export default async function RootLayout({
                   Radio Drake
                 </div>
                 <div className="mx-2">
-                  <Image src="/logosm.png" alt="" height={60} width={60} />
+                  <Image src="/logosm.png" alt="" height={50} width={50} />
                 </div>
                 <div className="mx-2 text-2xl italic">({role})</div>
               </div>
 
-              <div className="scale-150 fixed top-5 right-15">
+              <div className="scale-150 fixed top-3 right-15">
                 <UserButton />
               </div>
             </header>

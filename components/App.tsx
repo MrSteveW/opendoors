@@ -51,7 +51,7 @@ export default function App({ eventOptions }: AppProps) {
   }
 
   return (
-    <div className="h-[calc(100vh-4rem)] flex flex-row">
+    <div className="h-screen flex flex-row">
       <div className="w-7/10">
         <Calendar
           handleDateSelect={handleDateSelect}
