@@ -2,11 +2,7 @@
 import { useSidebar } from '@/stores/useSidebar';
 import { PanelRightClose } from 'lucide-react';
 
-type ViewSidebarProps = {
-  eventOptions: any;
-};
-
-export default function ViewSidebar({ eventOptions }: ViewSidebarProps) {
+export default function ViewSidebar() {
   const selectedEvent = useSidebar((state) => state.selectedEvent);
   const setSelectedEvent = useSidebar((state) => state.setSelectedEvent);
   const setMode = useSidebar((state) => state.setMode);

@@ -11,18 +11,20 @@ export default function Page() {
   return (
     <div className="h-screen bg-white flex flex-col items-center justify-center">
       {isLoaded && (
-        <div className="fixed top-10 h-75 w-fit">
-          <div className="relative">
-            <Image src={bglogo} alt="Background" height={300} priority />
-          </div>
+        <div className="h-4/10 w-full  flex items-center ">
+          <div className="fixed w-full">
+            <div className="relative justify-items-center">
+              <Image src={bglogo} alt="Background" height={200} priority />
+            </div>
 
-          <EnterAnimation className="absolute inset-0 z-10">
-            <Image src={shiplogo} alt="Ship" height={300} priority />
-          </EnterAnimation>
+            <EnterAnimation className="absolute inset-0 z-10 justify-items-center">
+              <Image src={shiplogo} alt="Ship" height={200} priority />
+            </EnterAnimation>
+          </div>
         </div>
       )}
 
-      <div className="fixed top-90">
+      <div className="h-6/10">
         <SignIn routing="path" path="/sign-in" />
       </div>
     </div>

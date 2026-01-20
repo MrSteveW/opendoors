@@ -29,9 +29,9 @@ export default function ClassesAdmin({ classData }: ClassesAdminProps) {
   }
 
   return (
-    <div className="h-9/10 flex flex-col px-4 m-2 border-openblue border-3 rounded-lg">
+    <div className="h-[calc(100dvh-80px)] flex flex-col px-1 m-2 border-openblue border-3 rounded-lg">
       <div className="h-7/10 py-3">
-        <div className="text-3xl text-center ">Edit classes</div>
+        <div className="text-2xl text-center ">Edit classes</div>
         <div className="flex flex-wrap ">
           {classData.map((item) => (
             <ItemCard
@@ -43,7 +43,7 @@ export default function ClassesAdmin({ classData }: ClassesAdminProps) {
         </div>
       </div>
 
-      <div className="h-4/10 ">
+      <div className="h-3/10 ">
         <InputForm handleSubmit={handleSubmit} />
       </div>
     </div>

@@ -144,13 +144,9 @@ export default function EditSidebar({
               <PanelRightClose color="gray" size={50} strokeWidth={2} />
             </button>
 
-            <Trash
-              onClick={() => handleDelete(Number(selectedEvent?.id))}
-              color="red"
-              size={50}
-              strokeWidth={2}
-              className="cursor-pointer"
-            />
+            <button onClick={() => handleDelete(Number(selectedEvent?.id))}>
+              <Trash color="red" size={50} strokeWidth={2} />
+            </button>
           </div>
         </form>
       </div>

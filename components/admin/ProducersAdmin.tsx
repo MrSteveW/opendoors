@@ -29,9 +29,9 @@ export default function ProducersAdmin({ producersData }: ProducersAdminProps) {
   }
 
   return (
-    <div className="h-9/10 flex flex-col px-4 m-2 border-opengreen border-3 rounded-lg  ">
+    <div className="h-[calc(100dvh-80px)] flex flex-col px-1 m-2 border-opengreen border-3 rounded-lg  ">
       <div className="h-7/10 py-3">
-        <div className="text-3xl text-center ">Edit producers</div>
+        <div className="text-2xl text-center ">Edit producers</div>
         <div className=" flex flex-wrap columns-3">
           {producersData.map((item) => (
             <ItemCard
@@ -43,7 +43,7 @@ export default function ProducersAdmin({ producersData }: ProducersAdminProps) {
         </div>
       </div>
 
-      <div className="h-4/10">
+      <div className="h-3/10">
         <InputForm handleSubmit={handleSubmit} />
       </div>
     </div>

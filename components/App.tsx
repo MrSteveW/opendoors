@@ -70,9 +70,7 @@ export default function App({ eventOptions }: AppProps) {
             eventOptions={eventOptions}
           />
         )}
-        {mode === 'View' && (
-          <ViewSidebar key={selectedEvent?.id} eventOptions={eventOptions} />
-        )}
+        {mode === 'View' && <ViewSidebar key={selectedEvent?.id} />}
       </div>
     </div>
   );

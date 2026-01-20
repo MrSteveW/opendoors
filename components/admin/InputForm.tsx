@@ -6,7 +6,7 @@ interface Props {
 
 export default function InputForm({ handleSubmit }: Props) {
   return (
-    <div className="w-full px-2 pb-5 bg-openlightgreen rounded-2xl">
+    <div className="w-full px-2 pb-5 bg-opengreen text-white rounded-2xl">
       <div className="text-2xl py-4">Add new</div>
       <form action={handleSubmit}>
         <div className="flex ">
@@ -23,8 +23,8 @@ export default function InputForm({ handleSubmit }: Props) {
           <div className="flex w-2/5  items-center">
             <div className="px-2"></div>
             <div className="px-2">
-              <button type="submit">
-                <Check color="lightgreen" size={30} strokeWidth={3} />
+              <button type="submit" className="admin-submit">
+                <Check color="darkgreen" size={30} strokeWidth={3} />
               </button>
             </div>
           </div>
