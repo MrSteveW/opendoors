@@ -25,10 +25,10 @@ export default function EventCard({
       className="w-full mx-1 px-1 border-2 rounded-md cursor-pointer hover:bg-orange-500"
     >
       <div className="flex justify-evenly">
-        <div className="font-bold text-lg">{name}</div>
+        <div className="font-bold text-base">{name}</div>
         <div className="italic  flex justify-between items-center">
           <SlidersHorizontal size={18} strokeWidth={1} />
-          <div className="ml-1 text-base">{producer}</div>
+          <div className="ml-1 text-sm">{producer}</div>
         </div>
       </div>
 
