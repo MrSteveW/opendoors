@@ -1,14 +1,14 @@
-import * as motion from "motion/react-client";
-import { ReactNode } from "react";
+import * as motion from 'motion/react-client';
+import { ReactNode } from 'react';
 
 type childrenType = {
   children: ReactNode;
 };
 
 const textStyle = {
-  fontSize: "2rem",
-  fontWeight: "bold",
-  textAlign: "center" as const,
+  fontSize: '2rem',
+  fontWeight: 'bold',
+  textAlign: 'center' as const,
 };
 
 export default function EnterAnimation({
@@ -24,7 +24,7 @@ export default function EnterAnimation({
       animate={{ opacity: 1, x: 0 }}
       transition={{
         duration: 1,
-        x: { type: "spring", bounce: 0.3 },
+        x: { type: 'spring', bounce: 0.3 },
       }}
       className={className}
     >

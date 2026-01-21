@@ -3,9 +3,10 @@ import { handleEventEdit } from '@/app/lib/eventActions';
 import { handleEventDelete } from '@/app/lib/eventActions';
 import { useSidebar } from '@/stores/useSidebar';
 import { EventOptionsType } from '@/types';
-import { Trash } from 'lucide-react';
+
 import { SquareCheck } from 'lucide-react';
 import { PanelRightClose } from 'lucide-react';
+import { DeleteButton } from '../DeleteButton';
 
 interface EditSidebarProps {
   onEventChange: () => void;
@@ -144,9 +145,11 @@ export default function EditSidebar({
               <PanelRightClose color="gray" size={50} strokeWidth={2} />
             </button>
 
-            <button onClick={() => handleDelete(Number(selectedEvent?.id))}>
-              <Trash color="red" size={50} strokeWidth={2} />
-            </button>
+            <DeleteButton
+              handleDelete={handleDelete}
+              id={Number(selectedEvent?.id)}
+              size={50}
+            />
           </div>
         </form>
       </div>
