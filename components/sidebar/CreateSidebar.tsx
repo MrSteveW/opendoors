@@ -6,14 +6,10 @@ import { SquareCheck } from 'lucide-react';
 import { PanelRightClose } from 'lucide-react';
 
 interface CreateSidebarProps {
-  onEventChange: () => void;
   eventOptions: EventOptionsType;
 }
 
-export default function CreateSidebar({
-  onEventChange,
-  eventOptions,
-}: CreateSidebarProps) {
+export default function CreateSidebar({ eventOptions }: CreateSidebarProps) {
   const selectedDate = useSidebar((state) => state.selectedDate);
   const setMode = useSidebar((state) => state.setMode);
   const setSelectedDate = useSidebar((state) => state.setSelectedDate);
@@ -31,7 +27,6 @@ export default function CreateSidebar({
     if (result.success) {
       setMode(null);
       setUnavailableTimes(null);
-      onEventChange();
     } else {
       console.error('Form submmission failed', result.error);
     }

@@ -1,7 +1,10 @@
 import App from '@/components/App';
-import { getOptionsData } from '@/app/lib/getOptionsData';
+import { getOptionsData } from '@/app/lib/optionsActions';
+import { getEventsData } from './lib/eventActions';
 
 export default async function Page() {
   const optionsData = await getOptionsData();
-  return <App eventOptions={optionsData} />;
+  const eventsData = await getEventsData();
+
+  return <App eventOptions={optionsData} eventsData={eventsData} />;
 }

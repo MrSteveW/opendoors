@@ -2,7 +2,17 @@
 import { db } from '@/utils/connect';
 import { revalidatePath } from 'next/cache';
 
-type ActionResponse = { success: true } | { success: false; error: string };
+export async function getEventsData() {
+  const EventData = await db.query(
+    `SELECT events.id, events.date, events.date, events.name, classes.id as class_id, producers.id as producer_id, producers.name as producer, times.id as time_id, times.order AS order, times.name AS time, events.topic
+    FROM events
+    JOIN classes ON events.class_id = classes.id
+    JOIN producers ON events.producer_id = producers.id
+    JOIN times ON events.time_id = times.id
+    ORDER BY events.date ASC`,
+  );
+  return EventData.rows;
+}
 
 export async function handleEventCreate(formData: FormData) {
   try {

@@ -1,22 +1,19 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { handleEventEdit } from '@/app/lib/eventActions';
 import { handleEventDelete } from '@/app/lib/eventActions';
 import { useSidebar } from '@/stores/useSidebar';
 import { EventOptionsType } from '@/types';
-
 import { SquareCheck } from 'lucide-react';
 import { PanelRightClose } from 'lucide-react';
 import { DeleteButton } from '../DeleteButton';
 
 interface EditSidebarProps {
-  onEventChange: () => void;
   eventOptions: EventOptionsType;
 }
 
-export default function EditSidebar({
-  onEventChange,
-  eventOptions,
-}: EditSidebarProps) {
+export default function EditSidebar({ eventOptions }: EditSidebarProps) {
+  const router = useRouter();
   const { classNames, producers, times } = eventOptions;
   const selectedEvent = useSidebar((state) => state.selectedEvent);
   const setSelectedEvent = useSidebar((state) => state.setSelectedEvent);
@@ -26,8 +23,8 @@ export default function EditSidebar({
     const result = await handleEventEdit(formData);
 
     if (result.success) {
+      router.refresh();
       setMode(null);
-      onEventChange();
     } else {
       console.error('Update failed', result.error);
     }
@@ -36,9 +33,9 @@ export default function EditSidebar({
   async function handleDelete(id: number) {
     const result = await handleEventDelete(id);
     if (result.success) {
+      router.refresh();
       setMode(null);
       setSelectedEvent(null);
-      onEventChange();
     } else {
       console.error('Update failed', result.error);
     }

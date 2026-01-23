@@ -4,17 +4,17 @@ import CreateSidebar from '@/components/sidebar/CreateSidebar';
 import EditSidebar from '@/components/sidebar/EditSidebar';
 import ViewSidebar from './sidebar/ViewSidebar';
 import { useSidebar } from '@/stores/useSidebar';
-import { useFetch } from './useFetch';
 import { useUser } from '@clerk/nextjs';
-import { EventsData, EventOptionsType } from '@/types';
+import { EventsDataType, EventOptionsType } from '@/types';
 import { DateSelectArg } from '@fullcalendar/core/index.js';
 import { EventApi } from '@fullcalendar/core';
 
 type AppProps = {
   eventOptions: EventOptionsType;
+  eventsData: EventsDataType[];
 };
 
-export default function App({ eventOptions }: AppProps) {
+export default function App({ eventOptions, eventsData }: AppProps) {
   const mode = useSidebar((state) => state.mode);
   const setMode = useSidebar((state) => state.setMode);
   const setSelectedDate = useSidebar((state) => state.setSelectedDate);
@@ -25,8 +25,6 @@ export default function App({ eventOptions }: AppProps) {
   const { user } = useUser();
   const role = user?.publicMetadata?.role;
 
-  const { data: eventsData, refetch } = useFetch<EventsData[]>('/api/events');
-
   function handleDateSelect(selectInfo: DateSelectArg) {
     if (role === 'admin' || role === 'editor') {
       setMode('Create');
@@ -34,7 +32,10 @@ export default function App({ eventOptions }: AppProps) {
       setSelectedEvent(null);
       const selectedDateStr = selectInfo.startStr.split('T')[0];
       const unavailable = (eventsData ?? [])
-        .filter((event) => event.date.split('T')[0] === selectedDateStr)
+        .filter((event) => {
+          const eventDate = new Date(event.date).toISOString().split('T')[0];
+          return eventDate === selectedDateStr;
+        })
         .map((event) => ({ time_id: event.time_id }));
       setUnavailableTimes(unavailable);
     }
@@ -60,15 +61,9 @@ export default function App({ eventOptions }: AppProps) {
         />
       </div>
       <div className="w-3/10">
-        {mode === 'Create' && (
-          <CreateSidebar onEventChange={refetch} eventOptions={eventOptions} />
-        )}
+        {mode === 'Create' && <CreateSidebar eventOptions={eventOptions} />}
         {mode === 'Edit' && (
-          <EditSidebar
-            key={selectedEvent?.id}
-            onEventChange={refetch}
-            eventOptions={eventOptions}
-          />
+          <EditSidebar key={selectedEvent?.id} eventOptions={eventOptions} />
         )}
         {mode === 'View' && <ViewSidebar key={selectedEvent?.id} />}
       </div>

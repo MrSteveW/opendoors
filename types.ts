@@ -6,7 +6,7 @@ export type ProducersAdminProps = {
   producersData: { id: number; name: string; deleted_at: Date }[];
 };
 
-export type EventsData = {
+export type EventsDataType = {
   id: number;
   date: string;
   name: string;
