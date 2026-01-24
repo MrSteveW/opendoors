@@ -8,6 +8,7 @@ import { useUser } from '@clerk/nextjs';
 import { EventsDataType, EventOptionsType } from '@/types';
 import { DateSelectArg } from '@fullcalendar/core/index.js';
 import { EventApi } from '@fullcalendar/core';
+import { CreateDialog } from './dialog/CreateDialog';
 
 type AppProps = {
   eventOptions: EventOptionsType;
@@ -54,6 +55,7 @@ export default function App({ eventOptions, eventsData }: AppProps) {
   return (
     <div className="h-screen flex flex-row">
       <div className="w-7/10">
+        <CreateDialog />
         <Calendar
           handleDateSelect={handleDateSelect}
           handleEventSelect={handleEventSelect}
