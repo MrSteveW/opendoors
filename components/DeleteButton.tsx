@@ -21,7 +21,7 @@ export function DeleteButton({ handleDelete, id, size }: DeleteyButtonProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button>
+        <button className="cursor-pointer outline-none">
           <Trash color="red" size={size} strokeWidth={2} />
         </button>
       </DialogTrigger>
