@@ -9,6 +9,7 @@ type SidebarMode = 'Create' | 'Edit' | 'View' | null;
 type SidebarState = {
   mode: SidebarMode;
   isDialogOpen: Boolean;
+  isReadOnly: Boolean;
   selectedDate: Date | null;
   selectedEvent: EventApi | null;
   unavailableTimes: UnavailableType[] | null;
@@ -16,6 +17,7 @@ type SidebarState = {
     nextMode: SidebarMode | ((prev: SidebarMode) => SidebarMode),
   ) => void;
   setIsDialogOpen: (open: boolean) => void; 
+  setIsReadOnly: (isReadOnly: boolean) => void; 
   setSelectedDate: (date: Date | null) => void;
   setSelectedEvent: (
     event: EventApi | null | ((prev: EventApi | null) => EventApi | null),
@@ -26,6 +28,7 @@ type SidebarState = {
 export const useSidebar = create<SidebarState>((set) => ({
   mode: null,
   isDialogOpen: false,
+  isReadOnly: false,
   selectedDate: null,
   selectedEvent: null,
   unavailableTimes: null,
@@ -36,6 +39,9 @@ export const useSidebar = create<SidebarState>((set) => ({
   },
   setIsDialogOpen: (nextIsDialogOpen) => {
     set({isDialogOpen: nextIsDialogOpen});
+  },
+  setIsReadOnly: (nextIsReadOnly) => {
+    set({isReadOnly: nextIsReadOnly});
   },
   setSelectedDate: (date) => set({ selectedDate: date }),
 

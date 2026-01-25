@@ -8,7 +8,7 @@ import { useUser } from '@clerk/nextjs';
 import { EventsDataType, EventOptionsType } from '@/types';
 import { DateSelectArg } from '@fullcalendar/core/index.js';
 import { EventApi } from '@fullcalendar/core';
-import { CreateDialog } from './dialog/CreateDialog';
+import { EventDialog } from './EventDialog';
 type AppProps = {
   eventOptions: EventOptionsType;
   eventsData: EventsDataType[];
@@ -22,16 +22,18 @@ export default function App({ eventOptions, eventsData }: AppProps) {
   const selectedEvent = useSidebar((state) => state.selectedEvent);
   const setSelectedEvent = useSidebar((state) => state.setSelectedEvent);
   const setUnavailableTimes = useSidebar((state) => state.setUnavailableTimes);
+  const setIsReadOnly = useSidebar((state) => state.setIsReadOnly);
 
   const { user } = useUser();
   const role = user?.publicMetadata?.role;
 
   function handleDateSelect(selectInfo: DateSelectArg) {
     if (role === 'admin' || role === 'editor') {
-      // setMode('Create');
+      setMode('Create');
       setIsDialogOpen(true);
       setSelectedDate(new Date(selectInfo.startStr));
       setSelectedEvent(null);
+      setIsReadOnly(false);
       const selectedDateStr = selectInfo.startStr.split('T')[0];
       const unavailable = (eventsData ?? [])
         .filter((event) => {
@@ -48,27 +50,24 @@ export default function App({ eventOptions, eventsData }: AppProps) {
     setSelectedDate(null);
     if (role === 'admin' || role === 'editor') {
       setMode('Edit');
+      setIsDialogOpen(true);
+      setIsReadOnly(false);
     } else {
       setMode('View');
+      setIsReadOnly(true);
+      setIsDialogOpen(true);
     }
   }
 
   return (
     <div className="h-screen flex flex-row">
-      <div className="w-7/10">
-        <CreateDialog eventOptions={eventOptions} />
+      <div className="w-full">
+        <EventDialog eventOptions={eventOptions} />
         <Calendar
           handleDateSelect={handleDateSelect}
           handleEventSelect={handleEventSelect}
           eventsData={eventsData}
         />
-      </div>
-      <div className="w-3/10">
-        {mode === 'Create' && <CreateSidebar eventOptions={eventOptions} />}
-        {mode === 'Edit' && (
-          <EditSidebar key={selectedEvent?.id} eventOptions={eventOptions} />
-        )}
-        {mode === 'View' && <ViewSidebar key={selectedEvent?.id} />}
       </div>
     </div>
   );
