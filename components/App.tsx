@@ -12,11 +12,12 @@ type AppProps = {
 };
 
 export default function App({ eventOptions, eventsData }: AppProps) {
-  const setIsDialogOpen = useEventDialog((state) => state.setIsDialogOpen)
+  const setIsDialogOpen = useEventDialog((state) => state.setIsDialogOpen);
   const setSelectedDate = useEventDialog((state) => state.setSelectedDate);
-  const selectedEvent = useEventDialog((state) => state.selectedEvent);
   const setSelectedEvent = useEventDialog((state) => state.setSelectedEvent);
-  const setUnavailableTimes = useEventDialog((state) => state.setUnavailableTimes);
+  const setUnavailableTimes = useEventDialog(
+    (state) => state.setUnavailableTimes,
+  );
   const setIsReadOnly = useEventDialog((state) => state.setIsReadOnly);
 
   const { user } = useUser();
