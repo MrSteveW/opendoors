@@ -6,8 +6,8 @@ type UnavailableType = {
 };
 
 type DialogState = {
-  isDialogOpen: Boolean;
-  isReadOnly: Boolean;
+  isDialogOpen: boolean;
+  isReadOnly: boolean;
   selectedDate: Date | null;
   selectedEvent: EventApi | null;
   unavailableTimes: UnavailableType[] | null;

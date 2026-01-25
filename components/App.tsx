@@ -1,8 +1,5 @@
 'use client';
 import Calendar from '@/components/calendar/Calendar';
-import CreateSidebar from '@/components/sidebar/CreateSidebar';
-import EditSidebar from '@/components/sidebar/EditSidebar';
-import ViewSidebar from './sidebar/ViewSidebar';
 import { useEventDialog } from '@/stores/useEventDialog';
 import { useUser } from '@clerk/nextjs';
 import { EventsDataType, EventOptionsType } from '@/types';
