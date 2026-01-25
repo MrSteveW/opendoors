@@ -21,7 +21,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { handleEventCreate } from '@/app/lib/eventActions';
 import { handleEventEdit } from '@/app/lib/eventActions';
 import { handleEventDelete } from '@/app/lib/eventActions';
-import { useSidebar } from '@/stores/useSidebar';
+import { useEventDialog } from '@/stores/useEventDialog';
 import { EventOptionsType } from '@/types';
 import { SquareCheck } from 'lucide-react';
 import { PanelRightClose } from 'lucide-react';
@@ -35,17 +35,15 @@ type EventDialogProps = {
 
 export function EventDialog({ eventOptions }: EventDialogProps) {
   const router = useRouter();
-  const isDialogOpen = useSidebar((state) => state.isDialogOpen);
-  const setIsDialogOpen = useSidebar((state) => state.setIsDialogOpen);
-  const selectedDate = useSidebar((state) => state.selectedDate);
-  const mode = useSidebar((state) => state.mode)
-  const setMode = useSidebar((state) => state.setMode);
-  const setSelectedDate = useSidebar((state) => state.setSelectedDate);
-  const unavailableTimes = useSidebar((state) => state.unavailableTimes);
-  const setUnavailableTimes = useSidebar((state) => state.setUnavailableTimes);
-  const selectedEvent = useSidebar((state) => state.selectedEvent);
-  const setSelectedEvent = useSidebar((state) => state.setSelectedEvent);
-  const isReadOnly = useSidebar((state) => state.isReadOnly);
+  const isDialogOpen = useEventDialog((state) => state.isDialogOpen);
+  const setIsDialogOpen = useEventDialog((state) => state.setIsDialogOpen);
+  const selectedDate = useEventDialog((state) => state.selectedDate);
+  const setSelectedDate = useEventDialog((state) => state.setSelectedDate);
+  const unavailableTimes = useEventDialog((state) => state.unavailableTimes);
+  const setUnavailableTimes = useEventDialog((state) => state.setUnavailableTimes);
+  const selectedEvent = useEventDialog((state) => state.selectedEvent);
+  const setSelectedEvent = useEventDialog((state) => state.setSelectedEvent);
+  const isReadOnly = useEventDialog((state) => state.isReadOnly);
   const formAction = selectedEvent ? handleEditSubmit : handleSubmit;
 
   if (!eventOptions) return <div>Loading...</div>;
@@ -58,7 +56,6 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
 
     if (result.success) {
       setIsDialogOpen(false);
-      setMode(null);
       setUnavailableTimes(null);
     } else {
       console.error('Form submmission failed', result.error);
@@ -71,7 +68,6 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
     if (result.success) {
       setIsDialogOpen(false);
       router.refresh();
-      setMode(null);
     } else {
       console.error('Update failed', result.error);
     }
@@ -82,7 +78,6 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
     if (result.success) {
       setIsDialogOpen(false);
       router.refresh();
-      setMode(null);
       setSelectedEvent(null);
     } else {
       console.error('Update failed', result.error);
@@ -254,7 +249,6 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
               type="button"
               className="enlarge-button"
                 onClick={() => {
-                  setMode(null);
                   setSelectedDate(null);
                   setUnavailableTimes(null);
                 }}

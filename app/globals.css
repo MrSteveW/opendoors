@@ -88,7 +88,7 @@ textarea {
 }
 
 textarea:focus {
-  background-color: darkgreen;
+  background-color: bisque;
   border: 1px solid red;
 }
 

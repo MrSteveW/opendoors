@@ -4,18 +4,13 @@ import { EventApi } from '@fullcalendar/core';
 type UnavailableType = {
   time_id: number;
 };
-type SidebarMode = 'Create' | 'Edit' | 'View' | null;
 
-type SidebarState = {
-  mode: SidebarMode;
+type DialogState = {
   isDialogOpen: Boolean;
   isReadOnly: Boolean;
   selectedDate: Date | null;
   selectedEvent: EventApi | null;
   unavailableTimes: UnavailableType[] | null;
-  setMode: (
-    nextMode: SidebarMode | ((prev: SidebarMode) => SidebarMode),
-  ) => void;
   setIsDialogOpen: (open: boolean) => void; 
   setIsReadOnly: (isReadOnly: boolean) => void; 
   setSelectedDate: (date: Date | null) => void;
@@ -25,18 +20,12 @@ type SidebarState = {
   setUnavailableTimes: (times: UnavailableType[] | null) => void;
 };
 
-export const useSidebar = create<SidebarState>((set) => ({
-  mode: null,
+export const useEventDialog = create<DialogState>((set) => ({
   isDialogOpen: false,
   isReadOnly: false,
   selectedDate: null,
   selectedEvent: null,
   unavailableTimes: null,
-  setMode: (nextMode) => {
-    set((state) => ({
-      mode: typeof nextMode === 'function' ? nextMode(state.mode) : nextMode,
-    }));
-  },
   setIsDialogOpen: (nextIsDialogOpen) => {
     set({isDialogOpen: nextIsDialogOpen});
   },
