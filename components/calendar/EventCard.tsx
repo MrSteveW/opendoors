@@ -22,13 +22,14 @@ export default function EventCard({
   return (
     <div
       onClick={handleClick}
-      className="w-full mx-1 px-1 border-2 border-black rounded-md cursor-pointer bg-white hover:bg-orange-500"
+      className="w-full m-1.5 px-3 border-2 border-black rounded-md cursor-pointer bg-white hover:bg-orange-500"
     >
-      <div className="flex justify-evenly">
-        <div className="font-bold text-base">{name}</div>
-        <div className="italic  flex justify-between items-center">
-          <SlidersHorizontal size={18} strokeWidth={1} />
-          <div className="ml-1 text-sm">{producer}</div>
+      <div className="flex">
+        <div className="font-bold text-xl mr-2">{name}</div>
+       
+        <div className="flex italic items-center">
+           <SlidersHorizontal size={18} strokeWidth={1} />
+           <div className="ml-2 text-lg">{producer}</div>
         </div>
       </div>
 

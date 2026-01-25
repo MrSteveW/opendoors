@@ -71,11 +71,6 @@ body {
 }
 
 
-/* input:focus {
-  background-color: bisque;
-  border: 1px solid red;
-} */
-
 select:focus {
   background-color: bisque;
   border: 1px solid red;
