@@ -205,16 +205,16 @@ textarea:focus {
   flex: 1;
 }
 
-button {
+.enlarge-button {
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
 }
 
-button:hover {
+.enlarge-button:hover {
   transform: scale(1.2);
 }
 
-button:active {
+.enlarge-button:active {
   outline: none;
 }
 

@@ -9,13 +9,13 @@ import { EventsDataType, EventOptionsType } from '@/types';
 import { DateSelectArg } from '@fullcalendar/core/index.js';
 import { EventApi } from '@fullcalendar/core';
 import { CreateDialog } from './dialog/CreateDialog';
-
 type AppProps = {
   eventOptions: EventOptionsType;
   eventsData: EventsDataType[];
 };
 
 export default function App({ eventOptions, eventsData }: AppProps) {
+  const setIsDialogOpen = useSidebar((state) => state.setIsDialogOpen)
   const mode = useSidebar((state) => state.mode);
   const setMode = useSidebar((state) => state.setMode);
   const setSelectedDate = useSidebar((state) => state.setSelectedDate);
@@ -28,7 +28,8 @@ export default function App({ eventOptions, eventsData }: AppProps) {
 
   function handleDateSelect(selectInfo: DateSelectArg) {
     if (role === 'admin' || role === 'editor') {
-      setMode('Create');
+      // setMode('Create');
+      setIsDialogOpen(true);
       setSelectedDate(new Date(selectInfo.startStr));
       setSelectedEvent(null);
       const selectedDateStr = selectInfo.startStr.split('T')[0];
@@ -55,7 +56,7 @@ export default function App({ eventOptions, eventsData }: AppProps) {
   return (
     <div className="h-screen flex flex-row">
       <div className="w-7/10">
-        <CreateDialog />
+        <CreateDialog eventOptions={eventOptions} />
         <Calendar
           handleDateSelect={handleDateSelect}
           handleEventSelect={handleEventSelect}

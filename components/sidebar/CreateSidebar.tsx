@@ -5,9 +5,9 @@ import { EventOptionsType } from '@/types';
 import { SquareCheck } from 'lucide-react';
 import { PanelRightClose } from 'lucide-react';
 
-interface CreateSidebarProps {
+type CreateSidebarProps = {
   eventOptions: EventOptionsType;
-}
+};
 
 export default function CreateSidebar({ eventOptions }: CreateSidebarProps) {
   const selectedDate = useSidebar((state) => state.selectedDate);
