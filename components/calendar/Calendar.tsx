@@ -3,7 +3,7 @@ import EventCard from './EventCard';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { EventsData } from '@/types';
+import { EventsDataType } from '@/types';
 import { EventContentArg } from '@fullcalendar/core';
 import { EventApi, DateSelectArg } from '@fullcalendar/core';
 import { EventInput } from '@fullcalendar/core';
@@ -11,7 +11,7 @@ import { EventInput } from '@fullcalendar/core';
 type CalendarProps = {
   handleDateSelect: (selectInfo: DateSelectArg) => void;
   handleEventSelect: (event: EventApi) => void;
-  eventsData?: EventsData[] | null;
+  eventsData?: EventsDataType[] | null;
 };
 
 export default function Calendar({
