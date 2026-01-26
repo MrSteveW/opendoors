@@ -5,7 +5,7 @@ type ActionResponse = { success: true } | { success: false; error: string };
 
 export async function getClassesData() {
   const classData = await db.query(
-    `SELECT id, name FROM classes WHERE deleted_at IS NULL`,
+    `SELECT id, name, year_group FROM classes WHERE deleted_at IS NULL ORDER BY year_group ASC`,
   );
   return classData.rows;
 }
@@ -15,9 +15,10 @@ export async function handleClassCreate(
 ): Promise<ActionResponse> {
   try {
     const data = Object.fromEntries(formData);
-    const sendToDb = await db.query(`INSERT INTO classes (name) VALUES ($1)`, [
-      data.name,
-    ]);
+    const sendToDb = await db.query(
+      `INSERT INTO classes (name, year_group) VALUES ($1, $2)`,
+      [data.name, data.year_group],
+    );
     return { success: true };
   } catch (error: unknown) {
     const message =

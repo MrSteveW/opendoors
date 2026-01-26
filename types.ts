@@ -1,11 +1,3 @@
-export type ClassesAdminProps = {
-  classData: { id: number; name: string; deleted_at: Date }[];
-};
-
-export type ProducersAdminProps = {
-  producersData: { id: number; name: string; deleted_at: Date }[];
-};
-
 export type EventsDataType = {
   id: number;
   date: string;
@@ -19,9 +11,10 @@ export type EventsDataType = {
   topic: string;
 };
 
-export type ItemData = {
+type ClassOptionType = {
   id: number;
   name: string;
+  year_group: string;
 };
 
 type OptionType = {
@@ -30,7 +23,30 @@ type OptionType = {
 };
 
 export type EventOptionsType = {
-  classNames: OptionType[];
+  classNames: ClassOptionType[];
   producers: OptionType[];
   times: OptionType[];
+};
+
+// Admin
+export type ItemData = {
+  id: number;
+  name: string;
+};
+
+export type ClassItem = {
+  id: number;
+  name: string;
+  year_group: string;
+};
+
+export type ProducerItem = {
+  id: number;
+  name: string;
+};
+
+export type TimesItem = {
+  id: number;
+  name: string;
+  display_order: number;
 };

@@ -3,7 +3,7 @@ import { db } from '@/utils/connect';
 
 export async function getProducersData() {
   const producersData = await db.query(
-    `SELECT * FROM producers WHERE deleted_at IS NULL`,
+    `SELECT id, name FROM producers WHERE deleted_at IS NULL`,
   );
   return producersData.rows;
 }

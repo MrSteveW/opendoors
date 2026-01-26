@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 
 export async function getEventsData() {
   const EventData = await db.query(
-    `SELECT events.id, events.date, events.date, events.name, classes.id as class_id, producers.id as producer_id, producers.name as producer, times.id as time_id, times.order AS order, times.name AS time, events.topic
+    `SELECT events.id, events.date, events.date, events.name, classes.id as class_id, producers.id as producer_id, producers.name as producer, times.id as time_id, times.display_order AS order, times.name AS time, events.topic
     FROM events
     JOIN classes ON events.class_id = classes.id
     JOIN producers ON events.producer_id = producers.id
