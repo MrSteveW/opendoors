@@ -40,7 +40,7 @@ export default async function RootLayout({
         >
           <SignedIn>
             <header className="w-full flex h-12 text-center items-center">
-              <div className="flex flex-row w-70 fixed top-5 left-0 items-center">
+              <div className="flex flex-row w-70 items-center">
                 {role === 'admin' && <AdminNav />}
               </div>
               <div className="flex w-full h-full items-center justify-center">
