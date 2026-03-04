@@ -1,10 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useParams } from 'next/navigation';
 
 export default function AdminNav() {
-  const { schname } = useParams();
   const pathname = usePathname();
   const links = [
     { name: 'Calendar', href: '/calendar' },
@@ -17,7 +15,7 @@ export default function AdminNav() {
         return (
           <Link
             key={link.href}
-            href={`/${schname}${link.href}`}
+            href={link.href}
             className={`p-1 rounded-md transition-colors ${
               isActive
                 ? 'text-gray-400 cursor-default '
