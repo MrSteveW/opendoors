@@ -1,12 +1,5 @@
 # Opendoors v4 booking app
 
-### Zustand state
-
-- [x] mode ('Create', 'Edit', 'View')
-- [x] selectedDate
-- [x] selectedEvent
-- [x] unavailableTimes
-
 ## Features
 
 - [x] Next.JS with PostgreSQL database
@@ -15,6 +8,7 @@
 
 ## Additional libraries used
 
+- FullCalendar
 - pg database interface
 - Zustand state management
 - Clerk

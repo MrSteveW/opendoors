@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import ItemCard from './ItemCard';
-import { handleProducersCreate } from '@/app/lib/producerActions';
-import { handleProducersDelete } from '@/app/lib/producerActions';
+import { handleProducersCreate } from '@/lib/producerActions';
+import { handleProducersDelete } from '@/lib/producerActions';
 import { ProducerItem } from '@/types';
 import { BookHeadphones } from 'lucide-react';
 import { Check } from 'lucide-react';

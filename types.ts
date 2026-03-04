@@ -2,13 +2,13 @@ export type EventsDataType = {
   id: number;
   date: string;
   name: string;
+  topic: string;
   class_id: number;
   producer_id: number;
   producer: string;
   time_id: number;
   order: number;
   time: string;
-  topic: string;
 };
 
 type ClassOptionType = {

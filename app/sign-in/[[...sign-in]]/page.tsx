@@ -26,11 +26,21 @@ export default function Page() {
       )}
 
       <div className="h-6/10 flex flex-col justify-center-safe items-center">
-        <div className="mb-2">
+        <div className="mb-2 cursor-pointer">
           <GuestButton />
         </div>
 
-        <SignIn routing="path" path="/sign-in" />
+        <SignIn
+          routing="path"
+          path="/sign-in"
+          forceRedirectUrl="/"
+          appearance={{
+            elements: {
+              rootBox: 'mx-auto',
+            },
+          }}
+          signUpUrl="sign-in"
+        />
       </div>
     </div>
   );

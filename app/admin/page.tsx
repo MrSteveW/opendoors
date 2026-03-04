@@ -1,6 +1,6 @@
-import { getClassesData } from '../lib/classActions';
-import { getProducersData } from '../lib/producerActions';
-import { getTimesData } from '../lib/timesActions';
+import { getClassesData } from '@/lib/classActions';
+import { getProducersData } from '@/lib/producerActions';
+import { getTimesData } from '@/lib/timesActions';
 import AdminPanel from '@/components/admin/AdminPanel';
 
 export default async function AdminPage() {

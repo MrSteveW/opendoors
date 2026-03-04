@@ -1,8 +1,8 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { DeleteButton } from '../DeleteButton';
-import { handleTimesCreate } from '@/app/lib/timesActions';
-import { handleTimesDelete } from '@/app/lib/timesActions';
+import { handleTimesCreate } from '@/lib/timesActions';
+import { handleTimesDelete } from '@/lib/timesActions';
 import { TimesItem } from '@/types';
 import { Clock } from 'lucide-react';
 import { Check } from 'lucide-react';

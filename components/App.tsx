@@ -21,7 +21,7 @@ export default function App({ eventOptions, eventsData }: AppProps) {
   const setIsReadOnly = useEventDialog((state) => state.setIsReadOnly);
 
   const { user } = useUser();
-  const role = user?.publicMetadata?.role;
+  const role = user?.publicMetadata?.user_role;
 
   function handleDateSelect(selectInfo: DateSelectArg) {
     if (role === 'admin' || role === 'editor') {

@@ -16,9 +16,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { handleEventCreate } from '@/app/lib/eventActions';
-import { handleEventEdit } from '@/app/lib/eventActions';
-import { handleEventDelete } from '@/app/lib/eventActions';
+import { handleEventCreate } from '@/lib/eventActions';
+import { handleEventEdit } from '@/lib/eventActions';
+import { handleEventDelete } from '@/lib/eventActions';
 import { useEventDialog } from '@/stores/useEventDialog';
 import { EventOptionsType } from '@/types';
 import { SquareCheck } from 'lucide-react';
@@ -142,7 +142,7 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
             <div className="col-span-3">
               <Select
                 name="class_id"
-                defaultValue={selectedEvent?.extendedProps.class_id.toString()}
+                defaultValue={selectedEvent?.extendedProps.class_id?.toString()}
                 disabled={isReadOnly}
                 required={true}
               >
@@ -177,7 +177,7 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
             <div className="col-span-3">
               <Select
                 name="producer_id"
-                defaultValue={selectedEvent?.extendedProps.producer_id.toString()}
+                defaultValue={selectedEvent?.extendedProps.producer_id?.toString()}
                 disabled={isReadOnly}
                 required={true}
               >
@@ -207,7 +207,7 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
             <div className="col-span-3">
               <Select
                 name="time_id"
-                defaultValue={selectedEvent?.extendedProps.time_id.toString()}
+                defaultValue={selectedEvent?.extendedProps.time_id?.toString()}
                 disabled={isReadOnly}
                 required={true}
               >

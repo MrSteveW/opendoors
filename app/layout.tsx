@@ -6,6 +6,7 @@ import './globals.css';
 import AdminNav from '@/components/admin/AdminNav';
 import Image from 'next/image';
 import { currentUser } from '@clerk/nextjs/server';
+import SchName from '@/components/SchName';
 
 // import logosm from "../../public/logosm.png";
 
@@ -30,7 +31,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const user = await currentUser();
-  const role = user?.publicMetadata?.role as string;
+  const role = user?.publicMetadata?.user_role as string;
 
   return (
     <ClerkProvider>
@@ -45,7 +46,7 @@ export default async function RootLayout({
               </div>
               <div className="flex w-full h-full items-center justify-center">
                 <div className="font-family-atomatic text-5xl mx-2">
-                  Radio Drake
+                  Radio <SchName />
                 </div>
                 <div className="mx-2">
                   <Image src="/logosm.png" alt="" height={50} width={50} />

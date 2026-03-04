@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { DeleteButton } from '../DeleteButton';
-import { handleClassCreate } from '@/app/lib/classActions';
-import { handleClassDelete } from '@/app/lib/classActions';
+import { handleClassCreate } from '@/lib/classActions';
+import { handleClassDelete } from '@/lib/classActions';
 import { ClassItem } from '@/types';
 import { School } from 'lucide-react';
 import { Check } from 'lucide-react';
