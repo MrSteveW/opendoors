@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 export default function AdminNav() {
   const pathname = usePathname();
   const links = [
-    { name: 'Calendar', href: '/calendar' },
+    { name: 'Calendar', href: '/' },
     { name: 'Admin', href: '/admin' },
   ];
   return (
