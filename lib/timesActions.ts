@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 import { createClerkSupabaseClient } from '@/lib/supabase';
 
@@ -6,7 +7,7 @@ export async function getTimesData() {
 
   const { data, error } = await supabase
     .from('times')
-    .select('id, name, display_order')
+    .select('id, name, display_order, icon')
     .is('deleted_at', null)
     .order('display_order', { ascending: true });
 
@@ -25,6 +26,7 @@ export async function handleTimesCreate(formData: FormData) {
     const name = formData.get('name') as string;
     const orderRaw = formData.get('display_order') as string;
     const display_order = parseInt(orderRaw, 10);
+    const icon = formData.get('icon') as string;
 
     if (isNaN(display_order)) {
       throw new Error('Invalid order value');
@@ -32,7 +34,7 @@ export async function handleTimesCreate(formData: FormData) {
 
     const { error } = await supabase
       .from('times')
-      .insert({ name, display_order });
+      .insert({ name, display_order, icon });
 
     if (error) throw error;
 

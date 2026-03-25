@@ -17,7 +17,7 @@ export default function EventCard({
   }
 
   const { event } = eventInfo;
-  const { name, producer, time } = event.extendedProps;
+  const { name, producer, time, icon, order } = event.extendedProps;
 
   return (
     <div
@@ -34,7 +34,7 @@ export default function EventCard({
       </div>
 
       <div className="text-xl">
-        <EventTimeLabel time={time} />
+        <EventTimeLabel time={time} icon={icon} order={order} />
       </div>
     </div>
   );

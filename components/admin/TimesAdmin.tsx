@@ -1,17 +1,33 @@
 'use client';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { DeleteButton } from '../DeleteButton';
 import { handleTimesCreate } from '@/lib/timesActions';
 import { handleTimesDelete } from '@/lib/timesActions';
 import { TimesItem } from '@/types';
+import { IconsItem } from '@/types';
 import { Clock } from 'lucide-react';
 import { Check } from 'lucide-react';
+import IconDialog from '@/components/IconDialog';
+import * as Icons from 'lucide-react';
+import { Music } from 'lucide-react';
 
 type TimesAdminProps = {
   timesData: TimesItem[];
+  iconsData: IconsItem[];
 };
 
-export default function TimesAdmin({ timesData }: TimesAdminProps) {
+export default function TimesAdmin({ timesData, iconsData }: TimesAdminProps) {
+  const [iconDialogOpen, setIconDialogOpen] = useState(false);
+  const [selectedIcon, setSelectedIcon] = useState('');
+  const CurrentIconSelection =
+    (Icons[selectedIcon as keyof typeof Icons] as React.ElementType) ?? Music;
+
+  function selectIcon(icon: string) {
+    setSelectedIcon(icon);
+    setIconDialogOpen(false);
+  }
+
   const router = useRouter();
 
   async function handleDelete(id: number) {
@@ -47,6 +63,14 @@ export default function TimesAdmin({ timesData }: TimesAdminProps) {
         <form action={handleSubmit}>
           <div className="flex">
             <div className="flex items-center text-2xl">
+              <input
+                hidden
+                name="icon"
+                type="text"
+                value={selectedIcon}
+                readOnly
+              />
+
               <label htmlFor="name">Time:</label>
               <input
                 id="name"
@@ -58,6 +82,7 @@ export default function TimesAdmin({ timesData }: TimesAdminProps) {
                 required
               />
             </div>
+
             <div className="flex items-center text-2xl">
               <label htmlFor="display_order">Display order:</label>
               <select
@@ -73,6 +98,14 @@ export default function TimesAdmin({ timesData }: TimesAdminProps) {
                 <option value="5">5th</option>
               </select>
             </div>
+
+            <div className="flex items-center text-2xl px-5">
+              <IconDialog iconsData={iconsData} selectIcon={selectIcon} />
+              <div className="pl-4">
+                <CurrentIconSelection />
+              </div>
+            </div>
+
             <div className="flex w-2/5  items-center">
               <div className="px-2"></div>
               <div className="px-2">
@@ -87,28 +120,37 @@ export default function TimesAdmin({ timesData }: TimesAdminProps) {
 
       {/* Display */}
       <div className="h-full w-1/3 p-2 m-4 text-xl  overflow-auto">
-        <div className="grid grid-cols-[3fr_3fr_1fr] items-center border-b pb-2 font-bold">
+        <div className="grid grid-cols-[3fr_2fr_2fr_1fr] items-center border-b pb-2 font-bold">
           <div>Time</div>
           <div>Display order</div>
+          <div>Icon</div>
           <div></div>
         </div>
         <div className="divide-y">
-          {timesData.map((item) => (
-            <div
-              key={item.id}
-              className="grid grid-cols-[3fr_3fr_1fr] py-1.5 items-center hover:bg-slate-50 transition-colors "
-            >
-              <div className="truncate pr-4">{item.name}</div>
-              <div className="truncate pr-4">{item.display_order}</div>
-              <div className="flex justify-end enlarge-button">
-                <DeleteButton
-                  handleDelete={handleDelete}
-                  id={Number(item.id)}
-                  size={25}
-                />
+          {timesData.map((item) => {
+            const IconComponent =
+              (Icons[item.icon as keyof typeof Icons] as React.ElementType) ??
+              Music;
+            return (
+              <div
+                key={item.id}
+                className="grid grid-cols-[3fr_2fr_2fr_1fr] py-1.5 items-center hover:bg-slate-50 transition-colors "
+              >
+                <div className="truncate pr-4">{item.name}</div>
+                <div className="truncate pr-4">{item.display_order}</div>
+                <div className="truncate pr-4">
+                  <IconComponent />
+                </div>
+                <div className="flex justify-end enlarge-button">
+                  <DeleteButton
+                    handleDelete={handleDelete}
+                    id={Number(item.id)}
+                    size={25}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

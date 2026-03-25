@@ -1,43 +1,31 @@
-import { useCallback } from "react";
-import { Timer } from "lucide-react";
-import { Sandwich } from "lucide-react";
-import { Headphones } from "lucide-react";
+import { useCallback } from 'react';
+import * as Icons from 'lucide-react';
+import { Music } from 'lucide-react';
+import { getEventTimeColor } from '@/lib/eventTimeColours';
 
 type PropsType = {
   time: string;
+  icon: string;
+  order: number;
 };
 
-export default function EventTimeLabel({ time }: PropsType) {
+export default function EventTimeLabel({ time, icon, order }: PropsType) {
+  const textColor = getEventTimeColor(order);
+
   const renderContent = useCallback(() => {
-    switch (time) {
-      case "Daily Mile":
-        return (
-          <div className="text-opengreen flex font-bold items-center">
-            <Timer />
-            <div className="ml-1">Daily Mile</div>
-          </div>
-        );
+    const IconComponent =
+      (Icons[icon as keyof typeof Icons] as React.ElementType) ?? Music;
 
-      case "Live at Lunch":
-        return (
-          <div className="text-openyellow flex font-bold items-center">
-            <Sandwich />
-            <div className="ml-1">Live at Lunch</div>
-          </div>
-        );
-
-      case "After Lunch":
-        return (
-          <div className="text-openblue flex font-bold items-center">
-            <Headphones />
-            <div className="ml-1">After Lunch</div>
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  }, [time]);
+    return (
+      <div className={`${textColor} flex font-bold items-center`}>
+        <div>
+          <IconComponent />
+        </div>
+        <div className="ml-1">{time}</div>
+        <div></div>
+      </div>
+    );
+  }, [time, icon, textColor]);
 
   return <div>{renderContent()}</div>;
 }

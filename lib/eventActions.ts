@@ -17,13 +17,12 @@ export async function getEventsData() {
       class_id,
       producer_id,
       producers(name),
-      times(id, display_order, name)
+      times(id, display_order, name, icon)
       `,
     )
     .order('date', { ascending: true });
 
   if (error) throw error;
-  console.log('Raw data from Supabase:', JSON.stringify(data?.[0], null, 2));
 
   return (data ?? []).map((row) => {
     const producers = row.producers as unknown as { name: string };
@@ -31,6 +30,7 @@ export async function getEventsData() {
       id: number;
       display_order: number;
       name: string;
+      icon: string;
     };
 
     return {
@@ -44,6 +44,7 @@ export async function getEventsData() {
       time_id: times.id,
       order: times.display_order,
       time: times.name,
+      icon: times.icon,
     } satisfies EventsDataType;
   });
 }

@@ -33,6 +33,7 @@ export default function Calendar({
       time_id: event.time_id,
       time: event.time,
       topic: event.topic,
+      icon: event.icon,
     },
   }));
 

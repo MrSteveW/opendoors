@@ -9,6 +9,7 @@ export type EventsDataType = {
   time_id: number;
   order: number;
   time: string;
+  icon: string;
 };
 
 type ClassOptionType = {
@@ -49,4 +50,9 @@ export type TimesItem = {
   id: number;
   name: string;
   display_order: number;
+  icon: string;
+};
+
+export type IconsItem = {
+  name: string;
 };
