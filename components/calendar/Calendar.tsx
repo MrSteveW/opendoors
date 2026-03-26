@@ -28,8 +28,7 @@ export default function Calendar({
     extendedProps: {
       name: event.name,
       class_id: event.class_id,
-      producer_id: event.producer_id,
-      producer: event.producer,
+      producers: event.producers,
       time_id: event.time_id,
       time: event.time,
       topic: event.topic,

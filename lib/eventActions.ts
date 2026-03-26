@@ -15,8 +15,7 @@ export async function getEventsData() {
       name,
       topic,
       class_id,
-      producer_id,
-      producers(name),
+      events_producers(producers(id, name)),
       times(id, display_order, name, icon)
       `,
     )
@@ -25,7 +24,11 @@ export async function getEventsData() {
   if (error) throw error;
 
   return (data ?? []).map((row) => {
-    const producers = row.producers as unknown as { name: string };
+    const producers = (
+      row.events_producers as unknown as {
+        producers: { id: number; name: string };
+      }[]
+    ).map((ep) => ep.producers);
     const times = row.times as unknown as {
       id: number;
       display_order: number;
@@ -39,8 +42,7 @@ export async function getEventsData() {
       name: row.name,
       topic: row.topic,
       class_id: row.class_id,
-      producer_id: row.producer_id,
-      producer: producers.name,
+      producers,
       time_id: times.id,
       order: times.display_order,
       time: times.name,
@@ -54,18 +56,47 @@ export async function handleEventCreate(formData: FormData) {
     const supabase = await createClerkSupabaseClient();
     const rawData = Object.fromEntries(formData);
 
-    const { data, error } = await supabase.from('events').insert({
-      date: rawData.date,
-      name: rawData.name,
-      class_id: parseInt(rawData.class_id as string),
-      producer_id: parseInt(rawData.producer_id as string),
-      time_id: parseInt(rawData.time_id as string),
-      topic: rawData.topic,
-    });
+    // Initial data in new event
+    const { data: eventData, error: eventError } = await supabase
+      .from('events')
+      .insert({
+        date: rawData.date,
+        name: rawData.name,
+        class_id: parseInt(rawData.class_id as string),
+        time_id: parseInt(rawData.time_id as string),
+        topic: rawData.topic,
+      })
+      .select('id')
+      .single();
 
-    if (error) {
-      console.error('Supabase error details:', JSON.stringify(error, null, 2));
-      throw error;
+    if (eventError) {
+      console.error(
+        'Supabase error details:',
+        JSON.stringify(eventError, null, 2),
+      );
+      throw eventError;
+    }
+
+    // 2. Get all checked producer IDs
+    const producerIds = formData
+      .getAll('producers')
+      .map((id) => parseInt(id as string));
+
+    const { error: junctionError } = await supabase
+      .from('events_producers')
+      .insert(
+        producerIds.map((producer_id) => ({
+          event_id: eventData.id,
+          producer_id,
+        })),
+      );
+
+    if (junctionError) {
+      console.error(
+        'Supabase error details:',
+        JSON.stringify(junctionError, null, 2),
+      );
+      throw junctionError;
     }
 
     revalidatePath('/');
@@ -84,21 +115,41 @@ export async function handleEventEdit(formData: FormData) {
   try {
     const supabase = await createClerkSupabaseClient();
     const id = formData.get('id');
-    const updateData = {
-      name: formData.get('name'),
-      class_id: parseInt(formData.get('class_id') as string),
-      producer_id: parseInt(formData.get('producer_id') as string),
-      time_id: parseInt(formData.get('time_id') as string),
-      topic: formData.get('topic'),
-    };
-
-    // Perform the update
-    const { error } = await supabase
+    // Step 1: Update the event
+    const { error: updateError } = await supabase
       .from('events')
-      .update(updateData)
-      .eq('id', id); // Matches your WHERE id = $6
+      .update({
+        name: formData.get('name'),
+        class_id: parseInt(formData.get('class_id') as string),
+        time_id: parseInt(formData.get('time_id') as string),
+        topic: formData.get('topic'),
+      })
+      .eq('id', id);
+    if (updateError) throw updateError;
 
-    if (error) throw error;
+    // Step 2: Delete existing junction rows
+    const { error: deleteError } = await supabase
+      .from('events_producers')
+      .delete()
+      .eq('event_id', id);
+
+    if (deleteError) throw deleteError;
+
+    // Step 3: Insert new junction rows
+    const producerIds = formData
+      .getAll('producers')
+      .map((p) => parseInt(p as string));
+
+    const { error: junctionError } = await supabase
+      .from('events_producers')
+      .insert(
+        producerIds.map((producer_id) => ({
+          event_id: parseInt(id as string),
+          producer_id,
+        })),
+      );
+
+    if (junctionError) throw junctionError;
 
     revalidatePath('/');
     return { success: true };

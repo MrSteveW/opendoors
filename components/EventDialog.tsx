@@ -15,6 +15,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Textarea } from '@/components/ui/textarea';
 import { handleEventCreate } from '@/lib/eventActions';
 import { handleEventEdit } from '@/lib/eventActions';
@@ -26,9 +28,13 @@ import { PanelRightClose } from 'lucide-react';
 import { DeleteButton } from './DeleteButton';
 import { useRouter } from 'next/navigation';
 
-type EventDialogProps = {
+interface Producer {
+  id: number;
+  name: string;
+}
+interface EventDialogProps {
   eventOptions: EventOptionsType;
-};
+}
 
 export function EventDialog({ eventOptions }: EventDialogProps) {
   const router = useRouter();
@@ -172,30 +178,24 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
           {/* PRODCUER */}
           <div className="grid grid-cols-4 items-center">
             <Label htmlFor="producer_id" className="text-2xl">
-              Producer
+              Producers
             </Label>
-            <div className="col-span-3">
-              <Select
-                name="producer_id"
-                defaultValue={selectedEvent?.extendedProps.producer_id?.toString()}
-                disabled={isReadOnly}
-                required={true}
-              >
-                <SelectTrigger id="producer_id" className="text-2xl">
-                  <SelectValue placeholder="Select producer" />
-                </SelectTrigger>
-                <SelectContent>
-                  {producers?.map((item) => (
-                    <SelectItem
-                      key={item.id}
-                      value={item.id.toString()}
-                      className="text-2xl"
-                    >
-                      {item.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <div className="col-span-3 grid grid-cols-3">
+              {producers?.map((producer) => (
+                <FieldGroup key={producer.id} className="mx-auto">
+                  <Field orientation="horizontal">
+                    <Checkbox
+                      id={`producer-${producer.id}`}
+                      name="producers"
+                      value={producer.id.toString()}
+                      defaultChecked={selectedEvent?.extendedProps.producers?.some(
+                        (p: Producer) => p.id === producer.id,
+                      )}
+                    />
+                    <FieldLabel htmlFor="producers">{producer.name}</FieldLabel>
+                  </Field>
+                </FieldGroup>
+              ))}
             </div>
           </div>
 

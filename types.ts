@@ -4,8 +4,10 @@ export type EventsDataType = {
   name: string;
   topic: string;
   class_id: number;
-  producer_id: number;
-  producer: string;
+  producers: {
+    id: number;
+    name: string;
+  }[];
   time_id: number;
   order: number;
   time: string;
