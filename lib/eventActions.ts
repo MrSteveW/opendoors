@@ -15,6 +15,7 @@ export async function getEventsData() {
       name,
       topic,
       class_id,
+      iscomplete,
       events_producers(producers(id, name)),
       times(id, display_order, name, icon)
       `,
@@ -43,6 +44,7 @@ export async function getEventsData() {
       topic: row.topic,
       class_id: row.class_id,
       producers,
+      iscomplete: row.iscomplete,
       time_id: times.id,
       order: times.display_order,
       time: times.name,
@@ -123,6 +125,7 @@ export async function handleEventEdit(formData: FormData) {
         class_id: parseInt(formData.get('class_id') as string),
         time_id: parseInt(formData.get('time_id') as string),
         topic: formData.get('topic'),
+        iscomplete: formData.has('iscomplete'),
       })
       .eq('id', id);
     if (updateError) throw updateError;

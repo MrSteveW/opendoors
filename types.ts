@@ -4,6 +4,7 @@ export type EventsDataType = {
   name: string;
   topic: string;
   class_id: number;
+  iscomplete: boolean;
   producers: {
     id: number;
     name: string;
