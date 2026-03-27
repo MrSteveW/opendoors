@@ -1,3 +1,4 @@
+import { ClockCheck } from 'lucide-react';
 import {
   Dialog,
   DialogClose,
@@ -252,6 +253,29 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
               />
             </div>
           </div>
+
+          {/* Completed */}
+          {selectedEvent && (
+            <div className="grid grid-cols-4 items-center">
+              <Label htmlFor="iscompleted" className="text-2xl self-start pt-2">
+                Completed?
+              </Label>
+              <div className="col-span-3">
+                <FieldGroup key={selectedEvent.id} className="mx-auto">
+                  <Field orientation="horizontal">
+                    <Checkbox
+                      variant="success"
+                      id={selectedEvent.id}
+                      name="iscomplete"
+                      value="foo"
+                      defaultChecked={selectedEvent.extendedProps.iscomplete}
+                      className="w-8 h-8"
+                    />
+                  </Field>
+                </FieldGroup>
+              </div>
+            </div>
+          )}
 
           <DialogFooter>
             {!isReadOnly && (
