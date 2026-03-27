@@ -192,6 +192,7 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
                       defaultChecked={selectedEvent?.extendedProps.producers?.some(
                         (p: Producer) => p.id === producer.id,
                       )}
+                      disabled={isReadOnly}
                     />
                     <FieldLabel htmlFor="producers">{producer.name}</FieldLabel>
                   </Field>
@@ -270,6 +271,7 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
                       value="foo"
                       defaultChecked={selectedEvent.extendedProps.iscomplete}
                       className="w-8 h-8"
+                      disabled={isReadOnly}
                     />
                   </Field>
                 </FieldGroup>

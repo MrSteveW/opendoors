@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS classes (
 
 ALTER TABLE classes ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Sch Access Classes" ON public.classes 
+CREATE POLICY "Sch Access classes" ON public.classes 
 FOR ALL
 TO authenticated
 USING (organization_id = (auth.jwt()->'o'->>'id'))
@@ -25,12 +25,13 @@ CREATE TABLE IF NOT EXISTS events (
   producer_id INT REFERENCES producers(id),
   time_id INT REFERENCES times(id),
   topic TEXT,
+  iscomplete BOOL DEFAULT (false);
   organization_id TEXT DEFAULT (auth.jwt()->'o'->>'id') 
 );
 
 ALTER TABLE events ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Sch Access Events" ON public.events 
+CREATE POLICY "Sch Access events" ON public.events 
 FOR ALL
 TO authenticated
 USING (organization_id = (auth.jwt()->'o'->>'id'))
@@ -47,7 +48,7 @@ CREATE TABLE IF NOT EXISTS events_producers (
 
 ALTER TABLE events_producers ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Sch Access EVENTS_PRODUCERS" ON public.events_producers
+CREATE POLICY "Sch Access events_producers" ON public.events_producers
 FOR ALL
 TO authenticated
 USING (organization_id = (auth.jwt()->'o'->>'id'))
@@ -69,7 +70,7 @@ CREATE TABLE IF NOT EXISTS producers (
 
 ALTER TABLE producers ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Sch Access Producers" ON public.producers 
+CREATE POLICY "Sch Access producers" ON public.producers 
 FOR ALL
 TO authenticated
 USING (organization_id = (auth.jwt()->'o'->>'id'))

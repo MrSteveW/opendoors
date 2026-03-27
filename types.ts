@@ -59,3 +59,9 @@ export type TimesItem = {
 export type IconsItem = {
   name: string;
 };
+
+export type StatsCount = {
+  id: number;
+  name: string;
+  event_count: number;
+};
