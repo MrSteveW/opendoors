@@ -90,7 +90,7 @@ export default function ClassesAdmin({ classData }: ClassesAdminProps) {
       </div>
 
       {/* Display */}
-      <div className="h-full w-1/3 p-2 m-4 text-xl  overflow-auto">
+      <div className="h-full w-1/3 p-2 m-4 text-xl overflow-auto">
         <div className="grid grid-cols-[3fr_3fr_1fr] items-center border-b pb-2 font-bold">
           <div>Class</div>
           <div>Year</div>

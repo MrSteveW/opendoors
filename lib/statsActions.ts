@@ -3,27 +3,27 @@ import { createClerkSupabaseClient } from '@/lib/supabase';
 
 export async function getClassEventCount() {
   const supabase = await createClerkSupabaseClient();
-  const { data, error } = await supabase
-    .from('classes')
-    .select(
-      `
+  const { data, error } = await supabase.from('classes').select(
+    `
     id,
     name,
     year_group,
     events(count)
     `,
-    )
-    .order('year_group');
+  );
 
   if (error) {
     throw new Error(`Failed to fetch class event counts: ${error.message}`);
   }
 
-  return (data ?? []).map((clss) => ({
-    id: clss.id,
-    name: clss.name,
-    event_count: (clss.events as unknown as { count: number }[])[0]?.count ?? 0,
-  }));
+  return (data ?? [])
+    .map((clss) => ({
+      id: clss.id,
+      name: clss.name,
+      event_count:
+        (clss.events as unknown as { count: number }[])[0]?.count ?? 0,
+    }))
+    .sort((a, b) => b.event_count - a.event_count);
 }
 
 export async function getProducerEventCounts() {
