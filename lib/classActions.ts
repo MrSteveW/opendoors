@@ -32,11 +32,10 @@ export async function handleClassCreate(
 
     if (error) throw error;
     return { success: true };
-  } catch (error: any) {
-    return {
-      success: false,
-      error: error.message || 'An unexpected error occurred',
-    };
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : 'An unexpected error occurred';
+    return { success: false, error: message };
   }
 }
 
@@ -51,10 +50,9 @@ export async function handleClassDelete(id: number) {
 
     if (error) throw error;
     return { success: true };
-  } catch (error: any) {
-    return {
-      success: false,
-      error: error.message || 'An unexpected error occurred',
-    };
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : 'An unexpected error occurred';
+    return { success: false, error: message };
   }
 }
