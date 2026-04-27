@@ -1,46 +1,40 @@
-'use client';
-
-import { useSignIn, SignIn } from '@clerk/nextjs';
-import EnterAnimation from '@/app/animation/EnterAnimation';
-import bglogo from '@/public/bglogo.webp';
-import shiplogo from '@/public/shiplogo.webp';
+import Link from 'next/link';
 import Image from 'next/image';
-import GuestButton from '../GuestButton';
+import drakelogo from '@/public/drakelogo.webp';
+import wicklogo from '@/public/wicklogo.webp';
 
 export default function Page() {
-  const { isLoaded } = useSignIn();
   return (
-    <div className="h-screen bg-white flex flex-col items-center justify-center">
-      {isLoaded && (
-        <div className="h-4/10 w-full  flex items-center ">
-          <div className="fixed w-full">
-            <div className="relative justify-items-center">
-              <Image src={bglogo} alt="Background" height={200} priority />
-            </div>
-
-            <EnterAnimation className="absolute inset-0 z-10 justify-items-center">
-              <Image src={shiplogo} alt="Ship" height={200} priority />
-            </EnterAnimation>
+    <div className="h-screen flex flex-col items-center  bg-yellow-50">
+      <div className="h-60 flex items-center">
+        <div className="font-family-atomatic text-5xl">Halcyon Media</div>
+      </div>
+      <div className="flex gap-x-20">
+        <div className="flex flex-col gap-4 items-center">
+          <div>
+            <Link href="/sign-in/drake">
+              <div>
+                <Image src={drakelogo} alt="Ship" height={200} priority />
+              </div>
+              <div className="bg-teal-800 text-white px-8 mt-4 py-3 rounded text-lg w-48 text-center">
+                Drake
+              </div>
+            </Link>
           </div>
         </div>
-      )}
 
-      <div className="h-6/10 flex flex-col justify-center-safe items-center">
-        <div className="mb-2 cursor-pointer">
-          <GuestButton />
+        <div className="flex flex-col gap-4 items-center">
+          <div>
+            <Link href="/sign-in/wicklewood">
+              <div>
+                <Image src={wicklogo} alt="Ship" height={200} priority />
+              </div>
+              <div className="bg-teal-800 text-white px-8 mt-4 py-3 rounded text-lg w-48 text-center">
+                Wicklewood
+              </div>
+            </Link>
+          </div>
         </div>
-
-        <SignIn
-          routing="path"
-          path="/sign-in"
-          forceRedirectUrl="/"
-          appearance={{
-            elements: {
-              rootBox: 'mx-auto',
-            },
-          }}
-          signUpUrl="sign-in"
-        />
       </div>
     </div>
   );

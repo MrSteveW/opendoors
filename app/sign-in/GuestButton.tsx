@@ -1,19 +1,17 @@
 'use client';
 import { useSignIn } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
+import { getGuestCredentials } from '@/lib/guestActions';
 
-export default function GuestButton() {
+export default function GuestButton({ org }: { org: 'drake' | 'wicklewood' }) {
   const { signIn, setActive, isLoaded } = useSignIn();
   const router = useRouter();
+
   const handleGuestLogin = async () => {
     if (!isLoaded) return;
-
     try {
-      const result = await signIn.create({
-        identifier: 'guest',
-        password: process.env.NEXT_PUBLIC_GUEST_PASSWORD,
-      });
-
+      const { identifier, password } = await getGuestCredentials(org);
+      const result = await signIn.create({ identifier, password });
       if (result.status === 'complete') {
         await setActive({ session: result.createdSessionId });
         router.push('/');
