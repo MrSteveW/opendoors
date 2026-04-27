@@ -24,7 +24,7 @@ export default function App({ eventOptions, eventsData }: AppProps) {
   const role = user?.publicMetadata?.user_role;
 
   function handleDateSelect(selectInfo: DateSelectArg) {
-    if (role === 'admin' || role === 'editor') {
+    if (role === 'admin' || role === 'producer') {
       setIsDialogOpen(true);
       setSelectedDate(new Date(selectInfo.startStr));
       setSelectedEvent(null);
@@ -43,7 +43,7 @@ export default function App({ eventOptions, eventsData }: AppProps) {
   function handleEventSelect(event: EventApi) {
     setSelectedEvent(event);
     setSelectedDate(null);
-    if (role === 'admin' || role === 'editor') {
+    if (role === 'admin' || role === 'producer') {
       setIsDialogOpen(true);
       setIsReadOnly(false);
     } else {
