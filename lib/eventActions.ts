@@ -1,57 +1,6 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { createClerkSupabaseClient } from '@/lib/supabase';
-import { EventsDataType } from '@/types';
-
-export async function getEventsData() {
-  const supabase = await createClerkSupabaseClient();
-
-  const { data, error } = await supabase
-    .from('events')
-    .select(
-      `
-      id,
-      date,
-      name,
-      topic,
-      class_id,
-      iscomplete,
-      events_producers(producers(id, name)),
-      times(id, display_order, name, icon)
-      `,
-    )
-    .order('date', { ascending: true });
-
-  if (error) throw error;
-
-  return (data ?? []).map((row) => {
-    const producers = (
-      row.events_producers as unknown as {
-        producers: { id: number; name: string };
-      }[]
-    ).map((ep) => ep.producers);
-    const times = row.times as unknown as {
-      id: number;
-      display_order: number;
-      name: string;
-      icon: string;
-    };
-
-    return {
-      id: row.id,
-      date: row.date,
-      name: row.name,
-      topic: row.topic,
-      class_id: row.class_id,
-      producers,
-      iscomplete: row.iscomplete,
-      time_id: times.id,
-      order: times.display_order,
-      time: times.name,
-      icon: times.icon,
-    } satisfies EventsDataType;
-  });
-}
 
 export async function handleEventCreate(formData: FormData) {
   try {

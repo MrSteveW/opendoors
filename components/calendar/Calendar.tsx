@@ -4,45 +4,48 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { EventsDataType } from '@/types';
-import { EventContentArg } from '@fullcalendar/core';
+import { EventContentArg, EventSourceFuncArg } from '@fullcalendar/core';
 import { EventApi, DateSelectArg } from '@fullcalendar/core';
-import { EventInput } from '@fullcalendar/core';
 
 type CalendarProps = {
   handleDateSelect: (selectInfo: DateSelectArg) => void;
   handleEventSelect: (event: EventApi) => void;
-  eventsData?: EventsDataType[] | null;
 };
 
 export default function Calendar({
   handleDateSelect,
   handleEventSelect,
-  eventsData,
 }: CalendarProps) {
-  // Convert events into FullCalendar's event format
-  const events: EventInput[] = (eventsData ?? []).map((event) => ({
-    id: String(event.id),
-    title: event.name,
-    start: event.date,
-    order: event.order,
-    extendedProps: {
-      name: event.name,
-      class_id: event.class_id,
-      producers: event.producers,
-      time_id: event.time_id,
-      time: event.time,
-      topic: event.topic,
-      icon: event.icon,
-      iscomplete: event.iscomplete,
-    },
-  }));
-
   return (
     <>
       <div className="h-full">
         <FullCalendar
           expandRows={true}
-          events={events}
+          events={async (fetchInfo: EventSourceFuncArg) => {
+            const params = new URLSearchParams({
+              start: fetchInfo.startStr,
+              end: fetchInfo.endStr,
+            });
+            const response = await fetch(`/api/events?${params}`);
+            if (!response.ok) throw new Error('Failed to fetch events');
+            const data: EventsDataType[] = await response.json();
+            return data.map((event) => ({
+              id: event.id,
+              title: event.name,
+              start: event.date,
+              extendedProps: {
+                name: event.name,
+                topic: event.topic,
+                class_id: event.class_id,
+                producers: event.producers,
+                iscomplete: event.iscomplete,
+                time_id: event.time_id,
+                order: event.order,
+                time: event.time,
+                icon: event.icon,
+              },
+            }));
+          }}
           eventContent={(arg: EventContentArg) => (
             <EventCard eventInfo={arg} handleEventSelect={handleEventSelect} />
           )}
