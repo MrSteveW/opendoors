@@ -23,7 +23,7 @@ export async function getOptionsData() {
       producers: producersRes.error,
       times: timesRes.error,
     });
-    throw new Error('Failed to fetch booking options');
+    throw new Error('Could not load booking data');
   }
 
   return {
