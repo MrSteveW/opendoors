@@ -6,12 +6,12 @@ import { EventsDataType, EventOptionsType } from '@/types';
 import { DateSelectArg } from '@fullcalendar/core/index.js';
 import { EventApi } from '@fullcalendar/core';
 import { EventDialog } from './EventDialog';
+
 type AppProps = {
   eventOptions: EventOptionsType;
-  eventsData: EventsDataType[];
 };
 
-export default function App({ eventOptions, eventsData }: AppProps) {
+export default function App({ eventOptions }: AppProps) {
   const setIsDialogOpen = useEventDialog((state) => state.setIsDialogOpen);
   const setSelectedDate = useEventDialog((state) => state.setSelectedDate);
   const setSelectedEvent = useEventDialog((state) => state.setSelectedEvent);
@@ -23,20 +23,18 @@ export default function App({ eventOptions, eventsData }: AppProps) {
   const { user } = useUser();
   const role = user?.publicMetadata?.user_role;
 
-  function handleDateSelect(selectInfo: DateSelectArg) {
+  async function handleDateSelect(selectInfo: DateSelectArg) {
     if (role === 'admin' || role === 'producer') {
+      const selectedDateStr = selectInfo.startStr.split('T')[0];
+      const params = new URLSearchParams({ start: selectedDateStr, end: selectedDateStr });
+      const response = await fetch(`/api/events?${params}`);
+      const dayEvents: EventsDataType[] = await response.json();
+      const unavailable = dayEvents.map((event) => ({ time_id: event.time_id }));
+      setUnavailableTimes(unavailable);
       setIsDialogOpen(true);
       setSelectedDate(new Date(selectInfo.startStr));
       setSelectedEvent(null);
       setIsReadOnly(false);
-      const selectedDateStr = selectInfo.startStr.split('T')[0];
-      const unavailable = (eventsData ?? [])
-        .filter((event) => {
-          const eventDate = new Date(event.date).toISOString().split('T')[0];
-          return eventDate === selectedDateStr;
-        })
-        .map((event) => ({ time_id: event.time_id }));
-      setUnavailableTimes(unavailable);
     }
   }
 
@@ -59,7 +57,6 @@ export default function App({ eventOptions, eventsData }: AppProps) {
         <Calendar
           handleDateSelect={handleDateSelect}
           handleEventSelect={handleEventSelect}
-          eventsData={eventsData}
         />
       </div>
     </div>
