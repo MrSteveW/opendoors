@@ -41,33 +41,39 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  const events = (data ?? []).map((row) => {
-    const producers = (
-      row.events_producers as unknown as {
-        producers: { id: number; name: string };
-      }[]
-    ).map((ep) => ep.producers);
-    const times = row.times as unknown as {
-      id: number;
-      display_order: number;
-      name: string;
-      icon: string;
-    };
+  let events: EventsDataType[];
+  try {
+    events = (data ?? []).map((row) => {
+      const producers = (
+        row.events_producers as unknown as {
+          producers: { id: number; name: string };
+        }[]
+      ).map((ep) => ep.producers);
+      const times = row.times as unknown as {
+        id: number;
+        display_order: number;
+        name: string;
+        icon: string;
+      };
 
-    return {
-      id: row.id,
-      date: row.date,
-      name: row.name,
-      topic: row.topic,
-      class_id: row.class_id,
-      producers,
-      iscomplete: row.iscomplete,
-      time_id: times.id,
-      order: times.display_order,
-      time: times.name,
-      icon: times.icon,
-    } satisfies EventsDataType;
-  });
+      return {
+        id: row.id,
+        date: row.date,
+        name: row.name,
+        topic: row.topic,
+        class_id: row.class_id,
+        producers,
+        iscomplete: row.iscomplete,
+        time_id: times.id,
+        order: times.display_order,
+        time: times.name,
+        icon: times.icon,
+      } satisfies EventsDataType;
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Failed to process events data';
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 
   return NextResponse.json(events);
 }
