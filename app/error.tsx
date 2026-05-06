@@ -17,7 +17,7 @@ export default function Error({
     <div className="min-h-screen flex items-center justify-center text-3xl">
       <div className="w-100 text-center">
         <h2>Oops!</h2>
-        <p>{error.message}</p>
+        <p>We have run into an error.</p>
 
         <button
           onClick={reset}

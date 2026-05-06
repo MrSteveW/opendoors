@@ -3,7 +3,6 @@
 ## Dependencies
 
 | Package | Version | Purpose |
-|---|---|---|
 | `next` | 16.1.1 | Framework |
 | `react` / `react-dom` | 19.2.3 | UI runtime |
 | `typescript` | ^5 | Language |
@@ -19,6 +18,8 @@
 | `clsx` + `tailwind-merge` + `class-variance-authority` | latest | Conditional class utilities |
 | `tailwindcss-animate` | ^1.0.7 | Tailwind animation plugin |
 
+- This app is being built using VS Code version 1.118, in WSL version: 2.5.9.0, using ZSH terminal zsh 5.9 (x86_64-ubuntu-linux-gnu).
+
 ## Working preferences
 
 **Do not add files to fix tooling or TypeScript issues.** If a linter, TypeScript, or IDE issue can be resolved through an IDE/editor setting or config change, prefer that. Do not create extra files (e.g. `global.d.ts`) that clutter the codebase when a simpler non-file solution exists.
@@ -26,6 +27,7 @@
 ## Next.js file conventions used in this project
 
 ### `proxy.ts` (Clerk middleware)
+
 Next.js 16+ uses `proxy.ts` as the middleware filename — **not** `middleware.ts`. Do not suggest renaming it. `middleware.ts` is only correct for Next.js ≤15. The code inside is identical either way; only the filename differs.
 
 This project's `proxy.ts` runs `clerkMiddleware()` and enforces auth: unauthenticated users are redirected to `/sign-in`, and non-admins are redirected away from `/admin(.*)`.

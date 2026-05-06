@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import EventCard from './EventCard';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -16,12 +17,18 @@ export default function Calendar({
   handleDateSelect,
   handleEventSelect,
 }: CalendarProps) {
+  const [fetchError, setFetchError] = useState<string | null>(null);
+
   return (
     <>
+      {fetchError && (
+        <div className="text-center text-red-600 py-2 text-sm">{fetchError}</div>
+      )}
       <div className="h-full">
         <FullCalendar
           expandRows={true}
           events={async (fetchInfo: EventSourceFuncArg) => {
+            setFetchError(null);
             const params = new URLSearchParams({
               start: fetchInfo.startStr,
               end: fetchInfo.endStr,
@@ -46,6 +53,7 @@ export default function Calendar({
               },
             }));
           }}
+          eventSourceFailure={() => setFetchError('Failed to load events. Please refresh.')}
           eventContent={(arg: EventContentArg) => (
             <EventCard eventInfo={arg} handleEventSelect={handleEventSelect} />
           )}
