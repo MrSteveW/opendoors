@@ -14,7 +14,7 @@ export default function Page() {
           <div>
             <Link href="/sign-in/drake">
               <div>
-                <Image src={drakelogo} alt="Ship" height={200} priority />
+                <Image src={drakelogo} alt="Drake logo" height={200} priority />
               </div>
               <div className="bg-teal-800 text-white px-8 mt-4 py-3 rounded text-lg w-48 text-center">
                 Drake
@@ -27,7 +27,12 @@ export default function Page() {
           <div>
             <Link href="/sign-in/wicklewood">
               <div>
-                <Image src={wicklogo} alt="Ship" height={200} priority />
+                <Image
+                  src={wicklogo}
+                  alt="Wicklewood logo"
+                  height={200}
+                  priority
+                />
               </div>
               <div className="bg-teal-800 text-white px-8 mt-4 py-3 rounded text-lg w-48 text-center">
                 Wicklewood
