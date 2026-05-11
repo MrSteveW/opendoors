@@ -14,7 +14,10 @@ export default clerkMiddleware(async (auth, req) => {
     const { userId } = await auth();
 
     if (!userId) {
-      return NextResponse.redirect(new URL('/sign-in', req.url));
+      const destination = process.env.DEMO === 'true' && req.nextUrl.pathname === '/'
+        ? '/sign-in/drake'
+        : '/sign-in';
+      return NextResponse.redirect(new URL(destination, req.url));
     }
   }
 
