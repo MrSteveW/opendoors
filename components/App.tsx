@@ -26,10 +26,15 @@ export default function App({ eventOptions }: AppProps) {
   async function handleDateSelect(selectInfo: DateSelectArg) {
     if (role === 'admin' || role === 'producer') {
       const selectedDateStr = selectInfo.startStr.split('T')[0];
-      const params = new URLSearchParams({ start: selectedDateStr, end: selectedDateStr });
+      const params = new URLSearchParams({
+        start: selectedDateStr,
+        end: selectedDateStr,
+      });
       const response = await fetch(`/api/events?${params}`);
       const dayEvents: EventsDataType[] = await response.json();
-      const unavailable = dayEvents.map((event) => ({ time_id: event.time_id }));
+      const unavailable = dayEvents.map((event) => ({
+        time_id: event.time_id,
+      }));
       setUnavailableTimes(unavailable);
       setIsDialogOpen(true);
       setSelectedDate(new Date(selectInfo.startStr));
@@ -51,8 +56,8 @@ export default function App({ eventOptions }: AppProps) {
   }
 
   return (
-    <div className="h-screen flex flex-row">
-      <div className="w-full">
+    <div className="h-screen flex flex-row app-bg">
+      <div className="w-full font-comfortaa">
         <EventDialog eventOptions={eventOptions} />
         <Calendar
           handleDateSelect={handleDateSelect}

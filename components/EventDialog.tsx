@@ -96,7 +96,7 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
         <form
           key={selectedEvent?.id || selectedDate?.toISOString()}
           action={formAction}
-          className="flex flex-col space-y-8 text-3xl"
+          className="flex flex-col space-y-8 text-xl"
         >
           <DialogHeader>
             <DialogTitle className="text-center">
@@ -134,7 +134,6 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
                 name="name"
                 autoComplete="off"
                 required
-                className="text-2xl"
                 defaultValue={selectedEvent?.title}
                 readOnly={isReadOnly}
               />
@@ -153,16 +152,12 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
                 disabled={isReadOnly}
                 required={true}
               >
-                <SelectTrigger id="class_id" className="text-2xl">
+                <SelectTrigger id="class_id">
                   <SelectValue placeholder="Select class" />
                 </SelectTrigger>
                 <SelectContent>
                   {classNames.map((item) => (
-                    <SelectItem
-                      key={item.id}
-                      value={item.id.toString()}
-                      className="text-2xl"
-                    >
+                    <SelectItem key={item.id} value={item.id.toString()}>
                       <div className="grid grid-cols-[4fr_1fr] items-center w-full ">
                         <div className="truncate">{item.name}</div>
                         <div className="text-slate-500">
@@ -213,7 +208,7 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
                 disabled={isReadOnly}
                 required={true}
               >
-                <SelectTrigger id="time_id" className="text-2xl">
+                <SelectTrigger id="time_id">
                   <SelectValue placeholder="Select time" />
                 </SelectTrigger>
 
@@ -228,7 +223,6 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
                         key={time.id}
                         value={time.id.toString()}
                         disabled={isUnavailable}
-                        className="text-2xl"
                       >
                         {time.name}
                       </SelectItem>
@@ -248,7 +242,7 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
               <Textarea
                 name="topic"
                 id="topic"
-                className="w-full text-2xl"
+                className="w-full"
                 defaultValue={selectedEvent?.extendedProps.topic}
                 readOnly={isReadOnly}
               />
@@ -258,7 +252,7 @@ export function EventDialog({ eventOptions }: EventDialogProps) {
           {/* Completed */}
           {selectedEvent && (
             <div className="grid grid-cols-4 items-center">
-              <Label htmlFor="iscompleted" className="text-2xl self-start pt-2">
+              <Label htmlFor="iscompleted" className="self-start pt-2">
                 Completed?
               </Label>
               <div className="col-span-3">
