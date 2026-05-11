@@ -30,11 +30,11 @@ This project has a live CI/CD pipeline:
 
 ## Working preferences
 
-**When referencing external documentation to guide implementation:** reproduce code examples in full — do not paraphrase, summarise, or reconstruct from memory. Every line in the source example is there for a reason. If a line is unfamiliar or its purpose is unclear, flag it and explain it rather than silently omitting it.
+- When referencing external documentation to guide implementation:\*\* reproduce code examples in full — do not paraphrase, summarise, or reconstruct from memory. Every line in the source example is there for a reason. If a line is unfamiliar or its purpose is unclear, flag it and explain it rather than silently omitting it.
 
+- Always default to the most secure, industry-standard approach. Never suggest a workaround or "get it working" shortcut when a safer established pattern exists. If you're aware of a more secure alternative, use it without being asked. Think "best practice" not "matching existing setup".
 
-
-**Do not add files to fix tooling or TypeScript issues.** If a linter, TypeScript, or IDE issue can be resolved through an IDE/editor setting or config change, prefer that. Do not create extra files (e.g. `global.d.ts`) that clutter the codebase when a simpler non-file solution exists.
+- Do not add files to fix tooling or TypeScript issues.\*\* If a linter, TypeScript, or IDE issue can be resolved through an IDE/editor setting or config change, prefer that. Do not create extra files (e.g. `global.d.ts`) that clutter the codebase when a simpler non-file solution exists.
 
 ## Next.js file conventions used in this project
 
