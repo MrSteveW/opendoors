@@ -11,6 +11,7 @@
   --color-opengreen: #0db651;
   --color-openlightgreen: #b3f7cb;
   --font-family-mulish: 'Mulish', sans-serif;
+  --font-family-comfortaa: var(--font-comfortaa);
   --font-family-atomatic: var(--font-atomatic);
 
   --color-sidebar-ring: var(--sidebar-ring);
@@ -54,10 +55,13 @@
 }
 
 body {
-  font-family: var(--font-mulish);
-  background-image: url('/wavebg.png');
-  background-position: right top;
-  background-size: contain;
+  font-family: var(--font-comfortaa);
+}
+
+.app-bg {
+  background-image: url('/bgspeakerpale.webp');
+  background-position: center;
+  background-size: cover;
   background-repeat: no-repeat;
   overflow: hidden;
 }
@@ -72,7 +76,7 @@ body {
 
 select:focus {
   background-color: bisque;
-  border: 1px solid red;
+  border: 1px solid black;
 }
 
 textarea {
@@ -83,7 +87,7 @@ textarea {
 
 textarea:focus {
   background-color: bisque;
-  border: 1px solid red;
+  border: 1px solid black;
 }
 
 /* Reduce spacing around the header toolbar */
@@ -97,23 +101,10 @@ textarea:focus {
   display: none;
 }
 
+/* 2-week title */
 .fc .fc-toolbar-title {
   font-size: 1.1rem !important;
-}
-
-.fc .fc-daygrid-day-number {
-  padding: 2px 2px !important;
-  line-height: 0.8 !important;
-}
-
-.fc .fc-button {
-  padding: 0.2rem 0.5rem !important;
-  font-size: 0.85rem !important;
-}
-
-/* target all calendar day cells */
-.fc .fc-daygrid-day {
-  background-color: rgba(255, 255, 255, 0.5);
+  color: black;
 }
 
 /* target non-current month days (if they have a different shade) */
@@ -131,20 +122,25 @@ textarea:focus {
 .fc-scrollgrid,
 .fc-theme-standard td,
 .fc-theme-standard th {
-  border-color: #010066 !important;
+  /* border-color: #010066 !important; */
+  border-color: black !important;
 }
 
 /*Current day highlighted*/
 .fc-day-today {
-  background: rgba(183, 255, 180, 0.9) !important;
+  background: rgba(183, 255, 180, 0.8) !important;
   border: 2px solid #8a0404 !important;
 }
 
-/*Each day on the left*/
-.fc-daygrid-day-number {
-  float: left !important;
-  margin-left: 0 !important;
-  margin-right: auto !important;
+/* Cell date number */
+.fc .fc-daygrid-day-number {
+  padding: 5px 5px;
+  line-height: 0.8;
+  float: left;
+  margin-left: 0;
+  margin-right: auto;
+  color: black;
+  font-size: 1.2em;
 }
 
 /* Equal height day cells with overflow */
@@ -166,7 +162,15 @@ textarea:focus {
 }
 
 /*Other FullCalendar CSS */
-/* Remove default FullCalendar event styling */
+.fc .fc-button {
+  padding: 0.2rem 0.5rem !important;
+  font-size: 0.85rem !important;
+}
+
+.fc .fc-next-button {
+  margin-right: 1rem !important;
+}
+
 .fc-event {
   background-color: transparent !important;
   border: none !important;

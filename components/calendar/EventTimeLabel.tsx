@@ -17,7 +17,7 @@ export default function EventTimeLabel({ time, icon, order }: PropsType) {
       (Icons[icon as keyof typeof Icons] as React.ElementType) ?? Music;
 
     return (
-      <div className={`${textColor} flex font-bold items-center`}>
+      <div className={`${textColor} flex font-bold items-center text-base`}>
         <div>
           <IconComponent />
         </div>

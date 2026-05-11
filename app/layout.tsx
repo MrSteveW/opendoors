@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ClerkProvider, SignedIn, UserButton } from '@clerk/nextjs';
 import { Mulish } from 'next/font/google';
+import { Comfortaa } from 'next/font/google';
 import localFont from 'next/font/local';
 import AdminNav from '@/components/admin/AdminNav';
 import './globals.css';
@@ -15,6 +16,11 @@ const mulish = Mulish({
   subsets: ['latin'],
 });
 
+const comfortaa = Comfortaa({
+  variable: '--font-comfortaa',
+  subsets: ['latin'],
+});
+
 const atomatic = localFont({
   src: './fonts/linotypeatomatic.ttf',
   variable: '--font-atomatic',
@@ -22,7 +28,7 @@ const atomatic = localFont({
 
 export const metadata: Metadata = {
   title: 'OpenDoors',
-  description: 'OpenDoors booking v4',
+  description: 'OpenDoors booking app',
 };
 
 export default async function RootLayout({
@@ -37,24 +43,24 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${mulish.variable}  ${atomatic.variable}  antialiased`}
+          className={`${mulish.variable}  ${atomatic.variable}  ${comfortaa.variable}  antialiased`}
         >
           <SignedIn>
-            <header className="w-full flex h-12 text-center items-center">
+            <header className="w-full flex h-10 text-center items-center">
               <div className="flex flex-row w-70 items-center">
                 {role === 'admin' && <AdminNav />}
               </div>
               <div className="flex w-full h-full items-center justify-center">
-                <div className="font-family-atomatic text-5xl mx-2">
+                <div className="font-family-atomatic text-4xl mx-2">
                   Radio <SchName />
                 </div>
                 <div className="mx-2">
-                  <Image src="/logosm.png" alt="" height={50} width={50} />
+                  <Image src="/logosm.png" alt="" height={40} width={40} />
                 </div>
                 <div className="mx-2 text-2xl italic">({role})</div>
               </div>
 
-              <div className="scale-150 fixed top-3 right-15">
+              <div className="scale-120 fixed top-2 right-15">
                 <UserButton />
               </div>
             </header>

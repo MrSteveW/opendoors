@@ -9,7 +9,7 @@ export default function AdminNav() {
     { name: 'Admin', href: '/admin' },
   ];
   return (
-    <nav className="w-full flex justify-evenly text-2xl">
+    <nav className="w-full flex justify-evenly text-xl">
       {links.map((link) => {
         const isActive = pathname === link.href;
         return (
