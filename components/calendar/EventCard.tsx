@@ -32,7 +32,7 @@ export default function EventCard({
       className={`
         ${
           iscomplete ? 'bg-green-400' : 'bg-white'
-        } mx-1 px-3 border-2 text-base border-black rounded-md cursor-pointer hover:bg-orange-500`}
+        } mx-1 my-0.5 px-3 border-2 text-base border-black rounded-md cursor-pointer hover:bg-orange-500`}
     >
       <div className="flex  px-0.5">
         <div className="font-bold">{name}</div>
