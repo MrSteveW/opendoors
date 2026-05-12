@@ -30,6 +30,8 @@ This project has a live CI/CD pipeline:
 
 ## Working preferences
 
+- Always search for the official documentation and quote that first and foremost.
+
 - When referencing external documentation to guide implementation:\*\* reproduce code examples in full — do not paraphrase, summarise, or reconstruct from memory. Every line in the source example is there for a reason. If a line is unfamiliar or its purpose is unclear, flag it and explain it rather than silently omitting it.
 
 - Always default to the most secure, industry-standard approach. Never suggest a workaround or "get it working" shortcut when a safer established pattern exists. If you're aware of a more secure alternative, use it without being asked. Think "best practice" not "matching existing setup".
