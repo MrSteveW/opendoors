@@ -1,10 +1,14 @@
 # Opendoors v4 booking app
 
+PostgreSQL schema used: [Schema File](schema.sql)
+
 ## Features
 
 - [x] Next.JS with PostgreSQL database
 - [x] Calendar by FullCalendar
 - [x] Authentication and Authorization by Clerk
+- [x] Integration testing with Vitest
+- [x] E2E testing with Playwright
 
 ## Additional libraries used
 

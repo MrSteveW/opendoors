@@ -22,13 +22,15 @@ export async function handleProducersCreate(formData: FormData) {
     const supabase = await createClerkSupabaseClient();
     const { name } = Object.fromEntries(formData);
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('producers')
-      .insert({ name: name as string });
+      .insert({ name: name as string })
+      .select('id')
+      .single();
 
     if (error) throw error;
 
-    return { success: true };
+    return { success: true, data };
   } catch (error: unknown) {
     const message =
       error instanceof Error ? error.message : 'An unexpected error occurred';

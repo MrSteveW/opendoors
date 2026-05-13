@@ -1,5 +1,9 @@
 import { beforeEach, afterEach, beforeAll, it, expect, vi } from 'vitest';
-import { handleClassCreate, handleClassDelete } from '@/lib/classActions';
+import {
+  getClassesData,
+  handleClassCreate,
+  handleClassDelete,
+} from '@/lib/classActions';
 import { createClerkSupabaseClient } from '@/lib/supabase';
 import { createClient } from '@supabase/supabase-js';
 
@@ -24,6 +28,35 @@ afterEach(async () => {
   await adminClient.from('classes').delete().eq('name', 'Vitest Class');
 });
 
+it('getClassesData returns active classes', async () => {
+  const { data: inserted } = await adminClient
+    .from('classes')
+    .insert({ name: 'Vitest Class' })
+    .select()
+    .single();
+
+  const result = await getClassesData();
+
+  expect(result.find((c) => c.id === inserted!.id)).toBeDefined();
+});
+
+it('getClassesData excludes soft-deleted classes', async () => {
+  const { data: inserted } = await adminClient
+    .from('classes')
+    .insert({ name: 'Vitest Class', year_group: '3' })
+    .select()
+    .single();
+
+  await adminClient
+    .from('classes')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', inserted!.id);
+
+  const result = await getClassesData();
+
+  expect(result.find((c) => c.id === inserted!.id)).toBeUndefined();
+});
+
 it('admin can create a class', async () => {
   const formData = new FormData();
   formData.append('name', 'Vitest Class');
@@ -36,11 +69,11 @@ it('admin can create a class', async () => {
   const { data } = await adminClient
     .from('classes')
     .select()
-    .eq('name', 'Vitest Class')
-    .is('deleted_at', null);
+    .eq('id', result.data!.id)
+    .is('deleted_at', null)
+    .single();
 
-  expect(data).toHaveLength(1);
-  expect(data![0].year_group).toBe('3');
+  expect(data!.name).toBe('Vitest Class');
 });
 
 it('admin can softDelete a class', async () => {

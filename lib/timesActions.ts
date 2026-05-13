@@ -32,13 +32,15 @@ export async function handleTimesCreate(formData: FormData) {
       throw new Error('Invalid order value');
     }
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('times')
-      .insert({ name, display_order, icon });
+      .insert({ name, display_order, icon })
+      .select('id')
+      .single();
 
     if (error) throw error;
 
-    return { success: true };
+    return { success: true, data };
   } catch (error: any) {
     return {
       success: false,

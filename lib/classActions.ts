@@ -4,6 +4,7 @@ import { createClerkSupabaseClient } from '@/lib/supabase';
 type ActionResponse = {
   success: boolean;
   error?: string;
+  data?: { id: number };
 };
 
 export async function getClassesData() {
@@ -26,12 +27,14 @@ export async function handleClassCreate(
     const supabase = await createClerkSupabaseClient();
     const { name, year_group } = Object.fromEntries(formData);
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('classes')
-      .insert({ name, year_group });
+      .insert({ name, year_group })
+      .select('id')
+      .single();
 
     if (error) throw error;
-    return { success: true };
+    return { success: true, data };
   } catch (error) {
     const message =
       error instanceof Error ? error.message : 'An unexpected error occurred';

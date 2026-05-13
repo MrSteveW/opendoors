@@ -33,25 +33,27 @@ export async function handleEventCreate(formData: FormData) {
       .getAll('producers')
       .map((id) => parseInt(id as string));
 
-    const { error: junctionError } = await supabase
-      .from('events_producers')
-      .insert(
-        producerIds.map((producer_id) => ({
-          event_id: eventData.id,
-          producer_id,
-        })),
-      );
+    if (producerIds.length > 0) {
+      const { error: junctionError } = await supabase
+        .from('events_producers')
+        .insert(
+          producerIds.map((producer_id) => ({
+            event_id: eventData.id,
+            producer_id,
+          })),
+        );
 
-    if (junctionError) {
-      console.error(
-        'Supabase error details:',
-        JSON.stringify(junctionError, null, 2),
-      );
-      throw junctionError;
+      if (junctionError) {
+        console.error(
+          'Supabase error details:',
+          JSON.stringify(junctionError, null, 2),
+        );
+        throw junctionError;
+      }
     }
 
     revalidatePath('/');
-    return { success: true };
+    return { success: true, data: eventData };
   } catch (error) {
     const message =
       error instanceof Error ? error.message : JSON.stringify(error);
